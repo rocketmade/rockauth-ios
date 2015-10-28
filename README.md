@@ -5,22 +5,71 @@
 [![License](https://img.shields.io/cocoapods/l/RockauthIOS.svg?style=flat)](http://cocoapods.org/pods/RockauthIOS)
 [![Platform](https://img.shields.io/cocoapods/p/RockauthIOS.svg?style=flat)](http://cocoapods.org/pods/RockauthIOS)
 
-## Usage
-
 ## Requirements
 
 ## Installation
 
-RockauthIOS is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+RockauthIOS is available through [CocoaPods](http://cocoapods.org).
 
-```ruby
-pod 'RockauthiOS', :git => 'https://github.com/rocketmade/rockauth-ios', :branch => 'dev'
-```
+1. Add the following line to your Podfile:
+  ```ruby
+  pod 'RockauthiOS', :git => 'https://github.com/rocketmade/rockauth-ios', :branch => 'dev'
+  ```
+  
+2. Run `pod install`
+
+
+## Usage
+
+### Email Registration
+
+### Email Login
+
+### Facebook Integration
+
+### Twitter Integration
+
+1. Add the following to your Podfile:
+  ```ruby
+  pod 'Fabric'
+  pod 'TwitterKit'
+  pod 'TwitterCore'
+  ```
+  
+2. Run `pod install`
+
+3. Add the following to your project (possibly in your AppDelegate, specifically in `didFinishLaunchingWithOptions`):
+  ```
+  import TwitterKit
+  ...
+  Twitter.sharedInstance().startWithConsumerKey(<#twitterKey: String#>, consumerSecret: <#twitterSecret: String#>)
+  ```
+  
+4. Where you want to invoke 
+  ```
+  import RockauthiOS
+  import TwitterKit
+  ...
+  func logInWithTwitter() {
+      Twitter.sharedInstance().logInWithCompletion { session, error in
+          if (session != nil) {
+              print("signed in as \(session!.userName)");
+              let tp = TwitterProvider(token: session!.authToken, secret: session!.authTokenSecret)
+              tp.login(success: { () -> Void in
+                  <#code#>
+                  }, failure: { (error) -> Void in
+                      print(error)
+              })
+          } else {
+              print("error: \(error!.localizedDescription)");
+          }
+      }
+  }
+  ```
 
 ## Author
 
-Brayden Morris, brayden@rocketmade.com
+Rocketmade, info@rocketmade.com
 
 ## License
 
