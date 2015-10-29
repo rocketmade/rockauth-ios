@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
 
-  s.source       = { :git => "https://github.com/rocketmade/rockauth-ios.git", :tag => '0.1.0' }
+  s.source       = { :git => "https://github.com/rocketmade/rockauth-ios.git", :branch => 'master', :tag => '0.1.0' }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
