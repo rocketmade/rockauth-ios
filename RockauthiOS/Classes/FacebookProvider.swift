@@ -11,7 +11,7 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 
 public class FacebookProvider :SocialProvider {
-    
+
     public static var sharedProvider: SocialProvider! = FacebookProvider()
 
     public var name: String = "facebook"
@@ -22,10 +22,11 @@ public class FacebookProvider :SocialProvider {
         return nil
     }
     public var secret :String? = nil
-    
+
     public init() {
+        FBSDKApplicationDelegate.sharedInstance().application(UIApplication.sharedApplication(), didFinishLaunchingWithOptions: nil)
     }
-    
+
     public func login(success success: () -> Void, failure: (error: ErrorType) -> Void) {
         if FBSDKAccessToken.currentAccessToken() != nil {
             success()
@@ -53,7 +54,7 @@ public class FacebookProvider :SocialProvider {
             }
         }
     }
-    
+
     public func logout() {
         let manager = FBSDKLoginManager()
         manager.logOut()
