@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "RockauthiOS"
-  s.version      = "0.0.1"
-  s.summary      = ""
+  s.version      = "0.1.0"
+  s.summary      = "Rockauth is a library for quick, easy to integrate social authentication."
 
   s.description  = <<-DESC
                    A longer description of RockauthiOS in Markdown format.
@@ -13,11 +13,10 @@ Pod::Spec.new do |s|
                    DESC
 
   s.homepage     = "http://rocketmade.com"
-  s.license      = "MIT"
-  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Daniel Gubler" => "danielcgubler@gmail.com" }
 
-  # s.platform     = :ios
+  s.platform     = :ios, "7.0"
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
@@ -25,7 +24,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
 
-  s.source       = { :git => "https://github.com/rocketmade/rockauth-ios", :branch => 'master' }
+  s.source       = { :git => "https://github.com/rocketmade/rockauth-ios.git", :tag => '0.1.0' }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
