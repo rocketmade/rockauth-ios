@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol SocialProvider {
+public protocol SocialProvider: LoginProvider {
 
     static var sharedProvider: SocialProvider! {get}
 
@@ -18,9 +18,8 @@ public protocol SocialProvider {
 
     var hash: Dictionary<String, String> {get} // Does not need to be implemented if the default implementation below works.
 
-    var jwtToken: String? {get} // Does not need to be implemented if the default implementation below works.
-
-    func login(success success: () -> Void, failure: (error: ErrorType) -> Void)
+    var jwtTokenKey: String {get} // Does not need to be implemented if the default implementation below works.
+    var jwtToken: String? {get set} // Does not need to be implemented if the default implementation below works.
 }
 
 public extension SocialProvider {
@@ -36,7 +35,16 @@ public extension SocialProvider {
         return retVal
     }
 
+    var jwtTokenKey: String {
+        return "rockauth_" + name + "_provider_key"
+    }
+
     var jwtToken: String? {
-       return ""
+        get {
+            return NSUserDefaults.standardUserDefaults().stringForKey(jwtTokenKey)
+        }
+        set(newToken) {
+            NSUserDefaults.standardUserDefaults().setObject(newToken, forKey: jwtTokenKey)
+        }
     }
 }

@@ -26,9 +26,15 @@ public class FacebookProvider :SocialProvider {
     public init() {
     }
     
-    public func login(success success: () -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(success success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         if FBSDKAccessToken.currentAccessToken() != nil {
-            success()
+            if let sharedClient = RockauthClient.sharedClient {
+                sharedClient.login(self, success: { (user) -> Void in
+                    success(user: user)
+                    }, failure: { (error) -> Void in
+                        failure(error: error)
+                })
+            }
             return
         }
         let manager = FBSDKLoginManager()
@@ -41,7 +47,7 @@ public class FacebookProvider :SocialProvider {
                 } else {
                     if let sharedClient = RockauthClient.sharedClient {
                         sharedClient.login(self, success: { (user) -> Void in
-                            success()
+                            success(user: user)
                             }, failure: { (error) -> Void in
                                 failure(error: error)
                         })

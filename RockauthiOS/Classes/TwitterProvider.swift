@@ -24,10 +24,10 @@ public class TwitterProvider: SocialProvider {
         self.secret = secret
     }
 
-    public func login(success success: () -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(success success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         if let sharedClient = RockauthClient.sharedClient {
             sharedClient.login(self, success: { (user) -> Void in
-                success()
+                success(user: user)
                 }, failure: { (error) -> Void in
                     failure(error: error)
             })
