@@ -60,6 +60,14 @@ public class RockauthClient {
             }.resume()
     }
 
+    public func login(provider: EmailProvider, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+        if let email = provider.email, password = provider.password {
+            login(email, password: password, success: success, failure: failure)
+        } else {
+            failure(error: RockauthError(message: "Email or password not provided"))
+        }
+    }
+
     public func login(email: String, password: String, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         //TODO: Add login with email and password
     }
@@ -74,21 +82,31 @@ public class RockauthClient {
     }
 
     public func registerUser(email: String?, password: String?, providers: [SocialProvider]?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+        // Create user
         let authentication = ["client_id": self.clientID, "client_secret": self.clientSecret]
         var user: Dictionary<String, AnyObject> = ["authentication": authentication]
+        var authenticationMethodProvided = false
         if let email = email, password = password {
             user["email"] = email
             user["password"] = password
-        } else if let providers = providers {
+            authenticationMethodProvided = true
+        }
+        if let providers = providers {
             var providerAuthentications: Array<Dictionary<String, String>> = []
             for provider in providers {
                 providerAuthentications.append(provider.hash)
             }
             user["provider_authentications"] = providerAuthentications
-        } else {
+            if providerAuthentications.count > 0 {
+                authenticationMethodProvided = true
+            }
+        }
+        if authenticationMethodProvided == false {
             failure(error: RockauthError(message: "No authentication method provided"))
             return
         }
+
+        // Create request
         let params = ["user": user]
         let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)me.json")!)
         request.HTTPMethod = "POST"
