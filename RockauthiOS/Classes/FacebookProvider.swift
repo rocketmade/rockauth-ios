@@ -35,6 +35,8 @@ public class FacebookProvider :SocialProvider {
                     }, failure: { (error) -> Void in
                         failure(error: error)
                 })
+            } else {
+                failure(error: RockauthError(message: "RockauthClient.sharedClient is probably not initialized"))
             }
             return
         }
