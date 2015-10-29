@@ -41,6 +41,9 @@ RockauthIOS is available through [CocoaPods](http://cocoapods.org).
 		<true/>
 	</dict>
   ```
+  Or like this:
+  
+  ![alt tag](/docs/screenshot-plist.png)
   
 ### Email Registration
 
