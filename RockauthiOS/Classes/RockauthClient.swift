@@ -68,7 +68,7 @@ public class RockauthClient {
         }
     }
 
-    public func login(email: String, password: String, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    private func login(email: String, password: String, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         //TODO: Add login with email and password
     }
 
@@ -123,10 +123,10 @@ public class RockauthClient {
             print(request.description)
             let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
             if let responseDict = response as? NSDictionary {
-                print(responseDict)
                 success(user: responseDict)
+            } else if let error = error {
+                failure(error: error)
             }
-            print("error: \(error)")
             }.resume()
     }
 }

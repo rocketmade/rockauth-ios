@@ -12,14 +12,19 @@ public class EmailProvider: LoginProvider {
     var email: String?
     var password: String?
 
-    init() {}
+    public init() {}
 
-    init(email: String, password: String) {
+    public init(email: String, password: String) {
         self.email = email
         self.password = password
     }
 
     public func login(success success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+        if let client = RockauthClient.sharedClient {
+            client.login(self, success: success, failure: failure)
+        } else {
+            failure(error: RockauthError(message: "RockauthClient.sharedClient is probably not initialized"))
+        }
     }
 
     public func logout() {
