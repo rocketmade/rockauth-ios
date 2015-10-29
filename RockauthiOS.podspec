@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "RockauthiOS"
   s.version      = "0.0.1"
-  s.summary      = "A short description of RockauthiOS."
+  s.summary      = ""
 
   s.description  = <<-DESC
                    A longer description of RockauthiOS in Markdown format.
@@ -12,8 +12,8 @@ Pod::Spec.new do |s|
                    * Finally, don't worry about the indent, CocoaPods strips it!
                    DESC
 
-  s.homepage     = "http://EXAMPLE/RockauthiOS"
-  s.license      = "MIT (example)"
+  s.homepage     = "http://rocketmade.com"
+  s.license      = "MIT"
   # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
   s.author             = { "Daniel Gubler" => "danielcgubler@gmail.com" }
 
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
 
-  s.source       = { :git => "http://EXAMPLE/RockauthiOS.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/rocketmade/rockauth-ios", :branch => 'master' }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
