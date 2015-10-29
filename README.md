@@ -21,6 +21,27 @@ RockauthIOS is available through [CocoaPods](http://cocoapods.org).
 
 ## Usage
 
+### Basic Rockauth Setup
+
+1. In order for API requests to work, add the following to your AppDelegate (The second part should go in `didFinishLaunchingWithOptions`):
+
+  ```
+  import RockauthiOS
+  ...
+  RockauthClient.sharedClient = RockauthClient(baseURL: <#apiBaseURL: String#>, clientID: <#apiClientID: String#>, clientSecret: <#apiClientSecret: String#>)
+  ```
+  
+2. If your app was not created with Liftoff, the app's Info.plist must contain the following:
+  ```
+	<key>Configuration</key>
+	<string>${CONFIGURATION}</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+  ```
+  
 ### Email Registration
 
 ### Email Login
