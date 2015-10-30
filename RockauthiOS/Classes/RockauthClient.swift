@@ -49,6 +49,7 @@ public class RockauthClient {
             print("request failed: \(error)")
         }
 
+        // TODO: fix this so it doesn't call success on 400 errors
         NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
             let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
             if let responseDict = response as? NSDictionary {
