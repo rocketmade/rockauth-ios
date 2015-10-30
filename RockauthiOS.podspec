@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Daniel Gubler" => "danielcgubler@gmail.com" }
 
-  s.platform     = :ios, "7.0"
+  s.platform     = :ios, "8.0"
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
 
-  s.source       = { :git => "https://github.com/rocketmade/rockauth-ios.git", :tag => '0.1.0' }
+  s.source       = { :git => "https://github.com/rocketmade/rockauth-ios.git", :branch => 'master', :tag => s.version.to_s }
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -47,7 +47,7 @@ Pod::Spec.new do |s|
   #
 
   # s.resource  = "icon.png"
-  # s.resources = "Resources/*.png"
+  s.resources = "RockauthiOS/Resources/*.png"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
