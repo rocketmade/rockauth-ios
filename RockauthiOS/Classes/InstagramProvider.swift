@@ -28,7 +28,7 @@ public static var sharedProvider: SocialProvider! = InstagramProvider()
         igRedirectUri = registeredRedirectUri
     }
     
-    public func login(success success: () -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(success success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         presentWebView()
         let urlStr = "https://api.instagram.com/oauth/authorize/?client_id=\(igAppId!)&redirect_uri=\(igRedirectUri!.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!)&response_type=token&scope=basic"
         let authUrl = NSURL(string: urlStr)!
