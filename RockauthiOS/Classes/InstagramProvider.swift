@@ -52,6 +52,7 @@ public static var sharedProvider: SocialProvider! = InstagramProvider()
     func success(token: String) {
         webViewController.dismissViewControllerAnimated(true, completion: nil)
         NSLog("token:\(token)")
+        self.token = token
         
         if let sharedClient = RockauthClient.sharedClient {
             sharedClient.login(self, success: { (user) -> Void in
