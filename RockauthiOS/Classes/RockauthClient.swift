@@ -25,6 +25,19 @@ public class RockauthClient {
         self.clientSecret = clientSecret
     }
 
+    public func showUI(presenter: UIViewController) {
+        let sVC = SignUpViewController()
+        let nav = UINavigationController(rootViewController: sVC)
+        nav.navigationBar.backgroundColor = UIColor(red: 1, green: 155/255.0, blue: 0, alpha: 1)
+        nav.navigationBar.barStyle = .Black
+        nav.navigationBar.barTintColor = UIColor(red: 1, green: 155/255.0, blue: 0, alpha: 1)
+        nav.navigationBar.tintColor = UIColor.whiteColor()
+        nav.navigationBar.translucent = false
+        nav.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        presenter.presentViewController(nav, animated: true) { () -> Void in
+        }
+    }
+
     public func login(provider: SocialProvider, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         let providerAuth = provider.hash
         let params = ["authentication": [
@@ -124,7 +137,19 @@ public class RockauthClient {
             print(request.description)
             let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
             if let responseDict = response as? NSDictionary {
-                success(user: responseDict)
+                if let errorObject = responseDict.objectForKey("error") {
+                    var e: RockauthError = RockauthError(message: "User could not be created.")
+                    if let validationErrors = errorObject.objectForKey("validation_errors") {
+                        var message = ""
+                        for key in (validationErrors as! NSDictionary).allKeys {
+                            message += "\(key.capitalizedString) \(validationErrors.valueForKey(key as! String)![0])\n"
+                        }
+                        e = RockauthError(message: message)
+                    }
+                    failure(error: e)
+                } else {
+                    success(user: responseDict)
+                }
             } else if let error = error {
                 failure(error: error)
             }
