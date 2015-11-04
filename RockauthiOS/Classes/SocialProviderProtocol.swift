@@ -10,11 +10,13 @@ import Foundation
 
 public protocol SocialProvider: LoginProvider {
 
-    static var sharedProvider: SocialProvider! {get}
-
     var name: String {get}
     var token: String? {get}
     var secret: String? {get}
+
+    var prettyName: String {get} // Should be capitalized and use any styling specific to the provider, eg. "Google+"
+    var icon: UIImage? {get}
+    var color: UIColor {get}
 
     var hash: Dictionary<String, String> {get} // Does not need to be implemented if the default implementation below works.
 
@@ -23,6 +25,10 @@ public protocol SocialProvider: LoginProvider {
 }
 
 public extension SocialProvider {
+    var prettyName: String {
+        return name.localizedCapitalizedString
+    }
+
     var hash: Dictionary<String, String> {
         var retVal = [String: String]()
         retVal["provider"] = name

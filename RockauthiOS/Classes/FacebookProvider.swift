@@ -12,8 +12,6 @@ import FBSDKLoginKit
 
 public class FacebookProvider :SocialProvider {
 
-    public static var sharedProvider: SocialProvider! = FacebookProvider()
-
     public var name: String = "facebook"
     public var token :String? {
         if FBSDKAccessToken.currentAccessToken() != nil {
@@ -22,6 +20,9 @@ public class FacebookProvider :SocialProvider {
         return nil
     }
     public var secret :String? = nil
+
+    public var icon: UIImage? = nil
+    public var color: UIColor = UIColor(colorLiteralRed: 0x3b/255.0, green: 0x59/255.0, blue: 0x98/255.0, alpha: 1.0)
 
     public init() {
         FBSDKApplicationDelegate.sharedInstance().application(UIApplication.sharedApplication(), didFinishLaunchingWithOptions: nil)

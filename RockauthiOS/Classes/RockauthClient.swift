@@ -18,11 +18,13 @@ public class RockauthClient {
     public var clientSecret: String
     public var twitterKey: String?
     public var twitterSecret: String?
+    public var themeColor: UIColor
 
-    public init(baseURL: NSURL, clientID: String, clientSecret: String) {
+    public init(baseURL: NSURL, clientID: String, clientSecret: String, themeColor: UIColor) {
         self.apiURL = baseURL
         self.clientID = clientID
         self.clientSecret = clientSecret
+        self.themeColor = themeColor
     }
 
     public func showUI(presenter: UIViewController) {
