@@ -14,7 +14,7 @@ public class TwitterButton: UIButton {
         super.init(frame: frame)
         self.backgroundColor = UIColor(red: 85/255.0, green: 172/255.0, blue: 238/255.0, alpha: 1)
         self.setTitle("Connect with Twitter", forState: .Normal)
-        self.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 18)
+        self.titleLabel?.font = UIFont.boldSystemFontOfSize(18)
         self.clipsToBounds = true
         self.layer.cornerRadius = 3
 
