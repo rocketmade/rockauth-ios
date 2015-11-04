@@ -25,6 +25,13 @@ public class SignUpViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.topItem!.title = "Sign Up"
+
+        let buttonBack: UIButton = UIButton(type: UIButtonType.Custom) as UIButton
+        buttonBack.frame = CGRectMake(0, 0, 40, 40)
+        buttonBack.setTitle("Back", forState: .Normal)
+        buttonBack.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: buttonBack), animated: false)
+
         self.view.backgroundColor = UIColor.whiteColor()
         addTextFields()
     }
@@ -164,5 +171,9 @@ public class SignUpViewController: UIViewController {
                     }
             }
         }
+    }
+
+    func back() {
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
 }
