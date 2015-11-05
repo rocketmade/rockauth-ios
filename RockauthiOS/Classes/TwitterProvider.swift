@@ -10,14 +10,14 @@ import UIKit
 
 public class TwitterProvider: SocialProvider {
 
-    public static var sharedProvider: SocialProvider! = TwitterProvider()
+    public static var sharedProvider: SocialProvider?
+
     public var token: String?
     public var name: String = "twitter"
-    public var secret: String? = nil
+    public var secret: String?
 
-    public init() {
-
-    }
+    public var icon: UIImage? = nil
+    public var color: UIColor = UIColor(colorLiteralRed: 0x55/255.0, green: 0xac/255.0, blue: 0xee/255.0, alpha: 1.0)
 
     public init(token: String, secret: String) {
         self.token = token

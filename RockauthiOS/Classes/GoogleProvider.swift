@@ -10,10 +10,14 @@ import UIKit
 
 public class GoogleProvider: SocialProvider {
     
-    public static var sharedProvider: SocialProvider! = GoogleProvider()
+    public static var sharedProvider: SocialProvider? = GoogleProvider()
     public var token: String?
     public var name: String = "google_plus"
     public var secret: String? = nil
+
+    public var icon: UIImage? = nil
+    public var color = UIColor(colorLiteralRed: 0x42/255.0, green: 0x85/255.0, blue: 0xf4/255.0, alpha: 1.0)
+    public var prettyName: String = "Google"
     
     public init() { }
     
