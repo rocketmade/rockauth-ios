@@ -58,6 +58,13 @@ class RockauthSplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+
+        let buttonBack: UIButton = UIButton(type: UIButtonType.Custom) as UIButton
+        buttonBack.frame = CGRectMake(0, 0, 40, 40)
+        buttonBack.setTitle("Back", forState: .Normal)
+        buttonBack.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
+        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: buttonBack), animated: false)
+
         var views: [String : AnyObject] = [:]
 
         self.view.backgroundColor = UIColor.whiteColor()
@@ -117,6 +124,9 @@ class RockauthSplashViewController: UIViewController {
         self.navigationController?.pushViewController(sUVC, animated: true)
     }
 
+    func back() {
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 
