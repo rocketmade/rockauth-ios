@@ -10,25 +10,30 @@ import UIKit
 
 public class InstagramProvider :SocialProvider, IGViewControllerDelegate {
 
-public static var sharedProvider: SocialProvider! = InstagramProvider()
+public static var sharedProvider: SocialProvider?
 
     public var name: String = "instagram"
     public var secret :String?
     public var token :String?
+    public var icon: UIImage? = nil
+    public var color = UIColor(colorLiteralRed: 0x37/255.0, green: 0x72/255.0, blue: 0x9b/255.0, alpha: 1.0)
     var igAppId :String?
     var igRedirectUri :String?
+
+    var successBlock :((user: NSDictionary) -> Void)?
+    var failureBlock :((error: ErrorType) -> Void)?
     
     private var webViewController = IGViewController()
+
     
-    public init() {
-    }
-    
-    public func initialize(instagramAppId :String, registeredRedirectUri :String) {
+    public init(instagramAppId :String, registeredRedirectUri :String) {
         igAppId = instagramAppId
         igRedirectUri = registeredRedirectUri
     }
     
     public func login(success success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+        self.successBlock = success
+        self.failureBlock = failure
         presentWebView()
         let urlStr = "https://api.instagram.com/oauth/authorize/?client_id=\(igAppId!)&redirect_uri=\(igRedirectUri!.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!)&response_type=token&scope=basic"
         let authUrl = NSURL(string: urlStr)!
@@ -56,15 +61,22 @@ public static var sharedProvider: SocialProvider! = InstagramProvider()
         
         if let sharedClient = RockauthClient.sharedClient {
             sharedClient.login(self, success: { (user) -> Void in
-                NSLog("Rockauth login success!")
+                if let successBlock = self.successBlock {
+                    successBlock(user: user)
+                }
                 }, failure: { (error) -> Void in
-                NSLog("Rockauth login failure!")
+                    if let failureBlock = self.failureBlock {
+                        failureBlock(error: error)
+                    }
             })
         }
     }
     
     func failure(error: String) {
         webViewController.dismissViewControllerAnimated(true, completion: nil)
+        if let failureBlock = self.failureBlock {
+            failureBlock(error: RockauthError(message: error))
+        }
     }
 }
 

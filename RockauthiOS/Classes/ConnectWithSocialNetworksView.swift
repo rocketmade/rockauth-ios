@@ -18,7 +18,7 @@ class ConnectWithSocialNetworksView: UIView {
     }
     */
 
-    var providers: [SocialProvider]!
+    var providers: [SocialProvider?]!
     var providersByTitle: [String:SocialProvider] = [:]
     var success: ((user: NSDictionary) -> ())!
     var failure: ((error: ErrorType) -> ())!
@@ -33,12 +33,12 @@ class ConnectWithSocialNetworksView: UIView {
         commonInit([FacebookProvider()], connected: nil, failed: nil)
     }
 
-    init(providers: [SocialProvider], connected: (user: NSDictionary) -> (), failed: (error: ErrorType) -> ()) {
+    init(providers: [SocialProvider?], connected: (user: NSDictionary) -> (), failed: (error: ErrorType) -> ()) {
         super.init(frame: CGRectZero)
         commonInit(providers, connected: connected, failed: failed)
     }
 
-    func commonInit(providers: [SocialProvider], connected: ((user: NSDictionary) -> ())?, failed: ((error: ErrorType) -> ())?) {
+    func commonInit(providers: [SocialProvider?], connected: ((user: NSDictionary) -> ())?, failed: ((error: ErrorType) -> ())?) {
         self.providers = providers
         if let connected = connected {
             self.success = connected
@@ -60,26 +60,26 @@ class ConnectWithSocialNetworksView: UIView {
         var views: [String : AnyObject] = [:]
         var previousProviderButton: String? = nil
         for provider in providers {
-            let providerButton = UIButton(type: UIButtonType.RoundedRect)
-            providerButton.translatesAutoresizingMaskIntoConstraints = false
-            let title = "Connect with \(provider.prettyName)"
-            providerButton.setTitle(title, forState: UIControlState.Normal)
-            providersByTitle[title] = provider
-            providerButton.setBackgroundImage(provider.color.resizeableImageFromColor(), forState: UIControlState.Normal)
-            providerButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            providerButton.addTarget(self, action: "providerButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-            self.addSubview(providerButton)
-            views[provider.name] = providerButton
-            let providerButtonHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[\(provider.name)]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-            let providerButtonVerticalConstraints: [NSLayoutConstraint]
-            let height = 50
-            if let previousProviderButton = previousProviderButton {
-                providerButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[\(previousProviderButton)]-10-[\(provider.name)(\(height))]-(>=10)-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-            } else {
-                providerButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(provider.name)(\(height))]-(>=10)-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+            if let provider = provider {
+                let title = "Connect with \(provider.prettyName)"
+                let providerButton = FlatRoundedButton(title: title, fontSize: 17, color: provider.color)
+                providerButton.translatesAutoresizingMaskIntoConstraints = false
+                providersByTitle[title] = provider
+                providerButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+                providerButton.addTarget(self, action: "providerButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+                self.addSubview(providerButton)
+                views[provider.name] = providerButton
+                let providerButtonHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[\(provider.name)]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+                let providerButtonVerticalConstraints: [NSLayoutConstraint]
+                let height = 50
+                if let previousProviderButton = previousProviderButton {
+                    providerButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[\(previousProviderButton)]-10-[\(provider.name)(\(height))]-(>=10)-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+                } else {
+                    providerButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(provider.name)(\(height))]-(>=10)-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+                }
+                self.addConstraints(providerButtonHorizontalConstraints + providerButtonVerticalConstraints)
+                previousProviderButton = provider.name
             }
-            self.addConstraints(providerButtonHorizontalConstraints + providerButtonVerticalConstraints)
-            previousProviderButton = provider.name
         }
     }
 

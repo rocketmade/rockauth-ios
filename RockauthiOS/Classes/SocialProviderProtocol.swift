@@ -10,6 +10,8 @@ import Foundation
 
 public protocol SocialProvider: LoginProvider {
 
+    static var sharedProvider: SocialProvider? {get set}
+
     var name: String {get}
     var token: String? {get}
     var secret: String? {get}

@@ -13,7 +13,7 @@ class RockauthSplashViewController: UIViewController {
 
     @IBInspectable var useEmailAuthentication: Bool!
     @IBInspectable var showOtherOptions: Bool!
-    var providers: [SocialProvider]!
+    var providers: [SocialProvider?]!
     var connected: ((user: NSDictionary)->())!
     var failed: ((error: ErrorType)->())!
 
@@ -27,12 +27,12 @@ class RockauthSplashViewController: UIViewController {
         commonInit(emailAuthentication: true, providers: [FacebookProvider()], otherOptions: true, connected: nil, failed: nil)
     }
 
-    init(useEmailAuthentication email: Bool, providers: [SocialProvider], showOtherOptions: Bool, connected: (user: NSDictionary)->(), failed: (error: ErrorType)->()) {
+    init(useEmailAuthentication email: Bool, providers: [SocialProvider?], showOtherOptions: Bool, connected: (user: NSDictionary)->(), failed: (error: ErrorType)->()) {
         super.init(nibName: nil, bundle: nil)
         commonInit(emailAuthentication: email, providers: providers, otherOptions: showOtherOptions, connected: connected, failed: failed)
     }
 
-    func commonInit(emailAuthentication email: Bool, providers: [SocialProvider], otherOptions: Bool, connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
+    func commonInit(emailAuthentication email: Bool, providers: [SocialProvider?], otherOptions: Bool, connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
         useEmailAuthentication = email
         showOtherOptions = otherOptions
         self.providers = providers
@@ -60,6 +60,8 @@ class RockauthSplashViewController: UIViewController {
         // Do any additional setup after loading the view.
         var views: [String : AnyObject] = [:]
 
+        self.view.backgroundColor = UIColor.whiteColor()
+
         let buttonsContainer = UIView()
         buttonsContainer.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(buttonsContainer)
@@ -86,29 +88,16 @@ class RockauthSplashViewController: UIViewController {
         let socialButtonsContainerHorizontalContstriants = NSLayoutConstraint.constraintsWithVisualFormat("H:|[socialButtonsContainer]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         buttonsContainer.addConstraints(socialButtonsContainerHorizontalContstriants + socialButtonsContainerVerticalConstraints)
 
-        let signInButton = UIButton(type: UIButtonType.System)
+        let signInButton = FlatRoundedButton(title: "Sign In", fontSize: 19, color: RockauthClient.sharedClient?.themeColor)
         signInButton.translatesAutoresizingMaskIntoConstraints = false
-        signInButton.setTitle("Sign In", forState: UIControlState.Normal)
-        signInButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        if let sharedClient = RockauthClient.sharedClient {
-            signInButton.setBackgroundImage(sharedClient.themeColor.resizeableImageFromColor(), forState: UIControlState.Normal)
-        } else {
-            signInButton.setBackgroundImage(UIColor.blackColor().resizeableImageFromColor(), forState: UIControlState.Normal)
-        }
         buttonsContainer.addSubview(signInButton)
         views["signInButton"] = signInButton
         let height = 50
         let signInButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[signInButton(\(height))]-(10)-[socialButtonsContainer]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         buttonsContainer.addConstraints(signInButtonVerticalConstraints)
-        let signUpButton = UIButton(type: UIButtonType.System)
+        let signUpButton = FlatRoundedButton(title: "Sign Up", fontSize: 19, color: RockauthClient.sharedClient?.themeColor)
         signUpButton.translatesAutoresizingMaskIntoConstraints = false
-        signUpButton.setTitle("Sign Up", forState: UIControlState.Normal)
-        signUpButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        if let sharedClient = RockauthClient.sharedClient {
-            signUpButton.setBackgroundImage(sharedClient.themeColor.resizeableImageFromColor(), forState: UIControlState.Normal)
-        } else {
-            signUpButton.setBackgroundImage(UIColor.blackColor().resizeableImageFromColor(), forState: UIControlState.Normal)
-        }
+        signUpButton.addTarget(self, action: "signUpButtonPressed:", forControlEvents: .TouchUpInside)
         buttonsContainer.addSubview(signUpButton)
         views["signUpButton"] = signUpButton
         let signUpButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[signUpButton(\(height))]-(10)-[socialButtonsContainer]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
@@ -121,6 +110,11 @@ class RockauthSplashViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func signUpButtonPressed(sender: UIButton) {
+        let sUVC = SignUpViewController()
+        self.navigationController?.pushViewController(sUVC, animated: true)
     }
 
     /*
