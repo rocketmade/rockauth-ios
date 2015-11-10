@@ -22,6 +22,7 @@ class ConnectWithSocialNetworksView: UIView {
     var providersByTitle: [String:SocialProvider] = [:]
     var success: ((user: NSDictionary) -> ())!
     var failure: ((error: ErrorType) -> ())!
+    var shortFormat: Bool = true
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,12 +55,22 @@ class ConnectWithSocialNetworksView: UIView {
                 print(error)
             }
         }
+        self.shortFormat = shortFormat
     }
 
     override func layoutSubviews() {
         var views: [String : AnyObject] = [:]
         var previousProviderButton: String? = nil
-        for provider in providers {
+        var displayedProviders: [SocialProvider?]
+        var truncatedProvidersList: Bool
+        if shortFormat && (providers.count > 3) {
+            displayedProviders = [providers[0], providers[1]]
+            truncatedProvidersList = true
+        } else {
+            displayedProviders = providers
+            truncatedProvidersList = false
+        }
+        for provider in displayedProviders {
             if let provider = provider {
                 let title = "Connect with \(provider.prettyName)"
                 let providerButton = FlatRoundedButton(title: title, fontSize: 17, color: provider.color)
@@ -73,9 +84,9 @@ class ConnectWithSocialNetworksView: UIView {
                 let providerButtonVerticalConstraints: [NSLayoutConstraint]
                 let height = 50
                 if let previousProviderButton = previousProviderButton {
-                    providerButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[\(previousProviderButton)]-10-[\(provider.name)(\(height))]-(>=10)-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+                    providerButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[\(previousProviderButton)]-10-[\(provider.name)(\(height))]-(>=0)-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
                 } else {
-                    providerButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(provider.name)(\(height))]-(>=10)-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+                    providerButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(provider.name)(\(height))]-(>=0)-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
                 }
                 self.addConstraints(providerButtonHorizontalConstraints + providerButtonVerticalConstraints)
                 if let iconName = provider.iconName {
@@ -95,6 +106,34 @@ class ConnectWithSocialNetworksView: UIView {
                 previousProviderButton = provider.name
             }
         }
+        if truncatedProvidersList {
+            if let previousProviderButton = previousProviderButton {
+                let otherOptionsButton = UIButton(type: UIButtonType.System)
+                otherOptionsButton.translatesAutoresizingMaskIntoConstraints = false
+                let otherOptionsFont = UIFont.systemFontOfSize(14, weight: UIFontWeightRegular)
+                let otherOptionsAttributes: [String: AnyObject] = [
+                    NSFontAttributeName: otherOptionsFont,
+                    NSForegroundColorAttributeName: UIColor(white: 161/255.0, alpha: 1)
+                ]
+                let attributedTitle = NSMutableAttributedString(string: "Other sign in ", attributes: otherOptionsAttributes)
+                let otherOptionsString = NSMutableAttributedString(string: "options", attributes: otherOptionsAttributes)
+                otherOptionsString.addAttribute(NSUnderlineStyleAttributeName, value: NSUnderlineStyle.StyleSingle.rawValue, range: NSRange.init(location: 0, length: otherOptionsString.length))
+                attributedTitle.appendAttributedString(otherOptionsString)
+                otherOptionsButton.setAttributedTitle(attributedTitle, forState: UIControlState.Normal)
+                otherOptionsButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                otherOptionsButton.titleLabel?.textAlignment = NSTextAlignment.Center
+                otherOptionsButton.addTarget(self, action: Selector("otherOptionsTapped"), forControlEvents: UIControlEvents.TouchUpInside)
+                self.addSubview(otherOptionsButton)
+                views["otherOptionsButton"] = otherOptionsButton
+                let otherOptionsHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-50-[otherOptionsButton]-50-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+                let otherOptionsVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[\(previousProviderButton)]-10-[otherOptionsButton]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+                self.addConstraints(otherOptionsHorizontalConstraints + otherOptionsVerticalConstraints)
+            }
+        }
+    }
+
+    func otherOptionsTapped() {
+        //TODO: push view controller with long format of ConnectWithSocialNetworksView
     }
 
     func providerButtonPressed(sender: UIButton) {

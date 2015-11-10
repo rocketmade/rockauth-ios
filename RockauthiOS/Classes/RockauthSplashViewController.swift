@@ -75,21 +75,11 @@ class RockauthSplashViewController: UIViewController {
         let buttonsContainerVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[buttonsContainer]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         self.view.addConstraints(buttonsContainerHorizontalConstraints + buttonsContainerVerticalConstraints)
 
-        let otherOptionsButton = UIButton(type: UIButtonType.System)
-        otherOptionsButton.translatesAutoresizingMaskIntoConstraints = false
-        otherOptionsButton.setTitle("Other sign up options", forState: UIControlState.Normal)
-        buttonsContainer.addSubview(otherOptionsButton)
-        views["otherOptionsButton"] = otherOptionsButton
-        let otherOptionsButtonHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[otherOptionsButton]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-        let otherOptionsButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-(>=0)-[otherOptionsButton]-2-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-        buttonsContainer.addConstraints(otherOptionsButtonHorizontalConstraints + otherOptionsButtonVerticalConstraints)
-
         let socialButtonsContainer = ConnectWithSocialNetworksView(providers: providers, shortFormat: true, connected: connected, failed: failed)
         socialButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
         buttonsContainer.addSubview(socialButtonsContainer)
         views["socialButtonsContainer"] = socialButtonsContainer
-        var socialButtonsContainerVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-(>=0)-[socialButtonsContainer]-10-[otherOptionsButton]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-        socialButtonsContainerVerticalConstraints += NSLayoutConstraint.constraintsWithVisualFormat("V:[socialButtonsContainer]-(>=10)-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        let socialButtonsContainerVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-(>=0)-[socialButtonsContainer]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         let socialButtonsContainerHorizontalContstriants = NSLayoutConstraint.constraintsWithVisualFormat("H:|[socialButtonsContainer]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         buttonsContainer.addConstraints(socialButtonsContainerHorizontalContstriants + socialButtonsContainerVerticalConstraints)
 
