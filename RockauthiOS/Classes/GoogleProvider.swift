@@ -15,8 +15,8 @@ public class GoogleProvider: SocialProvider {
     public var name: String = "google_plus"
     public var secret: String? = nil
 
-    public var iconName: String? = nil
-    public var color = UIColor(colorLiteralRed: 0x42/255.0, green: 0x85/255.0, blue: 0xf4/255.0, alpha: 1.0)
+    public var iconName: String? = "googleicon"
+    public var color = UIColor(colorLiteralRed: 220/255.0, green: 78/255.0, blue: 65/255.0, alpha: 1.0)
     public var prettyName: String = "Google"
     
     public init() { }
