@@ -23,7 +23,7 @@ public class FacebookProvider: SocialProvider {
     }
     public var secret: String? = nil
 
-    public var icon: UIImage? = nil
+    public var iconName: String? = "icon-facebook"
     public var color: UIColor = UIColor(colorLiteralRed: 0x3b/255.0, green: 0x59/255.0, blue: 0x98/255.0, alpha: 1.0)
 
     public init() {

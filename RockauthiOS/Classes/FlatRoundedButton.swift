@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FlatRoundedButton: UIButton {
+public class FlatRoundedButton: UIButton {
 
     init(title: String?, fontSize: CGFloat, color: UIColor?) {
         super.init(frame: CGRectZero)
@@ -27,7 +27,7 @@ class FlatRoundedButton: UIButton {
         commonInit(title: nil, fontSize: nil, color: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit(title: nil, fontSize: nil, color: nil)
     }

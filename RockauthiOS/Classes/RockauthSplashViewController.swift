@@ -12,29 +12,27 @@ import UIKit
 class RockauthSplashViewController: UIViewController {
 
     @IBInspectable var useEmailAuthentication: Bool!
-    @IBInspectable var showOtherOptions: Bool!
     var providers: [SocialProvider?]!
     var connected: ((user: NSDictionary)->())!
     var failed: ((error: ErrorType)->())!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit(emailAuthentication: true, providers: [FacebookProvider()], otherOptions: true, connected: nil, failed: nil)
+        commonInit(emailAuthentication: true, providers: [FacebookProvider()], connected: nil, failed: nil)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        commonInit(emailAuthentication: true, providers: [FacebookProvider()], otherOptions: true, connected: nil, failed: nil)
+        commonInit(emailAuthentication: true, providers: [FacebookProvider()], connected: nil, failed: nil)
     }
 
-    init(useEmailAuthentication email: Bool, providers: [SocialProvider?], showOtherOptions: Bool, connected: (user: NSDictionary)->(), failed: (error: ErrorType)->()) {
+    init(useEmailAuthentication email: Bool, providers: [SocialProvider?], connected: (user: NSDictionary)->(), failed: (error: ErrorType)->()) {
         super.init(nibName: nil, bundle: nil)
-        commonInit(emailAuthentication: email, providers: providers, otherOptions: showOtherOptions, connected: connected, failed: failed)
+        commonInit(emailAuthentication: email, providers: providers, connected: connected, failed: failed)
     }
 
-    func commonInit(emailAuthentication email: Bool, providers: [SocialProvider?], otherOptions: Bool, connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
+    func commonInit(emailAuthentication email: Bool, providers: [SocialProvider?], connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
         useEmailAuthentication = email
-        showOtherOptions = otherOptions
         self.providers = providers
         if let connected = connected {
             self.connected = connected
@@ -79,7 +77,7 @@ class RockauthSplashViewController: UIViewController {
         let otherOptionsButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-(>=0)-[otherOptionsButton]-2-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         buttonsContainer.addConstraints(otherOptionsButtonHorizontalConstraints + otherOptionsButtonVerticalConstraints)
 
-        let socialButtonsContainer = ConnectWithSocialNetworksView(providers: providers, connected: connected, failed: failed)
+        let socialButtonsContainer = ConnectWithSocialNetworksView(providers: providers, shortFormat: true, connected: connected, failed: failed)
         socialButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
         buttonsContainer.addSubview(socialButtonsContainer)
         views["socialButtonsContainer"] = socialButtonsContainer
@@ -113,7 +111,7 @@ class RockauthSplashViewController: UIViewController {
     }
 
     func signUpButtonPressed(sender: UIButton) {
-        let sUVC = SignUpViewController()
+        let sUVC = SignUpViewController(providers: providers, connected: connected, failed: failed)
         self.navigationController?.pushViewController(sUVC, animated: true)
     }
 

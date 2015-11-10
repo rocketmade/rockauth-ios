@@ -19,6 +19,40 @@ public class SignUpViewController: UIViewController {
     var nameUnderbar: UIView = UIView()
     var emailUnderbar: UIView = UIView()
     var passwordUnderbar: UIView = UIView()
+    var providers: [SocialProvider?]!
+    var connected: ((user: NSDictionary)->())!
+    var failed: ((error: ErrorType)->())!
+
+    init(providers: [SocialProvider?], connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
+        super.init(nibName: nil, bundle: nil)
+        commonInit(providers, connected: connected, failed: failed)
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit(providers, connected: nil, failed: nil)
+    }
+
+    func commonInit(providers: [SocialProvider?], connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
+        self.providers = providers
+        if let connected = connected {
+            self.connected = connected
+        } else {
+            self.connected = {(user: NSDictionary) -> () in
+                print(user)
+                if let navigationController = self.navigationController {
+                    navigationController.popViewControllerAnimated(true)
+                }
+            }
+        }
+        if let failed = failed {
+            self.failed = failed
+        } else {
+            self.failed = {(error: ErrorType) -> () in
+                print(error)
+            }
+        }
+    }
 
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +60,7 @@ public class SignUpViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.topItem!.title = "Sign Up"
         self.view.backgroundColor = UIColor.whiteColor()
-        addTextFields()
+        addAllSubviews()
     }
 
     override public func didReceiveMemoryWarning() {
@@ -34,7 +68,9 @@ public class SignUpViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func addTextFields() {
+    func addAllSubviews() {
+        var views: [String: AnyObject] = [:]
+
         let bundle = NSBundle(forClass: self.classForCoder)
         self.firstNameField = UITextField(frame: CGRect(x: 10, y: 12.5, width: 150, height: 23))
         self.firstNameField.placeholder = "First Name"
@@ -42,6 +78,7 @@ public class SignUpViewController: UIViewController {
         self.firstNameField.leftViewMode = .Always
         self.firstNameField.font = UIFont.systemFontOfSize(17)
         self.firstNameField.autocorrectionType = .No
+        views["firstNameField"] = self.firstNameField
 
         self.lastNameField = UITextField(frame: CGRect(x: 195, y: 12.5, width: 150, height: 23))
         self.lastNameField.placeholder = "Last Name"
@@ -49,6 +86,7 @@ public class SignUpViewController: UIViewController {
         self.lastNameField.leftViewMode = .Always
         self.lastNameField.font = UIFont.systemFontOfSize(17)
         self.lastNameField.autocorrectionType = .No
+        views["lastNameField"] = self.lastNameField
 
         self.emailField = UITextField(frame: CGRect(x: 10, y: 49.5, width: self.view.frame.size.width - 40, height: 23))
         self.emailField.placeholder = "Email"
@@ -58,6 +96,7 @@ public class SignUpViewController: UIViewController {
         self.emailField.keyboardType = .EmailAddress
         self.emailField.autocorrectionType = .No
         self.emailField.autocapitalizationType = .None
+        views["emailField"] = self.emailField
 
         self.passwordField = UITextField(frame: CGRect(x: 10, y: 86.5, width: self.view.frame.size.width - 40, height: 23))
         self.passwordField.placeholder = "Choose Password"
@@ -66,14 +105,20 @@ public class SignUpViewController: UIViewController {
         self.passwordField.autocorrectionType = .No
         self.passwordField.font = UIFont.systemFontOfSize(17)
         self.passwordField.autocapitalizationType = .None
+        views["passwordField"] = self.passwordField
 
         self.eyeButton = UIButton(frame: CGRect(x: self.view.frame.size.width - 45, y: 85, width: 30, height: 30))
-        let image = UIImage(named: "icon-eye", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())
-        //TODO: change highlighted image to be the theme color
-        let highlightedImage = UIImage(named: "icon-eye-orange", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())
+        let image = UIImage(named: "icon-eye-gray", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())
+        let highlightedImage = UIImage(named: "eyeIcon", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        if let themeColor = RockauthClient.sharedClient?.themeColor {
+            self.eyeButton.imageView?.tintColor = themeColor
+        } else {
+            self.eyeButton.imageView?.tintColor = UIColor.blackColor()
+        }
         self.eyeButton.setImage(image, forState: .Normal)
         self.eyeButton.setImage(highlightedImage, forState: .Selected)
         self.eyeButton.addTarget(self, action: Selector("eyeTapped"), forControlEvents: .TouchUpInside)
+        views["eyeButton"] = self.eyeButton
 
         self.nameUnderbar = UIView(frame: CGRect(x: 10, y: 40, width: self.view.frame.size.width - 20, height: 2))
         self.nameUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
@@ -92,6 +137,7 @@ public class SignUpViewController: UIViewController {
         self.signUpButton.titleLabel?.font = UIFont.systemFontOfSize(19, weight: UIFontWeightSemibold)
         self.signUpButton.backgroundColor = RockauthClient.sharedClient?.themeColor
         self.signUpButton.addTarget(self, action: Selector("signUpTapped"), forControlEvents: .TouchUpInside)
+        views["signUpButton"] = self.signUpButton
 
         self.view.addSubview(firstNameField)
         self.view.addSubview(lastNameField)
@@ -99,6 +145,72 @@ public class SignUpViewController: UIViewController {
         self.view.addSubview(passwordField)
         self.view.addSubview(signUpButton)
         self.view.addSubview(eyeButton)
+
+        let orLabel = UILabel()
+        orLabel.translatesAutoresizingMaskIntoConstraints = false
+        orLabel.text = "or"
+        orLabel.textColor = UIColor(white: 161/255.0, alpha: 1)
+        orLabel.font = UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold)
+        self.view.addSubview(orLabel)
+        views["orLabel"] = orLabel
+        let orLabelVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[signUpButton]-9-[orLabel]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        let orLabelHorizontalConstraints = [NSLayoutConstraint(item: orLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)]
+        self.view.addConstraints(orLabelVerticalConstraints + orLabelHorizontalConstraints)
+
+        let orMask = UIView()
+        orMask.translatesAutoresizingMaskIntoConstraints = false
+        orMask.backgroundColor = view.backgroundColor
+        self.view.insertSubview(orMask, belowSubview: orLabel)
+        views["orMask"] = orMask
+        let orMaskConstraints = [
+            NSLayoutConstraint(item: orMask, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: orLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: orMask, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: orLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: orMask, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: orLabel, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 20),
+            NSLayoutConstraint(item: orMask, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: orLabel, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+        ]
+        self.view.addConstraints(orMaskConstraints)
+
+        let separatorBar = UIView()
+        separatorBar.translatesAutoresizingMaskIntoConstraints = false
+        separatorBar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
+        self.view.insertSubview(separatorBar, belowSubview: orMask)
+        views["separatorBar"] = separatorBar
+        let separatorBarVerticalConstraints = [
+            NSLayoutConstraint(item: separatorBar, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: orLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 12), // offsets to middle of text instead of middle of textfield
+            NSLayoutConstraint(item: separatorBar, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 2)
+        ]
+        let separatorBarHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[separatorBar]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        self.view.addConstraints(separatorBarVerticalConstraints + separatorBarHorizontalConstraints)
+
+        let socialNetworksView = ConnectWithSocialNetworksView(providers: self.providers, shortFormat: true, connected: self.connected, failed: self.failed)
+        socialNetworksView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(socialNetworksView)
+        views["socialNetworksView"] = socialNetworksView
+        let socialNetworksViewHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[socialNetworksView]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        let socialNetworksViewVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[orLabel]-14-[socialNetworksView]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        self.view.addConstraints(socialNetworksViewHorizontalConstraints + socialNetworksViewVerticalConstraints)
+
+        let tosButton = UIButton(type: UIButtonType.System)
+        tosButton.translatesAutoresizingMaskIntoConstraints = false
+        let tosFont = UIFont.systemFontOfSize(12, weight: UIFontWeightRegular)
+        let tosAttributes: [String: AnyObject] = [
+            NSFontAttributeName: tosFont,
+            NSForegroundColorAttributeName: UIColor(white: 161/255.0, alpha: 1)
+        ]
+        let attributedTitle = NSMutableAttributedString(string: "By continuing you indicate that you have read and agree to the ", attributes: tosAttributes)
+        let tosString = NSMutableAttributedString(string: "Terms of Service", attributes: tosAttributes)
+        tosString.addAttribute(NSUnderlineStyleAttributeName, value: NSUnderlineStyle.StyleSingle.rawValue, range: NSRange.init(location: 0, length: tosString.length))
+        attributedTitle.appendAttributedString(tosString)
+        tosButton.setAttributedTitle(attributedTitle, forState: UIControlState.Normal)
+        tosButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        tosButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        tosButton.addTarget(self, action: Selector("tosTapped"), forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(tosButton)
+        views["tosButton"] = tosButton
+        let tosHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-50-[tosButton]-50-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        let tosVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[socialNetworksView]-10-[tosButton]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        self.view.addConstraints(tosHorizontalConstraints + tosVerticalConstraints)
+
     }
 
     override public func viewDidLayoutSubviews() {
@@ -165,5 +277,8 @@ public class SignUpViewController: UIViewController {
                     }
             }
         }
+    }
+    
+    func tosTapped() {
     }
 }

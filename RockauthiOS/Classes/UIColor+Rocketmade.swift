@@ -15,7 +15,7 @@ extension UIColor{
         return UIColor(red: CGFloat(red/255.0), green: CGFloat(green/255.0), blue: CGFloat(blue/255.0), alpha: CGFloat(alpha/255.0))
     }
 
-    public class func hexColor(hexValue: Int) -> UIColor {
+    class func hexColor(hexValue: Int) -> UIColor {
         let red = (hexValue >> 16) & 0xFF
         let green = (hexValue >> 8) & 0xFF
         let blue = hexValue & 0xFF
@@ -60,5 +60,4 @@ extension UIColor{
         UIGraphicsEndImageContext()
         return image.resizableImageWithCapInsets(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
     }
-
 }

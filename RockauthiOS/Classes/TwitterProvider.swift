@@ -16,7 +16,7 @@ public class TwitterProvider: SocialProvider {
     public var name: String = "twitter"
     public var secret: String?
 
-    public var icon: UIImage? = nil
+    public var iconName: String? = "icon-twitter"
     public var color: UIColor = UIColor(colorLiteralRed: 0x55/255.0, green: 0xac/255.0, blue: 0xee/255.0, alpha: 1.0)
 
     public init(token: String, secret: String) {

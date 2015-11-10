@@ -15,7 +15,7 @@ public static var sharedProvider: SocialProvider?
     public var name: String = "instagram"
     public var secret :String?
     public var token :String?
-    public var icon: UIImage? = nil
+    public var iconName: String? = "instagramIcon"
     public var color = UIColor(colorLiteralRed: 0x37/255.0, green: 0x72/255.0, blue: 0x9b/255.0, alpha: 1.0)
     var igAppId :String?
     var igRedirectUri :String?

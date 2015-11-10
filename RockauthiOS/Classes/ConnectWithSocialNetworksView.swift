@@ -25,20 +25,20 @@ class ConnectWithSocialNetworksView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit([FacebookProvider()], connected: nil, failed: nil)
+        commonInit([FacebookProvider()], shortFormat: true, connected: nil, failed: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit([FacebookProvider()], connected: nil, failed: nil)
+        commonInit([FacebookProvider()], shortFormat: true, connected: nil, failed: nil)
     }
 
-    init(providers: [SocialProvider?], connected: (user: NSDictionary) -> (), failed: (error: ErrorType) -> ()) {
+    init(providers: [SocialProvider?], shortFormat: Bool, connected: (user: NSDictionary) -> (), failed: (error: ErrorType) -> ()) {
         super.init(frame: CGRectZero)
-        commonInit(providers, connected: connected, failed: failed)
+        commonInit(providers, shortFormat: shortFormat, connected: connected, failed: failed)
     }
 
-    func commonInit(providers: [SocialProvider?], connected: ((user: NSDictionary) -> ())?, failed: ((error: ErrorType) -> ())?) {
+    func commonInit(providers: [SocialProvider?], shortFormat: Bool, connected: ((user: NSDictionary) -> ())?, failed: ((error: ErrorType) -> ())?) {
         self.providers = providers
         if let connected = connected {
             self.success = connected
@@ -78,6 +78,20 @@ class ConnectWithSocialNetworksView: UIView {
                     providerButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(provider.name)(\(height))]-(>=10)-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
                 }
                 self.addConstraints(providerButtonHorizontalConstraints + providerButtonVerticalConstraints)
+                if let iconName = provider.iconName {
+                    if let icon = UIImage(named: iconName, inBundle: NSBundle(forClass: self.classForCoder), compatibleWithTraitCollection: UITraitCollection()) {
+                        let iconView = UIImageView(image: icon)
+                        iconView.translatesAutoresizingMaskIntoConstraints = false
+                        let iconName = provider.name + "_icon"
+                        providerButton.addSubview(iconView)
+                        views[iconName] = iconView
+                        let iconVerticalConstraints = [NSLayoutConstraint(item: iconView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: providerButton, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)]
+                        providerButton.layoutIfNeeded()
+                        let iconHorizontalConstraints = [NSLayoutConstraint(item: iconView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.GreaterThanOrEqual, toItem: providerButton, attribute: NSLayoutAttribute.Left, multiplier: 1, constant: providerButton.frame.height/2),]
+                        providerButton.addConstraints(iconHorizontalConstraints + iconVerticalConstraints)
+                    }
+
+                }
                 previousProviderButton = provider.name
             }
         }

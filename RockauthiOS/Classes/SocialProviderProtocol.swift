@@ -17,7 +17,7 @@ public protocol SocialProvider: LoginProvider {
     var secret: String? {get}
 
     var prettyName: String {get} // Should be capitalized and use any styling specific to the provider, eg. "Google+"
-    var icon: UIImage? {get}
+    var iconName: String? {get}
     var color: UIColor {get}
 
     var hash: Dictionary<String, String> {get} // Does not need to be implemented if the default implementation below works.
