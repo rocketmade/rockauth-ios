@@ -84,8 +84,46 @@ public class RockauthClient {
         }
     }
 
-    private func login(email: String, password: String, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
-        //TODO: Add login with email and password
+    public func login(email: String?, password: String?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+        var authentication = ["client_id": self.clientID, "client_secret": self.clientSecret, "auth_type": "password"]
+        if let email = email, password = password {
+            authentication["username"] = email
+            authentication["password"] = password
+        }
+        let params = ["authentication": authentication]
+        // Create request
+        let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)authentications.json")!)
+        request.HTTPMethod = "POST"
+        do {
+            try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+        } catch {
+            failure(error: error)
+        }
+
+        NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
+            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            print(request.description)
+            let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
+            if let responseDict = response as? NSDictionary {
+                if let errorObject = responseDict.objectForKey("error") {
+                    var e: RockauthError = RockauthError(message: "Could not sign in user")
+                    if let validationErrors = errorObject["validation_errors"] {
+                        var message = ""
+                        for key in (validationErrors as! NSDictionary).allKeys {
+                            message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
+                        }
+                        e = RockauthError(message: message)
+                    }
+                    failure(error: e)
+                } else {
+                    success(user: responseDict)
+                }
+            } else if let error = error {
+                failure(error: error)
+            }
+            }.resume()
     }
 
     public func registerUser(providers: [SocialProvider], success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {

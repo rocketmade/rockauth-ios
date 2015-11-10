@@ -85,6 +85,7 @@ class RockauthSplashViewController: UIViewController {
 
         let signInButton = FlatRoundedButton(title: "Sign In", fontSize: 19, color: RockauthClient.sharedClient?.themeColor)
         signInButton.translatesAutoresizingMaskIntoConstraints = false
+        signInButton.addTarget(self, action: "signInButtonPressed:", forControlEvents: .TouchUpInside)
         buttonsContainer.addSubview(signInButton)
         views["signInButton"] = signInButton
         let height = 50
@@ -105,6 +106,11 @@ class RockauthSplashViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func signInButtonPressed(sender: UIButton) {
+        let sIVC = SignInViewController(providers: providers, connected: connected, failed: failed)
+        self.navigationController?.pushViewController(sIVC, animated: true)
     }
 
     func signUpButtonPressed(sender: UIButton) {
