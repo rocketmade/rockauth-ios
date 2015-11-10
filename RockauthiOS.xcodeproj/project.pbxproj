@@ -20,6 +20,7 @@
 		A37170BC1BDFC35900925F9F /* TwitterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37170BB1BDFC35900925F9F /* TwitterProvider.swift */; };
 		A38F91E21BD925BD00D722F5 /* ProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38F91E01BD925BD00D722F5 /* ProviderProtocol.swift */; };
 		A38F91E31BD925BD00D722F5 /* RockauthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38F91E11BD925BD00D722F5 /* RockauthClient.swift */; };
+		A3B3B29A1BF24FD1001F8BC9 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B3B2991BF24FD1001F8BC9 /* SignInViewController.swift */; };
 		A3BA71721BE97A25005B4A89 /* icon-eye-orange.png in Resources */ = {isa = PBXBuildFile; fileRef = A3BA716F1BE97A25005B4A89 /* icon-eye-orange.png */; };
 		A3BA71731BE97A25005B4A89 /* icon-eye-orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A3BA71701BE97A25005B4A89 /* icon-eye-orange@2x.png */; };
 		A3BA71741BE97A25005B4A89 /* icon-eye-orange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A3BA71711BE97A25005B4A89 /* icon-eye-orange@3x.png */; };
@@ -54,6 +55,7 @@
 		A37170BB1BDFC35900925F9F /* TwitterProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwitterProvider.swift; path = Classes/TwitterProvider.swift; sourceTree = "<group>"; };
 		A38F91E01BD925BD00D722F5 /* ProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProviderProtocol.swift; path = Classes/ProviderProtocol.swift; sourceTree = "<group>"; };
 		A38F91E11BD925BD00D722F5 /* RockauthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RockauthClient.swift; path = Classes/RockauthClient.swift; sourceTree = "<group>"; };
+		A3B3B2991BF24FD1001F8BC9 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = Classes/SignInViewController.swift; sourceTree = "<group>"; };
 		A3BA716F1BE97A25005B4A89 /* icon-eye-orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye-orange.png"; sourceTree = "<group>"; };
 		A3BA71701BE97A25005B4A89 /* icon-eye-orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye-orange@2x.png"; sourceTree = "<group>"; };
 		A3BA71711BE97A25005B4A89 /* icon-eye-orange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye-orange@3x.png"; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			children = (
 				A305851C1BE813F5000902A4 /* TwitterButton.swift */,
 				A3C3A1501BE7F3B800BFF7C2 /* SignUpViewController.swift */,
+				A3B3B2991BF24FD1001F8BC9 /* SignInViewController.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				A305851D1BE813F5000902A4 /* TwitterButton.swift in Sources */,
 				A38F91E21BD925BD00D722F5 /* ProviderProtocol.swift in Sources */,
 				A37170BC1BDFC35900925F9F /* TwitterProvider.swift in Sources */,
+				A3B3B29A1BF24FD1001F8BC9 /* SignInViewController.swift in Sources */,
 				A37170BA1BDFC32F00925F9F /* RockauthError.swift in Sources */,
 				A38F91E31BD925BD00D722F5 /* RockauthClient.swift in Sources */,
 				A37170B91BDFC32F00925F9F /* FacebookProvider.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  SignUpViewController.swift
+//  SignInViewController.swift
 //  RockauthiOS
 //
 //  Created by Cody Mace on 11/2/15.
@@ -8,15 +8,12 @@
 
 import UIKit
 
-public class SignUpViewController: UIViewController {
+public class SignInViewController: UIViewController {
 
-    var firstNameField: UITextField = UITextField()
-    var lastNameField: UITextField = UITextField()
     var emailField: UITextField = UITextField()
     var passwordField: UITextField = UITextField()
     var eyeButton: UIButton = UIButton()
-    var signUpButton: UIButton = UIButton()
-    var nameUnderbar: UIView = UIView()
+    var signInButton: UIButton = UIButton()
     var emailUnderbar: UIView = UIView()
     var passwordUnderbar: UIView = UIView()
     var providers: [SocialProvider?]!
@@ -57,8 +54,8 @@ public class SignUpViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
 
+        self.title = "Sign In"
         // Do any additional setup after loading the view.
-        self.title = "Sign Up"
 
         let buttonBack: UIButton = UIButton(type: UIButtonType.Custom) as UIButton
         buttonBack.frame = CGRectMake(0, 0, 40, 40)
@@ -79,23 +76,8 @@ public class SignUpViewController: UIViewController {
         var views: [String: AnyObject] = [:]
 
         let bundle = NSBundle(forClass: self.classForCoder)
-        self.firstNameField = UITextField(frame: CGRect(x: 10, y: 12.5, width: 150, height: 23))
-        self.firstNameField.placeholder = "First Name"
-        self.firstNameField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        self.firstNameField.leftViewMode = .Always
-        self.firstNameField.font = UIFont.systemFontOfSize(17)
-        self.firstNameField.autocorrectionType = .No
-        views["firstNameField"] = self.firstNameField
 
-        self.lastNameField = UITextField(frame: CGRect(x: 195, y: 12.5, width: 150, height: 23))
-        self.lastNameField.placeholder = "Last Name"
-        self.lastNameField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
-        self.lastNameField.leftViewMode = .Always
-        self.lastNameField.font = UIFont.systemFontOfSize(17)
-        self.lastNameField.autocorrectionType = .No
-        views["lastNameField"] = self.lastNameField
-
-        self.emailField = UITextField(frame: CGRect(x: 10, y: 49.5, width: self.view.frame.size.width - 40, height: 23))
+        self.emailField = UITextField(frame: CGRect(x: 10, y: 15, width: self.view.frame.size.width - 40, height: 23))
         self.emailField.placeholder = "Email"
         self.emailField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         self.emailField.leftViewMode = .Always
@@ -105,16 +87,17 @@ public class SignUpViewController: UIViewController {
         self.emailField.autocapitalizationType = .None
         views["emailField"] = self.emailField
 
-        self.passwordField = UITextField(frame: CGRect(x: 10, y: 86.5, width: self.view.frame.size.width - 40, height: 23))
+        self.passwordField = UITextField(frame: CGRect(x: 10, y: 54, width: self.view.frame.size.width - 40, height: 23))
         self.passwordField.placeholder = "Choose Password"
         self.passwordField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         self.passwordField.leftViewMode = .Always
         self.passwordField.autocorrectionType = .No
         self.passwordField.font = UIFont.systemFontOfSize(17)
         self.passwordField.autocapitalizationType = .None
+        self.passwordField.secureTextEntry = true
         views["passwordField"] = self.passwordField
 
-        self.eyeButton = UIButton(frame: CGRect(x: self.view.frame.size.width - 45, y: 85, width: 30, height: 30))
+        self.eyeButton = UIButton(frame: CGRect(x: self.view.frame.size.width - 45, y: 52, width: 30, height: 30))
         let image = UIImage(named: "icon-eye-gray", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())
         let highlightedImage = UIImage(named: "eyeIcon", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         if let themeColor = RockauthClient.sharedClient?.themeColor {
@@ -122,36 +105,31 @@ public class SignUpViewController: UIViewController {
         } else {
             self.eyeButton.imageView?.tintColor = UIColor.blackColor()
         }
+        self.eyeButton.selected = false
         self.eyeButton.setImage(image, forState: .Normal)
         self.eyeButton.setImage(highlightedImage, forState: .Selected)
-        self.eyeButton.selected = true
         self.eyeButton.addTarget(self, action: Selector("eyeTapped"), forControlEvents: .TouchUpInside)
         views["eyeButton"] = self.eyeButton
 
-        self.nameUnderbar = UIView(frame: CGRect(x: 10, y: 40, width: self.view.frame.size.width - 20, height: 2))
-        self.nameUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
-        self.view.addSubview(self.nameUnderbar)
-        self.emailUnderbar = UIView(frame: CGRect(x: 10, y: 77, width: self.view.frame.size.width - 20, height: 2))
+        self.emailUnderbar = UIView(frame: CGRect(x: 10, y: 42.5, width: self.view.frame.size.width - 20, height: 2))
         self.emailUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
         self.view.addSubview(self.emailUnderbar)
-        self.passwordUnderbar = UIView(frame: CGRect(x: 10, y: 114, width: self.view.frame.size.width - 20, height: 2))
+        self.passwordUnderbar = UIView(frame: CGRect(x: 10, y: 81.5, width: self.view.frame.size.width - 20, height: 2))
         self.passwordUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
         self.view.addSubview(self.passwordUnderbar)
 
-        self.signUpButton = UIButton(type: .System)
-        self.signUpButton.frame = CGRect(x: 10, y: 136, width: self.view.frame.size.width - 20, height: 50)
-        self.signUpButton.setTitle("Sign Up", forState: .Normal)
-        self.signUpButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        self.signUpButton.titleLabel?.font = UIFont.systemFontOfSize(19, weight: UIFontWeightSemibold)
-        self.signUpButton.backgroundColor = RockauthClient.sharedClient?.themeColor
-        self.signUpButton.addTarget(self, action: Selector("signUpTapped"), forControlEvents: .TouchUpInside)
-        views["signUpButton"] = self.signUpButton
+        self.signInButton = UIButton(type: .System)
+        self.signInButton.frame = CGRect(x: 10, y: 105.5, width: self.view.frame.size.width - 20, height: 50)
+        self.signInButton.setTitle("Sign In", forState: .Normal)
+        self.signInButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        self.signInButton.titleLabel?.font = UIFont.systemFontOfSize(19, weight: UIFontWeightSemibold)
+        self.signInButton.backgroundColor = RockauthClient.sharedClient?.themeColor
+        self.signInButton.addTarget(self, action: Selector("signInTapped"), forControlEvents: .TouchUpInside)
+        views["signInButton"] = self.signInButton
 
-        self.view.addSubview(firstNameField)
-        self.view.addSubview(lastNameField)
         self.view.addSubview(emailField)
         self.view.addSubview(passwordField)
-        self.view.addSubview(signUpButton)
+        self.view.addSubview(signInButton)
         self.view.addSubview(eyeButton)
 
         let orLabel = UILabel()
@@ -161,7 +139,7 @@ public class SignUpViewController: UIViewController {
         orLabel.font = UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold)
         self.view.addSubview(orLabel)
         views["orLabel"] = orLabel
-        let orLabelVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[signUpButton]-9-[orLabel]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        let orLabelVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[signInButton]-9-[orLabel]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         let orLabelHorizontalConstraints = [NSLayoutConstraint(item: orLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)]
         self.view.addConstraints(orLabelVerticalConstraints + orLabelHorizontalConstraints)
 
@@ -190,7 +168,7 @@ public class SignUpViewController: UIViewController {
         let separatorBarHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[separatorBar]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         self.view.addConstraints(separatorBarVerticalConstraints + separatorBarHorizontalConstraints)
 
-        let socialNetworksView = ConnectWithSocialNetworksView(providers: self.providers, shortFormat: true, parentViewController: self, connected: self.connected, failed: self.failed)
+        let socialNetworksView = ConnectWithSocialNetworksView(providers: self.providers, shortFormat: true, connected: self.connected, failed: self.failed)
         socialNetworksView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(socialNetworksView)
         views["socialNetworksView"] = socialNetworksView
@@ -223,7 +201,7 @@ public class SignUpViewController: UIViewController {
 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.signUpButton.layer.cornerRadius = 3
+        self.signInButton.layer.cornerRadius = 3
     }
 
     func eyeTapped() {
@@ -243,53 +221,28 @@ public class SignUpViewController: UIViewController {
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluateWithObject(testStr)
     }
-
-    func signUpTapped() {
+    
+    func signInTapped() {
         resignFirstResponder()
-        self.emailUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
-        self.passwordUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
-        var validationPassed = true
-        if (self.emailField.text == "") {
-            self.emailField.attributedPlaceholder = NSAttributedString(string: "Email is required", attributes: [NSForegroundColorAttributeName: UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 1)])
-            self.emailUnderbar.backgroundColor = UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 0.5)
-            validationPassed = false
-        } else if (isValidEmail(self.emailField.text!) == false) {
-            self.emailField.text = ""
-            self.emailField.attributedPlaceholder = NSAttributedString(string: "A valid email is required", attributes: [NSForegroundColorAttributeName: UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 1)])
-            self.emailUnderbar.backgroundColor = UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 0.5)
-            validationPassed = false
-        }
-        if (self.passwordField.text == "") {
-            self.passwordField.attributedPlaceholder = NSAttributedString(string: "Password is required", attributes: [NSForegroundColorAttributeName: UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 1)])
-            self.passwordUnderbar.backgroundColor = UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 0.5)
-            validationPassed = false
-        } else if (self.passwordField.text?.characters.count < 8) {
-            self.passwordField.text = ""
-            self.passwordField.attributedPlaceholder = NSAttributedString(string: "Password must have at least 8 characters", attributes: [NSForegroundColorAttributeName: UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 1)])
-            self.passwordUnderbar.backgroundColor = UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 0.5)
-            validationPassed = false
-        }
-
-        if (validationPassed) {
-            // check with server
-            RockauthClient.sharedClient!.registerUser(self.emailField.text!, password: self.passwordField.text!, success: { (user) -> Void in
-                // give the app the user
-                print(user)
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-                }) { (error) -> Void in
-                    NSOperationQueue.mainQueue().addOperationWithBlock {
-                        let alert = UIAlertController(title: "User could not be created", message: (error as! RockauthError).message, preferredStyle: .Alert)
-                        let okButton = UIAlertAction(title: "OK", style: .Default, handler:nil)
-                        alert.addAction(okButton)
-                        self.navigationController!.presentViewController(alert, animated: true, completion: nil)
-                    }
-            }
+        // check with server
+        RockauthClient.sharedClient!.login(self.emailField.text, password: self.passwordField.text, success: {
+            (user) -> Void in
+            // give the app the user
+            print(user)
+            self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+            }) { (error) -> Void in
+                NSOperationQueue.mainQueue().addOperationWithBlock {
+                    let alert = UIAlertController(title: "Could not sign in user", message: (error as! RockauthError).message, preferredStyle: .Alert)
+                    let okButton = UIAlertAction(title: "OK", style: .Default, handler:nil)
+                    alert.addAction(okButton)
+                    self.navigationController!.presentViewController(alert, animated: true, completion: nil)
+                }
         }
     }
-
+    
     func tosTapped() {
     }
-
+    
     func back() {
         self.navigationController?.popViewControllerAnimated(true)
     }
