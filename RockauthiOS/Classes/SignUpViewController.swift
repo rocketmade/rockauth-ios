@@ -58,7 +58,7 @@ public class SignUpViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationController?.navigationBar.topItem!.title = "Sign Up"
+        self.title = "Sign Up"
 
         let buttonBack: UIButton = UIButton(type: UIButtonType.Custom) as UIButton
         buttonBack.frame = CGRectMake(0, 0, 40, 40)
@@ -189,7 +189,7 @@ public class SignUpViewController: UIViewController {
         let separatorBarHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[separatorBar]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         self.view.addConstraints(separatorBarVerticalConstraints + separatorBarHorizontalConstraints)
 
-        let socialNetworksView = ConnectWithSocialNetworksView(providers: self.providers, shortFormat: true, connected: self.connected, failed: self.failed)
+        let socialNetworksView = ConnectWithSocialNetworksView(providers: self.providers, shortFormat: true, parentViewController: self, connected: self.connected, failed: self.failed)
         socialNetworksView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(socialNetworksView)
         views["socialNetworksView"] = socialNetworksView

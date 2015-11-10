@@ -75,11 +75,11 @@ class RockauthSplashViewController: UIViewController {
         let buttonsContainerVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[buttonsContainer]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         self.view.addConstraints(buttonsContainerHorizontalConstraints + buttonsContainerVerticalConstraints)
 
-        let socialButtonsContainer = ConnectWithSocialNetworksView(providers: providers, shortFormat: true, connected: connected, failed: failed)
+        let socialButtonsContainer = ConnectWithSocialNetworksView(providers: providers, shortFormat: true, parentViewController: self, connected: connected, failed: failed)
         socialButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
         buttonsContainer.addSubview(socialButtonsContainer)
         views["socialButtonsContainer"] = socialButtonsContainer
-        let socialButtonsContainerVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-(>=0)-[socialButtonsContainer]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        let socialButtonsContainerVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-(>=0)-[socialButtonsContainer]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         let socialButtonsContainerHorizontalContstriants = NSLayoutConstraint.constraintsWithVisualFormat("H:|[socialButtonsContainer]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         buttonsContainer.addConstraints(socialButtonsContainerHorizontalContstriants + socialButtonsContainerVerticalConstraints)
 

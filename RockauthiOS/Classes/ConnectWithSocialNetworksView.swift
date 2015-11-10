@@ -23,23 +23,25 @@ class ConnectWithSocialNetworksView: UIView {
     var success: ((user: NSDictionary) -> ())!
     var failure: ((error: ErrorType) -> ())!
     var shortFormat: Bool = true
+    var parentViewController: UIViewController?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit([FacebookProvider()], shortFormat: true, connected: nil, failed: nil)
+        commonInit([FacebookProvider()], shortFormat: true, parentViewController: nil, connected: nil, failed: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit([FacebookProvider()], shortFormat: true, connected: nil, failed: nil)
+        commonInit([FacebookProvider()], shortFormat: true, parentViewController: nil, connected: nil, failed: nil)
     }
 
-    init(providers: [SocialProvider?], shortFormat: Bool, connected: (user: NSDictionary) -> (), failed: (error: ErrorType) -> ()) {
+    init(providers: [SocialProvider?], shortFormat: Bool, parentViewController: UIViewController?, connected: (user: NSDictionary) -> (), failed: (error: ErrorType) -> ()) {
         super.init(frame: CGRectZero)
-        commonInit(providers, shortFormat: shortFormat, connected: connected, failed: failed)
+        commonInit(providers, shortFormat: shortFormat, parentViewController: parentViewController, connected: connected, failed: failed)
     }
 
-    func commonInit(providers: [SocialProvider?], shortFormat: Bool, connected: ((user: NSDictionary) -> ())?, failed: ((error: ErrorType) -> ())?) {
+    func commonInit(providers: [SocialProvider?], shortFormat: Bool, parentViewController: UIViewController?, connected: ((user: NSDictionary) -> ())?, failed: ((error: ErrorType) -> ())?) {
+        self.parentViewController = parentViewController
         self.providers = providers
         if let connected = connected {
             self.success = connected
@@ -133,7 +135,9 @@ class ConnectWithSocialNetworksView: UIView {
     }
 
     func otherOptionsTapped() {
-        //TODO: push view controller with long format of ConnectWithSocialNetworksView
+        let fullVC = FullConnectWithSocialNetworksViewController(providers: providers, connected: success, failed: failure)
+        parentViewController?.navigationController?.pushViewController(fullVC, animated: true)
+
     }
 
     func providerButtonPressed(sender: UIButton) {
