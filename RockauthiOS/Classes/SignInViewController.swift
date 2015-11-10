@@ -168,7 +168,7 @@ public class SignInViewController: UIViewController {
         let separatorBarHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[separatorBar]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         self.view.addConstraints(separatorBarVerticalConstraints + separatorBarHorizontalConstraints)
 
-        let socialNetworksView = ConnectWithSocialNetworksView(providers: self.providers, shortFormat: true, connected: self.connected, failed: self.failed)
+        let socialNetworksView = ConnectWithSocialNetworksView(providers: self.providers, shortFormat: true, parentViewController: self, connected: self.connected, failed: self.failed)
         socialNetworksView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(socialNetworksView)
         views["socialNetworksView"] = socialNetworksView
