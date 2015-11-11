@@ -216,13 +216,8 @@ public class SignInViewController: UIViewController {
         }
     }
 
-    func isValidEmail(testStr: String) -> Bool {
-        let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(testStr)
-    }
-    
     func signInTapped() {
+        self.emailField.text = self.emailField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         resignFirstResponder()
         // check with server
         RockauthClient.sharedClient!.login(self.emailField.text, password: self.passwordField.text, success: {

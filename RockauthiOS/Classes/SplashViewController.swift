@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class RockauthSplashViewController: UIViewController {
+class SplashViewController: UIViewController {
 
     @IBInspectable var useEmailAuthentication: Bool!
     var providers: [SocialProvider?]!

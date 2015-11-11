@@ -245,6 +245,7 @@ public class SignUpViewController: UIViewController {
     }
 
     func signUpTapped() {
+        self.emailField.text = self.emailField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         resignFirstResponder()
         self.emailUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
         self.passwordUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
