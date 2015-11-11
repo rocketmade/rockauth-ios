@@ -57,11 +57,7 @@ class SplashViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 
-        let buttonBack: UIButton = UIButton(type: UIButtonType.Custom) as UIButton
-        buttonBack.frame = CGRectMake(0, 0, 40, 40)
-        buttonBack.setTitle("Back", forState: .Normal)
-        buttonBack.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: buttonBack), animated: false)
+        self.title = ""
 
         var views: [String : AnyObject] = [:]
 

@@ -57,12 +57,6 @@ public class SignInViewController: UIViewController {
         self.title = "Sign In"
         // Do any additional setup after loading the view.
 
-        let buttonBack: UIButton = UIButton(type: UIButtonType.Custom) as UIButton
-        buttonBack.frame = CGRectMake(0, 0, 40, 40)
-        buttonBack.setTitle("Back", forState: .Normal)
-        buttonBack.addTarget(self, action: "back", forControlEvents: UIControlEvents.TouchUpInside)
-        self.navigationItem.setLeftBarButtonItem(UIBarButtonItem(customView: buttonBack), animated: false)
-
         self.view.backgroundColor = UIColor.whiteColor()
         addAllSubviews()
     }
