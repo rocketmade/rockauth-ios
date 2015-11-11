@@ -9,8 +9,17 @@
 import UIKit
 
 public class RockauthError: ErrorType {
+    var title: String = "Error"
     var message: String = "Error"
-    public init(message: String) {
+    var alertController: UIAlertController {
+        let alert = UIAlertController(title: self.title, message: self.message, preferredStyle: .Alert)
+        let okButton = UIAlertAction(title: "OK", style: .Default, handler:nil)
+        alert.addAction(okButton)
+        return alert
+    }
+
+    public init(title: String, message: String) {
+        self.title = title
         self.message = message
     }
 }

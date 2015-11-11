@@ -273,10 +273,7 @@ public class SignUpViewController: UIViewController {
                 self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
                 }) { (error) -> Void in
                     NSOperationQueue.mainQueue().addOperationWithBlock {
-                        let alert = UIAlertController(title: "User could not be created", message: (error as! RockauthError).message, preferredStyle: .Alert)
-                        let okButton = UIAlertAction(title: "OK", style: .Default, handler:nil)
-                        alert.addAction(okButton)
-                        self.navigationController!.presentViewController(alert, animated: true, completion: nil)
+                        self.navigationController!.presentViewController((error as! RockauthError).alertController, animated: true, completion: nil)
                     }
             }
         }

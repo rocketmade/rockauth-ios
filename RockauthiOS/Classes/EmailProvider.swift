@@ -23,7 +23,7 @@ public class EmailProvider: LoginProvider {
         if let client = RockauthClient.sharedClient {
             client.login(self, success: success, failure: failure)
         } else {
-            failure(error: RockauthError(message: "RockauthClient.sharedClient is probably not initialized"))
+            failure(error: RockauthError(title: "Error Signing In", message: "RockauthClient.sharedClient is probably not initialized"))
         }
     }
 

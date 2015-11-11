@@ -75,7 +75,7 @@ public static var sharedProvider: SocialProvider?
     func failure(error: String) {
         webViewController.dismissViewControllerAnimated(true, completion: nil)
         if let failureBlock = self.failureBlock {
-            failureBlock(error: RockauthError(message: error))
+            failureBlock(error: RockauthError(title: "Twitter Authentication Error", message: error))
         }
     }
 }
