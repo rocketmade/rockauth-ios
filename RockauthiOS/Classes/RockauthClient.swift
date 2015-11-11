@@ -179,10 +179,10 @@ public class RockauthClient {
             if let responseDict = response as? NSDictionary {
                 if let errorObject = responseDict.objectForKey("error") {
                     var e: RockauthError = RockauthError(message: "User could not be created.")
-                    if let validationErrors = errorObject.objectForKey("validation_errors") {
+                    if let validationErrors = errorObject["validation_errors"] {
                         var message = ""
                         for key in (validationErrors as! NSDictionary).allKeys {
-                            message += "\(key.capitalizedString) \(validationErrors.valueForKey(key as! String)![0])\n"
+                            message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
                         }
                         e = RockauthError(message: message)
                     }
