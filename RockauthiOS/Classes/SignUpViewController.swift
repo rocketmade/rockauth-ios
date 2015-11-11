@@ -267,7 +267,7 @@ public class SignUpViewController: UIViewController {
 
         if (validationPassed) {
             // check with server
-            RockauthClient.sharedClient!.registerUser(self.emailField.text!, password: self.passwordField.text!, success: { (user) -> Void in
+            RockauthClient.sharedClient!.registerUser(self.firstNameField.text!, lastName: self.lastNameField.text!, email: self.emailField.text!, password: self.passwordField.text!, success: { (user) -> Void in
                 // give the app the user
                 print(user)
                 self.navigationController?.dismissViewControllerAnimated(true, completion: nil)

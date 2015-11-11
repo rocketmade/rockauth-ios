@@ -127,22 +127,24 @@ public class RockauthClient {
     }
 
     public func registerUser(providers: [SocialProvider], success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
-        registerUser(nil, password: nil, providers: providers, success: success, failure: failure);
+        registerUser(nil, lastName: nil, email: nil, password: nil, providers: providers, success: success, failure: failure);
     }
 
-    public func registerUser(email: String, password: String, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
-        registerUser(email, password: password, providers: nil, success: success, failure: failure)
+    public func registerUser(firstName: String, lastName: String, email: String, password: String, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+        registerUser(firstName, lastName: lastName, email: email, password: password, providers: nil, success: success, failure: failure)
 
     }
 
-    public func registerUser(email: String?, password: String?, providers: [SocialProvider]?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func registerUser(firstName: String?, lastName: String?, email: String?, password: String?, providers: [SocialProvider]?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         // Create user
         let authentication = ["client_id": self.clientID, "client_secret": self.clientSecret]
         var user: Dictionary<String, AnyObject> = ["authentication": authentication]
         var authenticationMethodProvided = false
-        if let email = email, password = password {
+        if let email = email, password = password, firstName = firstName, lastName = lastName {
             user["email"] = email
             user["password"] = password
+            user["first_name"] = firstName
+            user["last_name"] = lastName
             authenticationMethodProvided = true
         }
         if let providers = providers {
