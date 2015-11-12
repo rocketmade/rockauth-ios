@@ -217,6 +217,7 @@ public class SignInViewController: UIViewController {
         RockauthClient.sharedClient!.login(self.emailField.text, password: self.passwordField.text, success: {
             (user) -> Void in
             // give the app the user
+            self.connected(user: user)
             print(user)
             self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
             }) { (error) -> Void in
