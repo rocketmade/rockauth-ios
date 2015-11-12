@@ -233,8 +233,7 @@ public class SignUpViewController: UIViewController {
             // check with server
             RockauthClient.sharedClient!.registerUser(self.firstNameField.text!, lastName: self.lastNameField.text!, email: self.emailField.text!, password: self.passwordField.text!, success: { (user) -> Void in
                 // give the app the user
-                print(user)
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                self.connected(user: user)
                 }) { (error) -> Void in
                     NSOperationQueue.mainQueue().addOperationWithBlock {
                         self.navigationController!.presentViewController((error as! RockauthError).alertController, animated: true, completion: nil)

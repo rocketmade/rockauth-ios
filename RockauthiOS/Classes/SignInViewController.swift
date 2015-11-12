@@ -182,8 +182,6 @@ public class SignInViewController: UIViewController {
             (user) -> Void in
             // give the app the user
             self.connected(user: user)
-            print(user)
-            self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
             }) { (error) -> Void in
                 NSOperationQueue.mainQueue().addOperationWithBlock {
                     self.navigationController!.presentViewController((error as! RockauthError).alertController, animated: true, completion: nil)
