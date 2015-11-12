@@ -13,29 +13,36 @@ class SplashViewController: UIViewController {
 
     @IBInspectable var useEmailAuthentication: Bool!
     @IBInspectable var cancelButton: Bool!
+    var logo: UIImage?
     var providers: [SocialProvider?]!
     var connected: ((user: NSDictionary)->())!
     var failed: ((error: ErrorType)->())!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit(emailAuthentication: true, cancelButton: false, providers: [FacebookProvider()], connected: nil, failed: nil)
+        commonInit(emailAuthentication: true, cancelButton: false, providers: [FacebookProvider()], logo: nil, connected: nil, failed: nil)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        commonInit(emailAuthentication: true, cancelButton: false, providers: [FacebookProvider()], connected: nil, failed: nil)
+        commonInit(emailAuthentication: true, cancelButton: false, providers: [FacebookProvider()], logo: nil, connected: nil, failed: nil)
     }
 
-    init(useEmailAuthentication email: Bool, cancelButton: Bool, providers: [SocialProvider?], connected: (user: NSDictionary)->(), failed: (error: ErrorType)->()) {
+    init(showCancelButton: Bool, logo: UIImage?, useEmailAuthentication email: Bool, providers: [SocialProvider?], connected: (user: NSDictionary)->(), failed: (error: ErrorType)->()) {
         super.init(nibName: nil, bundle: nil)
-        commonInit(emailAuthentication: email, cancelButton: cancelButton, providers: providers, connected: connected, failed: failed)
+        commonInit(emailAuthentication: email, cancelButton: showCancelButton, providers: providers, logo: logo, connected: connected, failed: failed)
     }
 
-    func commonInit(emailAuthentication email: Bool, cancelButton: Bool, providers: [SocialProvider?], connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
+    func commonInit(emailAuthentication email: Bool, cancelButton: Bool, providers: [SocialProvider?], logo: UIImage?, connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
         useEmailAuthentication = email
         self.cancelButton = cancelButton
         self.providers = providers
+        if let logo = logo {
+            self.logo = logo
+        } else {
+            let bundle = NSBundle(forClass: self.classForCoder)
+            self.logo = UIImage(named: "logo", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())
+        }
         if let connected = connected {
             self.connected = connected
         } else {
@@ -104,6 +111,24 @@ class SplashViewController: UIViewController {
             let emailHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[signInButton]-10-[signUpButton(signInButton)]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
             buttonsContainer.addConstraints(emailHorizontalConstraints)
         }
+
+        let logoContainer = UIView()
+        logoContainer.translatesAutoresizingMaskIntoConstraints = false
+        views["logoContainer"] = logoContainer
+        self.view.addSubview(logoContainer)
+        let logoContainerHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[logoContainer]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        let logoContainerVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[logoContainer]-[buttonsContainer]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        self.view.addConstraints(logoContainerHorizontalConstraints + logoContainerVerticalConstraints)
+
+        let logoView = UIImageView(image: logo)
+        logoView.translatesAutoresizingMaskIntoConstraints = false
+        logoContainer.addSubview(logoView)
+        views["logoView"] = logoView
+        let logoConstraints = [
+            NSLayoutConstraint(item: logoView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: logoContainer, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0),
+            NSLayoutConstraint(item: logoView, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: logoContainer, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+        ]
+        logoContainer.addConstraints(logoConstraints)
 
     }
 

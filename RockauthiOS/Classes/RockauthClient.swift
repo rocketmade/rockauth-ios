@@ -26,9 +26,9 @@ public class RockauthClient {
         self.clientSecret = clientSecret
     }
 
-    public func showUI(presenter: UIViewController,themeColor: UIColor, useEmailAuthentication: Bool, providers: [SocialProvider?], connected: (user:NSDictionary)->(), failed:(error: ErrorType)->()) {
+    public func showUI(presenter: UIViewController,themeColor: UIColor, logo: UIImage?, useEmailAuthentication: Bool, providers: [SocialProvider?], connected: (user:NSDictionary)->(), failed:(error: ErrorType)->()) {
         self.themeColor = themeColor
-        let splash = SplashViewController(useEmailAuthentication: useEmailAuthentication, cancelButton: true, providers: providers, connected: connected, failed: failed)
+        let splash = SplashViewController(showCancelButton: true, logo: logo, useEmailAuthentication: useEmailAuthentication, providers: providers, connected: connected, failed: failed)
         let nav = UINavigationController(rootViewController: splash)
         nav.navigationBar.backgroundColor = themeColor
         nav.navigationBar.barStyle = .Black
