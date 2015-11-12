@@ -80,7 +80,7 @@ public class RockauthClient {
         if let email = provider.email, password = provider.password {
             login(email, password: password, success: success, failure: failure)
         } else {
-            failure(error: RockauthError(message: "Email or password not provided"))
+            failure(error: RockauthError(title: "Error Signing In", message: "Email or password not provided"))
         }
     }
 
@@ -108,13 +108,19 @@ public class RockauthClient {
             let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
             if let responseDict = response as? NSDictionary {
                 if let errorObject = responseDict.objectForKey("error") {
-                    var e: RockauthError = RockauthError(message: "Could not sign in user")
+                    let title: String
+                    if let t = errorObject["message"] as! String? {
+                        title = t
+                    } else {
+                        title = "Error Signing In"
+                    }
+                    var e: RockauthError = RockauthError(title: title, message: "Could not sign in user")
                     if let validationErrors = errorObject["validation_errors"] {
                         var message = ""
                         for key in (validationErrors as! NSDictionary).allKeys {
                             message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
                         }
-                        e = RockauthError(message: message)
+                        e = RockauthError(title: title, message: message)
                     }
                     failure(error: e)
                 } else {
@@ -127,15 +133,15 @@ public class RockauthClient {
     }
 
     public func registerUser(providers: [SocialProvider], success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
-        registerUser(nil, password: nil, providers: providers, success: success, failure: failure);
+        registerUser(nil, lastName: nil, email: nil, password: nil, providers: providers, success: success, failure: failure);
     }
 
-    public func registerUser(email: String, password: String, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
-        registerUser(email, password: password, providers: nil, success: success, failure: failure)
+    public func registerUser(firstName: String?, lastName: String?, email: String, password: String, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+        registerUser(firstName, lastName: lastName, email: email, password: password, providers: nil, success: success, failure: failure)
 
     }
 
-    public func registerUser(email: String?, password: String?, providers: [SocialProvider]?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func registerUser(firstName: String?, lastName: String?, email: String?, password: String?, providers: [SocialProvider]?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         // Create user
         let authentication = ["client_id": self.clientID, "client_secret": self.clientSecret]
         var user: Dictionary<String, AnyObject> = ["authentication": authentication]
@@ -144,6 +150,12 @@ public class RockauthClient {
             user["email"] = email
             user["password"] = password
             authenticationMethodProvided = true
+        }
+        if let firstName = firstName {
+            user["first_name"] = firstName
+        }
+        if let lastName = lastName {
+            user["last_name"] = lastName
         }
         if let providers = providers {
             var providerAuthentications: Array<Dictionary<String, String>> = []
@@ -156,7 +168,7 @@ public class RockauthClient {
             }
         }
         if authenticationMethodProvided == false {
-            failure(error: RockauthError(message: "No authentication method provided"))
+            failure(error: RockauthError(title: "Error Signing Up", message: "No authentication method provided"))
             return
         }
 
@@ -178,13 +190,19 @@ public class RockauthClient {
             let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
             if let responseDict = response as? NSDictionary {
                 if let errorObject = responseDict.objectForKey("error") {
-                    var e: RockauthError = RockauthError(message: "User could not be created.")
+                    let title: String
+                    if let t = errorObject["message"] as! String? {
+                        title = t
+                    } else {
+                        title = "Error Signing Up"
+                    }
+                    var e: RockauthError = RockauthError(title: title, message: "User could not be created")
                     if let validationErrors = errorObject["validation_errors"] {
                         var message = ""
                         for key in (validationErrors as! NSDictionary).allKeys {
                             message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
                         }
-                        e = RockauthError(message: message)
+                        e = RockauthError(title: title, message: message)
                     }
                     failure(error: e)
                 } else {

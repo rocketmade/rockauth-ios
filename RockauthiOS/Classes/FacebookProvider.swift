@@ -39,7 +39,7 @@ public class FacebookProvider: SocialProvider {
                         failure(error: error)
                 })
             } else {
-                failure(error: RockauthError(message: "RockauthClient.sharedClient is probably not initialized"))
+                failure(error: RockauthError(title: "Error Signing In", message: "RockauthClient.sharedClient is probably not initialized"))
             }
             return
         }
@@ -49,7 +49,7 @@ public class FacebookProvider: SocialProvider {
                 failure(error: error)
             } else if let result = result {
                 if result.isCancelled {
-                    failure(error: RockauthError(message: "Facebook login cancelled"))
+                    failure(error: RockauthError(title: "Error Signing In", message: "Facebook login cancelled"))
                 } else {
                     if let sharedClient = RockauthClient.sharedClient {
                         sharedClient.login(self, success: { (user) -> Void in
@@ -61,7 +61,7 @@ public class FacebookProvider: SocialProvider {
                 }
             } else {
                 // no result AND no error; this shouldn't happen
-                failure(error: RockauthError(message: "This shouldn't happen"))
+                failure(error: RockauthError(title: "Error Signing In", message: "This shouldn't happen"))
             }
         }
     }

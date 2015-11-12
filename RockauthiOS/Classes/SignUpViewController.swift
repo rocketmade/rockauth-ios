@@ -231,16 +231,13 @@ public class SignUpViewController: UIViewController {
 
         if (validationPassed) {
             // check with server
-            RockauthClient.sharedClient!.registerUser(self.emailField.text!, password: self.passwordField.text!, success: { (user) -> Void in
+            RockauthClient.sharedClient!.registerUser(self.firstNameField.text!, lastName: self.lastNameField.text!, email: self.emailField.text!, password: self.passwordField.text!, success: { (user) -> Void in
                 // give the app the user
                 print(user)
                 self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
                 }) { (error) -> Void in
                     NSOperationQueue.mainQueue().addOperationWithBlock {
-                        let alert = UIAlertController(title: "User could not be created", message: (error as! RockauthError).message, preferredStyle: .Alert)
-                        let okButton = UIAlertAction(title: "OK", style: .Default, handler:nil)
-                        alert.addAction(okButton)
-                        self.navigationController!.presentViewController(alert, animated: true, completion: nil)
+                        self.navigationController!.presentViewController((error as! RockauthError).alertController, animated: true, completion: nil)
                     }
             }
         }

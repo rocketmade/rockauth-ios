@@ -185,10 +185,7 @@ public class SignInViewController: UIViewController {
             self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
             }) { (error) -> Void in
                 NSOperationQueue.mainQueue().addOperationWithBlock {
-                    let alert = UIAlertController(title: "Could not sign in user", message: (error as! RockauthError).message, preferredStyle: .Alert)
-                    let okButton = UIAlertAction(title: "OK", style: .Default, handler:nil)
-                    alert.addAction(okButton)
-                    self.navigationController!.presentViewController(alert, animated: true, completion: nil)
+                    self.navigationController!.presentViewController((error as! RockauthError).alertController, animated: true, completion: nil)
                 }
         }
     }
