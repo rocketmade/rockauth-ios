@@ -51,7 +51,7 @@ class FullConnectWithSocialNetworksViewController: UIViewController {
 
         var views: [String: AnyObject] = [:]
 
-        let providersView = ConnectWithSocialNetworksView(providers: providers, shortFormat: false, parentViewController: self, connected: connected, failed: failed)
+        let providersView = ConnectWithSocialNetworksView(providers: providers, shortFormat: false, orSeparator: false, parentViewController: self, connected: connected, failed: failed)
         providersView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(providersView)
         views["providersView"] = providersView

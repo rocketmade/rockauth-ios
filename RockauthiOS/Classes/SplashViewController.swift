@@ -12,27 +12,29 @@ import UIKit
 class SplashViewController: UIViewController {
 
     @IBInspectable var useEmailAuthentication: Bool!
+    @IBInspectable var cancelButton: Bool!
     var providers: [SocialProvider?]!
     var connected: ((user: NSDictionary)->())!
     var failed: ((error: ErrorType)->())!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit(emailAuthentication: true, providers: [FacebookProvider()], connected: nil, failed: nil)
+        commonInit(emailAuthentication: true, cancelButton: false, providers: [FacebookProvider()], connected: nil, failed: nil)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        commonInit(emailAuthentication: true, providers: [FacebookProvider()], connected: nil, failed: nil)
+        commonInit(emailAuthentication: true, cancelButton: false, providers: [FacebookProvider()], connected: nil, failed: nil)
     }
 
-    init(useEmailAuthentication email: Bool, providers: [SocialProvider?], connected: (user: NSDictionary)->(), failed: (error: ErrorType)->()) {
+    init(useEmailAuthentication email: Bool, cancelButton: Bool, providers: [SocialProvider?], connected: (user: NSDictionary)->(), failed: (error: ErrorType)->()) {
         super.init(nibName: nil, bundle: nil)
-        commonInit(emailAuthentication: email, providers: providers, connected: connected, failed: failed)
+        commonInit(emailAuthentication: email, cancelButton: cancelButton, providers: providers, connected: connected, failed: failed)
     }
 
-    func commonInit(emailAuthentication email: Bool, providers: [SocialProvider?], connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
+    func commonInit(emailAuthentication email: Bool, cancelButton: Bool, providers: [SocialProvider?], connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
         useEmailAuthentication = email
+        self.cancelButton = cancelButton
         self.providers = providers
         if let connected = connected {
             self.connected = connected
@@ -59,6 +61,10 @@ class SplashViewController: UIViewController {
 
         self.title = ""
 
+        if cancelButton! {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "back")
+        }
+
         var views: [String : AnyObject] = [:]
 
         self.view.backgroundColor = UIColor.whiteColor()
@@ -68,10 +74,10 @@ class SplashViewController: UIViewController {
         self.view.addSubview(buttonsContainer)
         views["buttonsContainer"] = buttonsContainer
         let buttonsContainerHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[buttonsContainer]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-        let buttonsContainerVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[buttonsContainer]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        let buttonsContainerVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-(>=10)-[buttonsContainer]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         self.view.addConstraints(buttonsContainerHorizontalConstraints + buttonsContainerVerticalConstraints)
 
-        let socialButtonsContainer = ConnectWithSocialNetworksView(providers: providers, shortFormat: true, parentViewController: self, connected: connected, failed: failed)
+        let socialButtonsContainer = ConnectWithSocialNetworksView(providers: providers, shortFormat: true, orSeparator: false, parentViewController: self, connected: connected, failed: failed)
         socialButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
         buttonsContainer.addSubview(socialButtonsContainer)
         views["socialButtonsContainer"] = socialButtonsContainer
@@ -79,23 +85,25 @@ class SplashViewController: UIViewController {
         let socialButtonsContainerHorizontalContstriants = NSLayoutConstraint.constraintsWithVisualFormat("H:|[socialButtonsContainer]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         buttonsContainer.addConstraints(socialButtonsContainerHorizontalContstriants + socialButtonsContainerVerticalConstraints)
 
-        let signInButton = FlatRoundedButton(title: "Sign In", fontSize: 19, color: RockauthClient.sharedClient?.themeColor)
-        signInButton.translatesAutoresizingMaskIntoConstraints = false
-        signInButton.addTarget(self, action: "signInButtonPressed:", forControlEvents: .TouchUpInside)
-        buttonsContainer.addSubview(signInButton)
-        views["signInButton"] = signInButton
-        let height = 50
-        let signInButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[signInButton(\(height))]-(10)-[socialButtonsContainer]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-        buttonsContainer.addConstraints(signInButtonVerticalConstraints)
-        let signUpButton = FlatRoundedButton(title: "Sign Up", fontSize: 19, color: RockauthClient.sharedClient?.themeColor)
-        signUpButton.translatesAutoresizingMaskIntoConstraints = false
-        signUpButton.addTarget(self, action: "signUpButtonPressed:", forControlEvents: .TouchUpInside)
-        buttonsContainer.addSubview(signUpButton)
-        views["signUpButton"] = signUpButton
-        let signUpButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[signUpButton(\(height))]-(10)-[socialButtonsContainer]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-        buttonsContainer.addConstraints(signUpButtonVerticalConstraints)
-        let emailHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[signInButton]-10-[signUpButton(signInButton)]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-        buttonsContainer.addConstraints(emailHorizontalConstraints)
+        if useEmailAuthentication! {
+            let signInButton = FlatRoundedButton(title: "Sign In", fontSize: 19, color: RockauthClient.sharedClient?.themeColor)
+            signInButton.translatesAutoresizingMaskIntoConstraints = false
+            signInButton.addTarget(self, action: "signInButtonPressed:", forControlEvents: .TouchUpInside)
+            buttonsContainer.addSubview(signInButton)
+            views["signInButton"] = signInButton
+            let height = 50
+            let signInButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[signInButton(\(height))]-(10)-[socialButtonsContainer]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+            buttonsContainer.addConstraints(signInButtonVerticalConstraints)
+            let signUpButton = FlatRoundedButton(title: "Sign Up", fontSize: 19, color: RockauthClient.sharedClient?.themeColor)
+            signUpButton.translatesAutoresizingMaskIntoConstraints = false
+            signUpButton.addTarget(self, action: "signUpButtonPressed:", forControlEvents: .TouchUpInside)
+            buttonsContainer.addSubview(signUpButton)
+            views["signUpButton"] = signUpButton
+            let signUpButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[signUpButton(\(height))]-(10)-[socialButtonsContainer]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+            buttonsContainer.addConstraints(signUpButtonVerticalConstraints)
+            let emailHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[signInButton]-10-[signUpButton(signInButton)]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+            buttonsContainer.addConstraints(emailHorizontalConstraints)
+        }
 
     }
 
