@@ -126,48 +126,12 @@ public class SignInViewController: UIViewController {
         self.view.addSubview(signInButton)
         self.view.addSubview(eyeButton)
 
-        let orLabel = UILabel()
-        orLabel.translatesAutoresizingMaskIntoConstraints = false
-        orLabel.text = "or"
-        orLabel.textColor = UIColor(white: 161/255.0, alpha: 1)
-        orLabel.font = UIFont.systemFontOfSize(15, weight: UIFontWeightSemibold)
-        self.view.addSubview(orLabel)
-        views["orLabel"] = orLabel
-        let orLabelVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[signInButton]-9-[orLabel]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-        let orLabelHorizontalConstraints = [NSLayoutConstraint(item: orLabel, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)]
-        self.view.addConstraints(orLabelVerticalConstraints + orLabelHorizontalConstraints)
-
-        let orMask = UIView()
-        orMask.translatesAutoresizingMaskIntoConstraints = false
-        orMask.backgroundColor = view.backgroundColor
-        self.view.insertSubview(orMask, belowSubview: orLabel)
-        views["orMask"] = orMask
-        let orMaskConstraints = [
-            NSLayoutConstraint(item: orMask, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: orLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: orMask, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: orLabel, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: orMask, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: orLabel, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 20),
-            NSLayoutConstraint(item: orMask, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: orLabel, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-        ]
-        self.view.addConstraints(orMaskConstraints)
-
-        let separatorBar = UIView()
-        separatorBar.translatesAutoresizingMaskIntoConstraints = false
-        separatorBar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
-        self.view.insertSubview(separatorBar, belowSubview: orMask)
-        views["separatorBar"] = separatorBar
-        let separatorBarVerticalConstraints = [
-            NSLayoutConstraint(item: separatorBar, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: orLabel, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 12), // offsets to middle of text instead of middle of textfield
-            NSLayoutConstraint(item: separatorBar, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 2)
-        ]
-        let separatorBarHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[separatorBar]|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-        self.view.addConstraints(separatorBarVerticalConstraints + separatorBarHorizontalConstraints)
-
-        let socialNetworksView = ConnectWithSocialNetworksView(providers: self.providers, shortFormat: true, parentViewController: self, connected: self.connected, failed: self.failed)
+        let socialNetworksView = ConnectWithSocialNetworksView(providers: self.providers, shortFormat: true, orSeparator: true, parentViewController: self, connected: self.connected, failed: self.failed)
         socialNetworksView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(socialNetworksView)
         views["socialNetworksView"] = socialNetworksView
         let socialNetworksViewHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[socialNetworksView]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
-        let socialNetworksViewVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[orLabel]-14-[socialNetworksView]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
+        let socialNetworksViewVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[signInButton]-10-[socialNetworksView]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         self.view.addConstraints(socialNetworksViewHorizontalConstraints + socialNetworksViewVerticalConstraints)
 
         let tosButton = UIButton(type: UIButtonType.System)
