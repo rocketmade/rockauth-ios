@@ -31,7 +31,7 @@ public static var sharedProvider: SocialProvider?
         igRedirectUri = registeredRedirectUri
     }
     
-    public func login(success success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         self.successBlock = success
         self.failureBlock = failure
         presentWebView()

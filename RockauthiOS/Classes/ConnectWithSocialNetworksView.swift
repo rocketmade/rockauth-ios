@@ -191,8 +191,8 @@ class ConnectWithSocialNetworksView: UIView {
     }
 
     func providerButtonPressed(sender: UIButton) {
-        if let title = sender.currentTitle, provider = providersByTitle[title] {
-            provider.login(success: success, failure: failure)
+        if let title = sender.currentTitle, provider = providersByTitle[title], parentViewController = parentViewController {
+            provider.login(fromViewController: parentViewController, success: success, failure: failure)
         }
     }
 }

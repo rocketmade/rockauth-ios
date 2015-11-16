@@ -30,7 +30,7 @@ public class FacebookProvider: SocialProvider {
         FBSDKApplicationDelegate.sharedInstance().application(UIApplication.sharedApplication(), didFinishLaunchingWithOptions: nil)
     }
 
-    public func login(success success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         if FBSDKAccessToken.currentAccessToken() != nil {
             if let sharedClient = RockauthClient.sharedClient {
                 sharedClient.login(self, success: { (user) -> Void in
@@ -44,7 +44,7 @@ public class FacebookProvider: SocialProvider {
             return
         }
         let manager = FBSDKLoginManager()
-        manager.logInWithReadPermissions(["public_profile"], fromViewController: UIApplication.sharedApplication().keyWindow?.rootViewController) { (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
+        manager.logInWithReadPermissions(["public_profile"], fromViewController: viewController) { (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
             if error != nil {
                 failure(error: error)
             } else if let result = result {
