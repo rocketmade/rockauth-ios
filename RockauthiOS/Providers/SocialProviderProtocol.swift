@@ -28,7 +28,12 @@ public protocol SocialProvider: LoginProvider {
 
 public extension SocialProvider {
     var prettyName: String {
-        return name.localizedCapitalizedString
+        if #available(iOS 9.0, *) {
+            return name.localizedCapitalizedString
+        } else {
+            // Fallback on earlier versions
+            return name
+        }
     }
 
     var hash: Dictionary<String, String> {

@@ -18,26 +18,11 @@ public class RockauthClient {
     public var clientSecret: String
     public var twitterKey: String?
     public var twitterSecret: String?
-    public var themeColor: UIColor?
 
     public init(baseURL: NSURL, clientID: String, clientSecret: String) {
         self.apiURL = baseURL
         self.clientID = clientID
         self.clientSecret = clientSecret
-    }
-
-    public func showUI(presenter: UIViewController,themeColor: UIColor, logo: UIImage?, useEmailAuthentication: Bool, providers: [SocialProvider?], connected: (user:NSDictionary)->(), failed:(error: ErrorType)->()) {
-        self.themeColor = themeColor
-        let splash = SplashViewController(showCancelButton: true, logo: logo, useEmailAuthentication: useEmailAuthentication, providers: providers, connected: connected, failed: failed)
-        let nav = UINavigationController(rootViewController: splash)
-        nav.navigationBar.backgroundColor = themeColor
-        nav.navigationBar.barStyle = .Black
-        nav.navigationBar.barTintColor = themeColor
-        nav.navigationBar.tintColor = UIColor.whiteColor()
-        nav.navigationBar.translucent = false
-        nav.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        presenter.presentViewController(nav, animated: true) { () -> Void in
-        }
     }
 
     public func login(provider: SocialProvider, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {

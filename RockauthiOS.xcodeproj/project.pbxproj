@@ -8,23 +8,48 @@
 
 /* Begin PBXBuildFile section */
 		A19512C23ECE559806EA6191 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA14552724AB06F43F6C91B9 /* Pods.framework */; };
-		A305851D1BE813F5000902A4 /* TwitterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A305851C1BE813F5000902A4 /* TwitterButton.swift */; };
-		A30585211BE8274D000902A4 /* icon-eye.png in Resources */ = {isa = PBXBuildFile; fileRef = A305851E1BE8274D000902A4 /* icon-eye.png */; };
-		A30585221BE8274D000902A4 /* icon-eye@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A305851F1BE8274D000902A4 /* icon-eye@2x.png */; };
-		A30585231BE8274D000902A4 /* icon-eye@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A30585201BE8274D000902A4 /* icon-eye@3x.png */; };
 		A30DB6D71BE4194400F4F2D5 /* icon-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = A30DB6D41BE4194400F4F2D5 /* icon-twitter.png */; };
 		A30DB6D81BE4194400F4F2D5 /* icon-twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A30DB6D51BE4194400F4F2D5 /* icon-twitter@2x.png */; };
 		A30DB6D91BE4194400F4F2D5 /* icon-twitter@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A30DB6D61BE4194400F4F2D5 /* icon-twitter@3x.png */; };
-		A37170B91BDFC32F00925F9F /* FacebookProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37170B71BDFC32F00925F9F /* FacebookProvider.swift */; };
-		A37170BA1BDFC32F00925F9F /* RockauthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37170B81BDFC32F00925F9F /* RockauthError.swift */; };
-		A37170BC1BDFC35900925F9F /* TwitterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37170BB1BDFC35900925F9F /* TwitterProvider.swift */; };
-		A38F91E21BD925BD00D722F5 /* ProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38F91E01BD925BD00D722F5 /* ProviderProtocol.swift */; };
-		A38F91E31BD925BD00D722F5 /* RockauthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38F91E11BD925BD00D722F5 /* RockauthClient.swift */; };
-		A3B3B29A1BF24FD1001F8BC9 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B3B2991BF24FD1001F8BC9 /* SignInViewController.swift */; };
-		A3BA71721BE97A25005B4A89 /* icon-eye-orange.png in Resources */ = {isa = PBXBuildFile; fileRef = A3BA716F1BE97A25005B4A89 /* icon-eye-orange.png */; };
-		A3BA71731BE97A25005B4A89 /* icon-eye-orange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A3BA71701BE97A25005B4A89 /* icon-eye-orange@2x.png */; };
-		A3BA71741BE97A25005B4A89 /* icon-eye-orange@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A3BA71711BE97A25005B4A89 /* icon-eye-orange@3x.png */; };
-		A3C3A1511BE7F3B800BFF7C2 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C3A1501BE7F3B800BFF7C2 /* SignUpViewController.swift */; };
+		A372902A1BFA9C2B00D223BE /* eyeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = A372901B1BFA9C2B00D223BE /* eyeIcon.png */; };
+		A372902B1BFA9C2B00D223BE /* eyeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A372901C1BFA9C2B00D223BE /* eyeIcon@2x.png */; };
+		A372902C1BFA9C2B00D223BE /* eyeIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A372901D1BFA9C2B00D223BE /* eyeIcon@3x.png */; };
+		A372902D1BFA9C2B00D223BE /* googleicon.png in Resources */ = {isa = PBXBuildFile; fileRef = A372901E1BFA9C2B00D223BE /* googleicon.png */; };
+		A372902E1BFA9C2B00D223BE /* googleicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A372901F1BFA9C2B00D223BE /* googleicon@2x.png */; };
+		A372902F1BFA9C2B00D223BE /* googleicon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290201BFA9C2B00D223BE /* googleicon@3x.png */; };
+		A37290301BFA9C2B00D223BE /* icon-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290211BFA9C2B00D223BE /* icon-arrow.png */; };
+		A37290311BFA9C2B00D223BE /* icon-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290221BFA9C2B00D223BE /* icon-arrow@2x.png */; };
+		A37290321BFA9C2B00D223BE /* icon-arrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290231BFA9C2B00D223BE /* icon-arrow@3x.png */; };
+		A37290331BFA9C2B00D223BE /* icon-eye-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290241BFA9C2B00D223BE /* icon-eye-gray.png */; };
+		A37290341BFA9C2B00D223BE /* icon-eye-gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290251BFA9C2B00D223BE /* icon-eye-gray@2x.png */; };
+		A37290351BFA9C2B00D223BE /* icon-eye-gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290261BFA9C2B00D223BE /* icon-eye-gray@3x.png */; };
+		A37290361BFA9C2B00D223BE /* icon-facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290271BFA9C2B00D223BE /* icon-facebook.png */; };
+		A37290371BFA9C2B00D223BE /* icon-facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290281BFA9C2B00D223BE /* icon-facebook@2x.png */; };
+		A37290381BFA9C2B00D223BE /* icon-facebook@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290291BFA9C2B00D223BE /* icon-facebook@3x.png */; };
+		A372903F1BFA9C3900D223BE /* instagramIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = A37290391BFA9C3900D223BE /* instagramIcon.png */; };
+		A37290401BFA9C3900D223BE /* instagramIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A372903A1BFA9C3900D223BE /* instagramIcon@2x.png */; };
+		A37290411BFA9C3900D223BE /* instagramIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A372903B1BFA9C3900D223BE /* instagramIcon@3x.png */; };
+		A37290421BFA9C3900D223BE /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A372903C1BFA9C3900D223BE /* logo.png */; };
+		A37290431BFA9C3900D223BE /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A372903D1BFA9C3900D223BE /* logo@2x.png */; };
+		A37290441BFA9C3900D223BE /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A372903E1BFA9C3900D223BE /* logo@3x.png */; };
+		A372907F1BFA9E8D00D223BE /* RockauthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A372907D1BFA9E8D00D223BE /* RockauthError.swift */; };
+		A37290801BFA9E8D00D223BE /* UIColor+Rocketmade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A372907E1BFA9E8D00D223BE /* UIColor+Rocketmade.swift */; };
+		A37290821BFA9E9300D223BE /* RockauthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290811BFA9E9300D223BE /* RockauthClient.swift */; };
+		A372908A1BFA9E9D00D223BE /* EmailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290831BFA9E9D00D223BE /* EmailProvider.swift */; };
+		A372908B1BFA9E9D00D223BE /* FacebookProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290841BFA9E9D00D223BE /* FacebookProvider.swift */; };
+		A372908C1BFA9E9D00D223BE /* GoogleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290851BFA9E9D00D223BE /* GoogleProvider.swift */; };
+		A372908D1BFA9E9D00D223BE /* InstagramProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290861BFA9E9D00D223BE /* InstagramProvider.swift */; };
+		A372908E1BFA9E9D00D223BE /* LoginProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290871BFA9E9D00D223BE /* LoginProviderProtocol.swift */; };
+		A372908F1BFA9E9D00D223BE /* SocialProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290881BFA9E9D00D223BE /* SocialProviderProtocol.swift */; };
+		A37290901BFA9E9D00D223BE /* TwitterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290891BFA9E9D00D223BE /* TwitterProvider.swift */; };
+		A37290991BFA9EA600D223BE /* ConnectWithSocialNetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290911BFA9EA600D223BE /* ConnectWithSocialNetworksView.swift */; };
+		A372909A1BFA9EA600D223BE /* FlatRoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290921BFA9EA600D223BE /* FlatRoundedButton.swift */; };
+		A372909B1BFA9EA600D223BE /* FullConnectWithSocialNetworksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290931BFA9EA600D223BE /* FullConnectWithSocialNetworksViewController.swift */; };
+		A372909C1BFA9EA600D223BE /* RockauthNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290941BFA9EA600D223BE /* RockauthNavigationController.swift */; };
+		A372909D1BFA9EA600D223BE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290951BFA9EA600D223BE /* SignInViewController.swift */; };
+		A372909E1BFA9EA600D223BE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290961BFA9EA600D223BE /* SignUpViewController.swift */; };
+		A372909F1BFA9EA600D223BE /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290971BFA9EA600D223BE /* SplashViewController.swift */; };
+		A37290A01BFA9EA600D223BE /* TwitterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290981BFA9EA600D223BE /* TwitterButton.swift */; };
 		BC0134271BD597000063541C /* RockauthiOS.h in Headers */ = {isa = PBXBuildFile; fileRef = BC0134261BD597000063541C /* RockauthiOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC01342D1BD597000063541C /* RockauthiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC0134211BD597000063541C /* RockauthiOS.framework */; };
 		BC0134341BD597000063541C /* RockauthiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0134331BD597000063541C /* RockauthiOSTests.swift */; };
@@ -43,23 +68,48 @@
 /* Begin PBXFileReference section */
 		72B0861DA086C4EECFD6B661 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		8789A069A7F0BABDB409D595 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		A305851C1BE813F5000902A4 /* TwitterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwitterButton.swift; path = Classes/TwitterButton.swift; sourceTree = "<group>"; };
-		A305851E1BE8274D000902A4 /* icon-eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye.png"; sourceTree = "<group>"; };
-		A305851F1BE8274D000902A4 /* icon-eye@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye@2x.png"; sourceTree = "<group>"; };
-		A30585201BE8274D000902A4 /* icon-eye@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye@3x.png"; sourceTree = "<group>"; };
 		A30DB6D41BE4194400F4F2D5 /* icon-twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-twitter.png"; sourceTree = "<group>"; };
 		A30DB6D51BE4194400F4F2D5 /* icon-twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-twitter@2x.png"; sourceTree = "<group>"; };
 		A30DB6D61BE4194400F4F2D5 /* icon-twitter@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-twitter@3x.png"; sourceTree = "<group>"; };
-		A37170B71BDFC32F00925F9F /* FacebookProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FacebookProvider.swift; path = Classes/FacebookProvider.swift; sourceTree = "<group>"; };
-		A37170B81BDFC32F00925F9F /* RockauthError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RockauthError.swift; path = Classes/RockauthError.swift; sourceTree = "<group>"; };
-		A37170BB1BDFC35900925F9F /* TwitterProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwitterProvider.swift; path = Classes/TwitterProvider.swift; sourceTree = "<group>"; };
-		A38F91E01BD925BD00D722F5 /* ProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProviderProtocol.swift; path = Classes/ProviderProtocol.swift; sourceTree = "<group>"; };
-		A38F91E11BD925BD00D722F5 /* RockauthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RockauthClient.swift; path = Classes/RockauthClient.swift; sourceTree = "<group>"; };
-		A3B3B2991BF24FD1001F8BC9 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = Classes/SignInViewController.swift; sourceTree = "<group>"; };
-		A3BA716F1BE97A25005B4A89 /* icon-eye-orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye-orange.png"; sourceTree = "<group>"; };
-		A3BA71701BE97A25005B4A89 /* icon-eye-orange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye-orange@2x.png"; sourceTree = "<group>"; };
-		A3BA71711BE97A25005B4A89 /* icon-eye-orange@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye-orange@3x.png"; sourceTree = "<group>"; };
-		A3C3A1501BE7F3B800BFF7C2 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = Classes/SignUpViewController.swift; sourceTree = "<group>"; };
+		A372901B1BFA9C2B00D223BE /* eyeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eyeIcon.png; sourceTree = "<group>"; };
+		A372901C1BFA9C2B00D223BE /* eyeIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eyeIcon@2x.png"; sourceTree = "<group>"; };
+		A372901D1BFA9C2B00D223BE /* eyeIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eyeIcon@3x.png"; sourceTree = "<group>"; };
+		A372901E1BFA9C2B00D223BE /* googleicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = googleicon.png; sourceTree = "<group>"; };
+		A372901F1BFA9C2B00D223BE /* googleicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "googleicon@2x.png"; sourceTree = "<group>"; };
+		A37290201BFA9C2B00D223BE /* googleicon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "googleicon@3x.png"; sourceTree = "<group>"; };
+		A37290211BFA9C2B00D223BE /* icon-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-arrow.png"; sourceTree = "<group>"; };
+		A37290221BFA9C2B00D223BE /* icon-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-arrow@2x.png"; sourceTree = "<group>"; };
+		A37290231BFA9C2B00D223BE /* icon-arrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-arrow@3x.png"; sourceTree = "<group>"; };
+		A37290241BFA9C2B00D223BE /* icon-eye-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye-gray.png"; sourceTree = "<group>"; };
+		A37290251BFA9C2B00D223BE /* icon-eye-gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye-gray@2x.png"; sourceTree = "<group>"; };
+		A37290261BFA9C2B00D223BE /* icon-eye-gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-eye-gray@3x.png"; sourceTree = "<group>"; };
+		A37290271BFA9C2B00D223BE /* icon-facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-facebook.png"; sourceTree = "<group>"; };
+		A37290281BFA9C2B00D223BE /* icon-facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-facebook@2x.png"; sourceTree = "<group>"; };
+		A37290291BFA9C2B00D223BE /* icon-facebook@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-facebook@3x.png"; sourceTree = "<group>"; };
+		A37290391BFA9C3900D223BE /* instagramIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = instagramIcon.png; sourceTree = "<group>"; };
+		A372903A1BFA9C3900D223BE /* instagramIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "instagramIcon@2x.png"; sourceTree = "<group>"; };
+		A372903B1BFA9C3900D223BE /* instagramIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "instagramIcon@3x.png"; sourceTree = "<group>"; };
+		A372903C1BFA9C3900D223BE /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		A372903D1BFA9C3900D223BE /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		A372903E1BFA9C3900D223BE /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
+		A372907D1BFA9E8D00D223BE /* RockauthError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockauthError.swift; sourceTree = "<group>"; };
+		A372907E1BFA9E8D00D223BE /* UIColor+Rocketmade.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Rocketmade.swift"; sourceTree = "<group>"; };
+		A37290811BFA9E9300D223BE /* RockauthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockauthClient.swift; sourceTree = "<group>"; };
+		A37290831BFA9E9D00D223BE /* EmailProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailProvider.swift; sourceTree = "<group>"; };
+		A37290841BFA9E9D00D223BE /* FacebookProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookProvider.swift; sourceTree = "<group>"; };
+		A37290851BFA9E9D00D223BE /* GoogleProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleProvider.swift; sourceTree = "<group>"; };
+		A37290861BFA9E9D00D223BE /* InstagramProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstagramProvider.swift; sourceTree = "<group>"; };
+		A37290871BFA9E9D00D223BE /* LoginProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginProviderProtocol.swift; sourceTree = "<group>"; };
+		A37290881BFA9E9D00D223BE /* SocialProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialProviderProtocol.swift; sourceTree = "<group>"; };
+		A37290891BFA9E9D00D223BE /* TwitterProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterProvider.swift; sourceTree = "<group>"; };
+		A37290911BFA9EA600D223BE /* ConnectWithSocialNetworksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectWithSocialNetworksView.swift; sourceTree = "<group>"; };
+		A37290921BFA9EA600D223BE /* FlatRoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatRoundedButton.swift; sourceTree = "<group>"; };
+		A37290931BFA9EA600D223BE /* FullConnectWithSocialNetworksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullConnectWithSocialNetworksViewController.swift; sourceTree = "<group>"; };
+		A37290941BFA9EA600D223BE /* RockauthNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockauthNavigationController.swift; sourceTree = "<group>"; };
+		A37290951BFA9EA600D223BE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		A37290961BFA9EA600D223BE /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		A37290971BFA9EA600D223BE /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		A37290981BFA9EA600D223BE /* TwitterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterButton.swift; sourceTree = "<group>"; };
 		BC0134211BD597000063541C /* RockauthiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RockauthiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC0134251BD597000063541C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC0134261BD597000063541C /* RockauthiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RockauthiOS.h; sourceTree = "<group>"; };
@@ -92,27 +142,70 @@
 		A30DB6CC1BE3DEA300F4F2D5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				A305851C1BE813F5000902A4 /* TwitterButton.swift */,
-				A3C3A1501BE7F3B800BFF7C2 /* SignUpViewController.swift */,
-				A3B3B2991BF24FD1001F8BC9 /* SignInViewController.swift */,
+				A37290911BFA9EA600D223BE /* ConnectWithSocialNetworksView.swift */,
+				A37290921BFA9EA600D223BE /* FlatRoundedButton.swift */,
+				A37290931BFA9EA600D223BE /* FullConnectWithSocialNetworksViewController.swift */,
+				A37290941BFA9EA600D223BE /* RockauthNavigationController.swift */,
+				A37290951BFA9EA600D223BE /* SignInViewController.swift */,
+				A37290961BFA9EA600D223BE /* SignUpViewController.swift */,
+				A37290971BFA9EA600D223BE /* SplashViewController.swift */,
+				A37290981BFA9EA600D223BE /* TwitterButton.swift */,
 			);
-			name = UI;
+			path = UI;
 			sourceTree = "<group>";
 		};
 		A30DB6D11BE3FF5A00F4F2D5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A37290391BFA9C3900D223BE /* instagramIcon.png */,
+				A372903A1BFA9C3900D223BE /* instagramIcon@2x.png */,
+				A372903B1BFA9C3900D223BE /* instagramIcon@3x.png */,
+				A372903C1BFA9C3900D223BE /* logo.png */,
+				A372903D1BFA9C3900D223BE /* logo@2x.png */,
+				A372903E1BFA9C3900D223BE /* logo@3x.png */,
+				A372901B1BFA9C2B00D223BE /* eyeIcon.png */,
+				A372901C1BFA9C2B00D223BE /* eyeIcon@2x.png */,
+				A372901D1BFA9C2B00D223BE /* eyeIcon@3x.png */,
+				A372901E1BFA9C2B00D223BE /* googleicon.png */,
+				A372901F1BFA9C2B00D223BE /* googleicon@2x.png */,
+				A37290201BFA9C2B00D223BE /* googleicon@3x.png */,
+				A37290211BFA9C2B00D223BE /* icon-arrow.png */,
+				A37290221BFA9C2B00D223BE /* icon-arrow@2x.png */,
+				A37290231BFA9C2B00D223BE /* icon-arrow@3x.png */,
+				A37290241BFA9C2B00D223BE /* icon-eye-gray.png */,
+				A37290251BFA9C2B00D223BE /* icon-eye-gray@2x.png */,
+				A37290261BFA9C2B00D223BE /* icon-eye-gray@3x.png */,
+				A37290271BFA9C2B00D223BE /* icon-facebook.png */,
+				A37290281BFA9C2B00D223BE /* icon-facebook@2x.png */,
+				A37290291BFA9C2B00D223BE /* icon-facebook@3x.png */,
 				A30DB6D41BE4194400F4F2D5 /* icon-twitter.png */,
 				A30DB6D51BE4194400F4F2D5 /* icon-twitter@2x.png */,
 				A30DB6D61BE4194400F4F2D5 /* icon-twitter@3x.png */,
-				A305851E1BE8274D000902A4 /* icon-eye.png */,
-				A305851F1BE8274D000902A4 /* icon-eye@2x.png */,
-				A30585201BE8274D000902A4 /* icon-eye@3x.png */,
-				A3BA716F1BE97A25005B4A89 /* icon-eye-orange.png */,
-				A3BA71701BE97A25005B4A89 /* icon-eye-orange@2x.png */,
-				A3BA71711BE97A25005B4A89 /* icon-eye-orange@3x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		A37290451BFA9C4300D223BE /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				A37290831BFA9E9D00D223BE /* EmailProvider.swift */,
+				A37290841BFA9E9D00D223BE /* FacebookProvider.swift */,
+				A37290851BFA9E9D00D223BE /* GoogleProvider.swift */,
+				A37290861BFA9E9D00D223BE /* InstagramProvider.swift */,
+				A37290871BFA9E9D00D223BE /* LoginProviderProtocol.swift */,
+				A37290881BFA9E9D00D223BE /* SocialProviderProtocol.swift */,
+				A37290891BFA9E9D00D223BE /* TwitterProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		A37290501BFA9C7B00D223BE /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A372907D1BFA9E8D00D223BE /* RockauthError.swift */,
+				A372907E1BFA9E8D00D223BE /* UIColor+Rocketmade.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		BC0134171BD597000063541C = {
@@ -138,15 +231,13 @@
 		BC0134231BD597000063541C /* RockauthiOS */ = {
 			isa = PBXGroup;
 			children = (
-				A30DB6D11BE3FF5A00F4F2D5 /* Resources */,
-				A30DB6CC1BE3DEA300F4F2D5 /* UI */,
-				A37170B71BDFC32F00925F9F /* FacebookProvider.swift */,
-				A37170B81BDFC32F00925F9F /* RockauthError.swift */,
-				A38F91E01BD925BD00D722F5 /* ProviderProtocol.swift */,
-				A38F91E11BD925BD00D722F5 /* RockauthClient.swift */,
 				BC0134261BD597000063541C /* RockauthiOS.h */,
+				A37290811BFA9E9300D223BE /* RockauthClient.swift */,
+				A37290501BFA9C7B00D223BE /* Utils */,
+				A37290451BFA9C4300D223BE /* Providers */,
+				A30DB6CC1BE3DEA300F4F2D5 /* UI */,
+				A30DB6D11BE3FF5A00F4F2D5 /* Resources */,
 				BC0134241BD597000063541C /* Supporting Files */,
-				A37170BB1BDFC35900925F9F /* TwitterProvider.swift */,
 			);
 			path = RockauthiOS;
 			sourceTree = "<group>";
@@ -286,15 +377,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A30585231BE8274D000902A4 /* icon-eye@3x.png in Resources */,
-				A30585221BE8274D000902A4 /* icon-eye@2x.png in Resources */,
-				A3BA71721BE97A25005B4A89 /* icon-eye-orange.png in Resources */,
-				A3BA71741BE97A25005B4A89 /* icon-eye-orange@3x.png in Resources */,
-				A30585211BE8274D000902A4 /* icon-eye.png in Resources */,
+				A37290431BFA9C3900D223BE /* logo@2x.png in Resources */,
+				A37290321BFA9C2B00D223BE /* icon-arrow@3x.png in Resources */,
+				A37290301BFA9C2B00D223BE /* icon-arrow.png in Resources */,
+				A37290421BFA9C3900D223BE /* logo.png in Resources */,
+				A37290311BFA9C2B00D223BE /* icon-arrow@2x.png in Resources */,
 				A30DB6D71BE4194400F4F2D5 /* icon-twitter.png in Resources */,
-				A3BA71731BE97A25005B4A89 /* icon-eye-orange@2x.png in Resources */,
+				A37290401BFA9C3900D223BE /* instagramIcon@2x.png in Resources */,
+				A372902A1BFA9C2B00D223BE /* eyeIcon.png in Resources */,
+				A37290371BFA9C2B00D223BE /* icon-facebook@2x.png in Resources */,
+				A37290411BFA9C3900D223BE /* instagramIcon@3x.png in Resources */,
+				A37290441BFA9C3900D223BE /* logo@3x.png in Resources */,
+				A372902E1BFA9C2B00D223BE /* googleicon@2x.png in Resources */,
+				A372902F1BFA9C2B00D223BE /* googleicon@3x.png in Resources */,
+				A37290351BFA9C2B00D223BE /* icon-eye-gray@3x.png in Resources */,
+				A37290361BFA9C2B00D223BE /* icon-facebook.png in Resources */,
+				A372902C1BFA9C2B00D223BE /* eyeIcon@3x.png in Resources */,
+				A37290341BFA9C2B00D223BE /* icon-eye-gray@2x.png in Resources */,
+				A37290381BFA9C2B00D223BE /* icon-facebook@3x.png in Resources */,
+				A37290331BFA9C2B00D223BE /* icon-eye-gray.png in Resources */,
 				A30DB6D81BE4194400F4F2D5 /* icon-twitter@2x.png in Resources */,
+				A372902B1BFA9C2B00D223BE /* eyeIcon@2x.png in Resources */,
+				A372903F1BFA9C3900D223BE /* instagramIcon.png in Resources */,
 				A30DB6D91BE4194400F4F2D5 /* icon-twitter@3x.png in Resources */,
+				A372902D1BFA9C2B00D223BE /* googleicon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,14 +451,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3C3A1511BE7F3B800BFF7C2 /* SignUpViewController.swift in Sources */,
-				A305851D1BE813F5000902A4 /* TwitterButton.swift in Sources */,
-				A38F91E21BD925BD00D722F5 /* ProviderProtocol.swift in Sources */,
-				A37170BC1BDFC35900925F9F /* TwitterProvider.swift in Sources */,
-				A3B3B29A1BF24FD1001F8BC9 /* SignInViewController.swift in Sources */,
-				A37170BA1BDFC32F00925F9F /* RockauthError.swift in Sources */,
-				A38F91E31BD925BD00D722F5 /* RockauthClient.swift in Sources */,
-				A37170B91BDFC32F00925F9F /* FacebookProvider.swift in Sources */,
+				A37290801BFA9E8D00D223BE /* UIColor+Rocketmade.swift in Sources */,
+				A372908A1BFA9E9D00D223BE /* EmailProvider.swift in Sources */,
+				A372909B1BFA9EA600D223BE /* FullConnectWithSocialNetworksViewController.swift in Sources */,
+				A372909F1BFA9EA600D223BE /* SplashViewController.swift in Sources */,
+				A372907F1BFA9E8D00D223BE /* RockauthError.swift in Sources */,
+				A372908C1BFA9E9D00D223BE /* GoogleProvider.swift in Sources */,
+				A372908E1BFA9E9D00D223BE /* LoginProviderProtocol.swift in Sources */,
+				A37290821BFA9E9300D223BE /* RockauthClient.swift in Sources */,
+				A37290901BFA9E9D00D223BE /* TwitterProvider.swift in Sources */,
+				A372909D1BFA9EA600D223BE /* SignInViewController.swift in Sources */,
+				A372908D1BFA9E9D00D223BE /* InstagramProvider.swift in Sources */,
+				A372909E1BFA9EA600D223BE /* SignUpViewController.swift in Sources */,
+				A372908B1BFA9E9D00D223BE /* FacebookProvider.swift in Sources */,
+				A372909C1BFA9EA600D223BE /* RockauthNavigationController.swift in Sources */,
+				A37290991BFA9EA600D223BE /* ConnectWithSocialNetworksView.swift in Sources */,
+				A37290A01BFA9EA600D223BE /* TwitterButton.swift in Sources */,
+				A372909A1BFA9EA600D223BE /* FlatRoundedButton.swift in Sources */,
+				A372908F1BFA9E9D00D223BE /* SocialProviderProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

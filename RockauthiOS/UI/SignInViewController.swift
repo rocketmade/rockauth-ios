@@ -91,14 +91,16 @@ public class SignInViewController: UIViewController {
         self.passwordField.secureTextEntry = true
         views["passwordField"] = self.passwordField
 
+        var themeColor: UIColor
+        if let tc = (self.navigationController as! RockauthNavigationController).themeColor {
+            themeColor = tc
+        } else {
+            themeColor = UIColor.blackColor()
+        }
         self.eyeButton = UIButton(frame: CGRect(x: self.view.frame.size.width - 45, y: 52, width: 30, height: 30))
         let image = UIImage(named: "icon-eye-gray", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())
         let highlightedImage = UIImage(named: "eyeIcon", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        if let themeColor = RockauthClient.sharedClient?.themeColor {
-            self.eyeButton.imageView?.tintColor = themeColor
-        } else {
-            self.eyeButton.imageView?.tintColor = UIColor.blackColor()
-        }
+        self.eyeButton.imageView?.tintColor = themeColor
         self.eyeButton.selected = false
         self.eyeButton.setImage(image, forState: .Normal)
         self.eyeButton.setImage(highlightedImage, forState: .Selected)
@@ -117,7 +119,7 @@ public class SignInViewController: UIViewController {
         self.signInButton.setTitle("Sign In", forState: .Normal)
         self.signInButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.signInButton.titleLabel?.font = UIFont.systemFontOfSize(19, weight: UIFontWeightSemibold)
-        self.signInButton.backgroundColor = RockauthClient.sharedClient?.themeColor
+        self.signInButton.backgroundColor = themeColor
         self.signInButton.addTarget(self, action: Selector("signInTapped"), forControlEvents: .TouchUpInside)
         views["signInButton"] = self.signInButton
 

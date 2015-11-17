@@ -93,7 +93,8 @@ class SplashViewController: UIViewController {
         buttonsContainer.addConstraints(socialButtonsContainerHorizontalContstriants + socialButtonsContainerVerticalConstraints)
 
         if useEmailAuthentication! {
-            let signInButton = FlatRoundedButton(title: "Sign In", fontSize: 19, color: RockauthClient.sharedClient?.themeColor)
+            let themeColor = (self.navigationController as! RockauthNavigationController).themeColor
+            let signInButton = FlatRoundedButton(title: "Sign In", fontSize: 19, color: themeColor)
             signInButton.translatesAutoresizingMaskIntoConstraints = false
             signInButton.addTarget(self, action: "signInButtonPressed:", forControlEvents: .TouchUpInside)
             buttonsContainer.addSubview(signInButton)
@@ -101,7 +102,7 @@ class SplashViewController: UIViewController {
             let height = 50
             let signInButtonVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[signInButton(\(height))]-(10)-[socialButtonsContainer]", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
             buttonsContainer.addConstraints(signInButtonVerticalConstraints)
-            let signUpButton = FlatRoundedButton(title: "Sign Up", fontSize: 19, color: RockauthClient.sharedClient?.themeColor)
+            let signUpButton = FlatRoundedButton(title: "Sign Up", fontSize: 19, color: themeColor)
             signUpButton.translatesAutoresizingMaskIntoConstraints = false
             signUpButton.addTarget(self, action: "signUpButtonPressed:", forControlEvents: .TouchUpInside)
             buttonsContainer.addSubview(signUpButton)
