@@ -12,13 +12,13 @@ public protocol SocialProvider: LoginProvider {
 
     static var sharedProvider: SocialProvider? {get set}
 
-    var name: String {get}
+    var name: String {get} // Identifier used by the rockauth server.
     var token: String? {get}
     var secret: String? {get}
 
-    var prettyName: String {get} // Should be capitalized and use any styling specific to the provider, eg. "Google+"
-    var iconName: String? {get}
-    var color: UIColor {get}
+    var prettyName: String {get} // Implement if the name isn't simply converted by the default impmlementation below. Should be capitalized and use any styling specific to the provider, eg. "Google+"
+    var iconName: String? {get} // Filename of the icon image.
+    var color: UIColor {get} // Background color for the "Connect with ..." button
 
     var hash: Dictionary<String, String> {get} // Does not need to be implemented if the default implementation below works.
 
