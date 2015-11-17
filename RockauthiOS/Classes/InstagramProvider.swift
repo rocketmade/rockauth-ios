@@ -34,7 +34,8 @@ public static var sharedProvider: SocialProvider?
     public func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         self.successBlock = success
         self.failureBlock = failure
-        presentWebView()
+        webViewController = IGViewController(delegate: self, callbackUrl: self.igRedirectUri)
+        viewController.presentViewController(webViewController, animated: true, completion: nil)
         let urlStr = "https://api.instagram.com/oauth/authorize/?client_id=\(igAppId!)&redirect_uri=\(igRedirectUri!.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!)&response_type=token&scope=basic"
         let authUrl = NSURL(string: urlStr)!
         webViewController.webView.loadRequest(NSURLRequest(URL: authUrl))
@@ -45,13 +46,7 @@ public static var sharedProvider: SocialProvider?
     }
     
     // MARK: helper methods
-    
-    func presentWebView() {
-        webViewController = IGViewController(delegate: self, callbackUrl: self.igRedirectUri)
-        let viewController :UIViewController = UIApplication.sharedApplication().keyWindow!.rootViewController!
-        viewController.presentViewController(webViewController, animated: true, completion: nil)
-    }
-    
+
     // MARK: IGViewControllerDelegate methods
     
     func success(token: String) {
@@ -111,8 +106,8 @@ class IGViewController :UIViewController, UIWebViewDelegate {
     override func loadView() {
         super.loadView()
         self.view = UIView()
-        self.view.backgroundColor = UIColor.blueColor()
-        webView.backgroundColor = UIColor.redColor()
+        self.view.backgroundColor = UIColor.whiteColor()
+//        webView.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(webView)
         applyConstraints()
     }
@@ -123,7 +118,7 @@ class IGViewController :UIViewController, UIWebViewDelegate {
     }
     
     func applyConstraints() {
-        view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1, constant: 20))
         view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Left, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Right, relatedBy: .Equal, toItem: self.view, attribute: .Right, multiplier: 1, constant: 0))
