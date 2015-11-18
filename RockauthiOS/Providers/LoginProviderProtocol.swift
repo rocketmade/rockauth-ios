@@ -10,7 +10,7 @@ import UIKit
 
 public protocol LoginProvider {
 
-    func login(success success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void)
+    func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void)
     func logout()
 
 }

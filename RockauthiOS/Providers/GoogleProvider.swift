@@ -21,7 +21,7 @@ public class GoogleProvider: SocialProvider {
     
     public init() { }
     
-    public func login(success success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         if let sharedClient = RockauthClient.sharedClient {
             sharedClient.login(self,
                 success: { (user) -> Void in
