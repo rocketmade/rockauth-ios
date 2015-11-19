@@ -28,7 +28,7 @@ public protocol SocialProvider: LoginProvider {
 
 public extension SocialProvider {
     var prettyName: String {
-        return name.localizedCapitalizedString
+        return name.capitalizedString
     }
 
     var hash: Dictionary<String, String> {

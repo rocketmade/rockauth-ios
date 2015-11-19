@@ -35,7 +35,11 @@ public static var sharedProvider: SocialProvider?
         self.successBlock = success
         self.failureBlock = failure
         webViewController = IGViewController(delegate: self, callbackUrl: self.igRedirectUri)
-        viewController.presentViewController(webViewController, animated: true, completion: nil)
+        if let navController = viewController.navigationController {
+            navController.pushViewController(webViewController, animated: true)
+        } else {
+            viewController.presentViewController(webViewController, animated: true, completion: nil)
+        }
         let urlStr = "https://api.instagram.com/oauth/authorize/?client_id=\(igAppId!)&redirect_uri=\(igRedirectUri!.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())!)&response_type=token&scope=basic"
         let authUrl = NSURL(string: urlStr)!
         webViewController.webView.loadRequest(NSURLRequest(URL: authUrl))
@@ -118,7 +122,11 @@ class IGViewController :UIViewController, UIWebViewDelegate {
     }
     
     func applyConstraints() {
-        view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1, constant: 20))
+        if let _ = self.navigationController {
+            view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1, constant: 0))
+        } else {
+            view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1, constant: 20))
+        }
         view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Left, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1, constant: 0))
         view.addConstraint(NSLayoutConstraint(item: webView, attribute: .Right, relatedBy: .Equal, toItem: self.view, attribute: .Right, multiplier: 1, constant: 0))
