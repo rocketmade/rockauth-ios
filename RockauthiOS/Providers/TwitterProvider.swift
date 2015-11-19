@@ -8,6 +8,10 @@
 
 import UIKit
 
+public protocol ConnectWithTwitterDelegate {
+    func twitterButtonClicked()
+}
+
 public class TwitterProvider: SocialProvider {
 
     public static var sharedProvider: SocialProvider?
@@ -18,6 +22,7 @@ public class TwitterProvider: SocialProvider {
 
     public var iconName: String? = "icon-twitter"
     public var color: UIColor = UIColor(colorLiteralRed: 0x55/255.0, green: 0xac/255.0, blue: 0xee/255.0, alpha: 1.0)
+    public var delegate: ConnectWithTwitterDelegate?
 
     public init(token: String, secret: String) {
         self.token = token
@@ -25,6 +30,15 @@ public class TwitterProvider: SocialProvider {
     }
 
     public func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+        if let delegate = self.delegate {
+            delegate.twitterButtonClicked()
+        } else {
+            let e = RockauthError(title: "Connect With Twitter Delegate not found", message: "You must set the ConnectWithTwitterDelegate")
+            failure(error: e)
+        }
+    }
+
+    public func connect(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         if let sharedClient = RockauthClient.sharedClient {
             sharedClient.login(self, success: { (user) -> Void in
                 success(user: user)

@@ -66,6 +66,7 @@ public class RockauthNavigationController: UINavigationController {
         self.failed = failed
         let splash = SplashViewController(showCancelButton: true, logo: self.logo, useEmailAuthentication: self.useEmailAuthentication, providers: self.providers, connected: self.connected, failed: self.failed)
         self.viewControllers = [splash]
+//        self.modalPresentationStyle = .Custom
         presenter.presentViewController(self, animated: true) { () -> Void in
         }
     }

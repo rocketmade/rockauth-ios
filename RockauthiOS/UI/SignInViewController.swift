@@ -175,19 +175,34 @@ public class SignInViewController: UIViewController {
             self.passwordField.secureTextEntry = false
         }
     }
-
+    
     func signInTapped() {
         self.emailField.text = self.emailField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         resignFirstResponder()
-        // check with server
-        RockauthClient.sharedClient!.login(self.emailField.text, password: self.passwordField.text, success: {
-            (user) -> Void in
-            // give the app the user
-            self.connected(user: user)
-            }) { (error) -> Void in
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    self.navigationController!.presentViewController((error as! RockauthError).alertController, animated: true, completion: nil)
-                }
+        self.emailUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
+        self.passwordUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
+        var validationPassed = true
+        if (self.passwordField.text == "") {
+            self.passwordField.attributedPlaceholder = NSAttributedString(string: "Password is required", attributes: [NSForegroundColorAttributeName: UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 1)])
+            self.passwordUnderbar.backgroundColor = UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 0.5)
+            validationPassed = false
+        }
+        if (self.emailField.text == "") {
+            self.emailField.attributedPlaceholder = NSAttributedString(string: "Email is required", attributes: [NSForegroundColorAttributeName: UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 1)])
+            self.emailUnderbar.backgroundColor = UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 0.5)
+            validationPassed = false
+        }
+        if (validationPassed == true) {
+            // check with server
+            RockauthClient.sharedClient!.login(self.emailField.text, password: self.passwordField.text, success: {
+                (user) -> Void in
+                // give the app the user
+                self.connected(user: user)
+                }) { (error) -> Void in
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        self.navigationController!.presentViewController((error as! RockauthError).alertController, animated: true, completion: nil)
+                    }
+            }
         }
     }
     
