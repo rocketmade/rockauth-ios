@@ -18,26 +18,11 @@ public class RockauthClient {
     public var clientSecret: String
     public var twitterKey: String?
     public var twitterSecret: String?
-    public var themeColor: UIColor?
 
     public init(baseURL: NSURL, clientID: String, clientSecret: String) {
         self.apiURL = baseURL
         self.clientID = clientID
         self.clientSecret = clientSecret
-    }
-
-    public func showUI(presenter: UIViewController,themeColor: UIColor, logo: UIImage?, useEmailAuthentication: Bool, providers: [SocialProvider?], connected: (user:NSDictionary)->(), failed:(error: ErrorType)->()) {
-        self.themeColor = themeColor
-        let splash = SplashViewController(showCancelButton: true, logo: logo, useEmailAuthentication: useEmailAuthentication, providers: providers, connected: connected, failed: failed)
-        let nav = UINavigationController(rootViewController: splash)
-        nav.navigationBar.backgroundColor = themeColor
-        nav.navigationBar.barStyle = .Black
-        nav.navigationBar.barTintColor = themeColor
-        nav.navigationBar.tintColor = UIColor.whiteColor()
-        nav.navigationBar.translucent = false
-        nav.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        presenter.presentViewController(nav, animated: true) { () -> Void in
-        }
     }
 
     public func login(provider: SocialProvider, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
@@ -109,14 +94,15 @@ public class RockauthClient {
             if let responseDict = response as? NSDictionary {
                 if let errorObject = responseDict.objectForKey("error") {
                     let title: String
-                    if let t = errorObject["message"] as! String? {
-                        title = t
+                    if let t = errorObject["message"] {
+                        title = t as! String
                     } else {
                         title = "Error Signing In"
                     }
                     var e: RockauthError = RockauthError(title: title, message: "Could not sign in user")
                     if let validationErrors = errorObject["validation_errors"] {
                         var message = ""
+                        print(validationErrors)
                         for key in (validationErrors as! NSDictionary).allKeys {
                             message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
                         }
@@ -191,8 +177,8 @@ public class RockauthClient {
             if let responseDict = response as? NSDictionary {
                 if let errorObject = responseDict.objectForKey("error") {
                     let title: String
-                    if let t = errorObject["message"] as! String? {
-                        title = t
+                    if let t = errorObject["message"] {
+                        title = t as! String
                     } else {
                         title = "Error Signing Up"
                     }

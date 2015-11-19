@@ -91,14 +91,16 @@ public class SignInViewController: UIViewController {
         self.passwordField.secureTextEntry = true
         views["passwordField"] = self.passwordField
 
+        var themeColor: UIColor
+        if let tc = (self.navigationController as! RockauthNavigationController).themeColor {
+            themeColor = tc
+        } else {
+            themeColor = UIColor.blackColor()
+        }
         self.eyeButton = UIButton(frame: CGRect(x: self.view.frame.size.width - 45, y: 52, width: 30, height: 30))
         let image = UIImage(named: "icon-eye-gray", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())
         let highlightedImage = UIImage(named: "eyeIcon", inBundle: bundle, compatibleWithTraitCollection: UITraitCollection())?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        if let themeColor = RockauthClient.sharedClient?.themeColor {
-            self.eyeButton.imageView?.tintColor = themeColor
-        } else {
-            self.eyeButton.imageView?.tintColor = UIColor.blackColor()
-        }
+        self.eyeButton.imageView?.tintColor = themeColor
         self.eyeButton.selected = false
         self.eyeButton.setImage(image, forState: .Normal)
         self.eyeButton.setImage(highlightedImage, forState: .Selected)
@@ -117,7 +119,7 @@ public class SignInViewController: UIViewController {
         self.signInButton.setTitle("Sign In", forState: .Normal)
         self.signInButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.signInButton.titleLabel?.font = UIFont.systemFontOfSize(19, weight: UIFontWeightSemibold)
-        self.signInButton.backgroundColor = RockauthClient.sharedClient?.themeColor
+        self.signInButton.backgroundColor = themeColor
         self.signInButton.addTarget(self, action: Selector("signInTapped"), forControlEvents: .TouchUpInside)
         views["signInButton"] = self.signInButton
 
@@ -173,19 +175,34 @@ public class SignInViewController: UIViewController {
             self.passwordField.secureTextEntry = false
         }
     }
-
+    
     func signInTapped() {
         self.emailField.text = self.emailField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         resignFirstResponder()
-        // check with server
-        RockauthClient.sharedClient!.login(self.emailField.text, password: self.passwordField.text, success: {
-            (user) -> Void in
-            // give the app the user
-            self.connected(user: user)
-            }) { (error) -> Void in
-                NSOperationQueue.mainQueue().addOperationWithBlock {
-                    self.navigationController!.presentViewController((error as! RockauthError).alertController, animated: true, completion: nil)
-                }
+        self.emailUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
+        self.passwordUnderbar.backgroundColor = UIColor(white: 216/255.0, alpha: 1)
+        var validationPassed = true
+        if (self.passwordField.text == "") {
+            self.passwordField.attributedPlaceholder = NSAttributedString(string: "Password is required", attributes: [NSForegroundColorAttributeName: UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 1)])
+            self.passwordUnderbar.backgroundColor = UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 0.5)
+            validationPassed = false
+        }
+        if (self.emailField.text == "") {
+            self.emailField.attributedPlaceholder = NSAttributedString(string: "Email is required", attributes: [NSForegroundColorAttributeName: UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 1)])
+            self.emailUnderbar.backgroundColor = UIColor(red: 1, green: 90/255.0, blue: 16/255.0, alpha: 0.5)
+            validationPassed = false
+        }
+        if (validationPassed == true) {
+            // check with server
+            RockauthClient.sharedClient!.login(self.emailField.text, password: self.passwordField.text, success: {
+                (user) -> Void in
+                // give the app the user
+                self.connected(user: user)
+                }) { (error) -> Void in
+                    NSOperationQueue.mainQueue().addOperationWithBlock {
+                        self.navigationController!.presentViewController((error as! RockauthError).alertController, animated: true, completion: nil)
+                    }
+            }
         }
     }
     

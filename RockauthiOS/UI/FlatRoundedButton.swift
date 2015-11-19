@@ -45,8 +45,6 @@ public class FlatRoundedButton: UIButton {
         }
         if let color = color {
             self.setBackgroundImage(color.resizeableImageFromColor(), forState: UIControlState.Normal)
-        } else if let color = RockauthClient.sharedClient?.themeColor {
-            self.setBackgroundImage(color.resizeableImageFromColor(), forState: UIControlState.Normal)
         } else {
             self.setBackgroundImage(UIColor.blackColor().resizeableImageFromColor(), forState: UIControlState.Normal)
         }
