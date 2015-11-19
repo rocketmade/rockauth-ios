@@ -44,7 +44,7 @@ public static var sharedProvider: SocialProvider?
     public func logout() {
         //Instagram has a different sign in model so we have to delete the cached response from the webview.
         if let cookies = NSHTTPCookieStorage.sharedHTTPCookieStorage().cookies {
-            for c in cookies {
+            for c in cookies where c.domain == ".instagram.com"{
                 NSHTTPCookieStorage.sharedHTTPCookieStorage().deleteCookie(c)
             }
         }
