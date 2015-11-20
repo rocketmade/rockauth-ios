@@ -16,10 +16,7 @@ public class FacebookProvider: SocialProvider {
 
     public var name: String = "facebook"
     public var token :String? {
-        if FBSDKAccessToken.currentAccessToken() != nil {
-            return FBSDKAccessToken.currentAccessToken().tokenString
-        }
-        return nil
+        return FBSDKAccessToken.currentAccessToken().tokenString
     }
     public var secret: String? = nil
 
