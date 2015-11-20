@@ -26,19 +26,24 @@ public class RockauthClient {
     }
 
     public func login(provider: SocialProvider, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
-        let providerAuth = provider.hash
-        let params = ["authentication": [
+        
+        var authentication: [String: AnyObject] = [
             "auth_type": "assertion",
             "client_id": self.clientID,
             "client_secret": self.clientSecret,
-            // these are optional
-            //      "device_identifier": "",
-            //      "device_description": "",
-            //      "device_os": "",
-            //      "device_os_version": "",
-            "provider_authentication": providerAuth
-            ]]
+            "provider_authentication": provider.hash,
+            "device_description": UIDevice.currentDevice().name,
+            "device_os_version": UIDevice.currentDevice().systemVersion,
+            "device_os": UIDevice.currentDevice().systemName
+        ]
+        
+        //the identifier for vendor is optional so we should only include the key in the hash if it exists.
+        if let identifier = UIDevice.currentDevice().identifierForVendor?.UUIDString {
+           authentication["device_identifier"] = identifier
+        }
 
+        let params = ["authentication": authentication]
+        
         let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)authentications.json")!)
         request.HTTPMethod = "POST"
         do {
