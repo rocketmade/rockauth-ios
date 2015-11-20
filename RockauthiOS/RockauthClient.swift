@@ -118,6 +118,40 @@ public class RockauthClient {
             }.resume()
     }
 
+    public func logout(success: (response: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+        let data = [String:String]()
+        let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)me.json")!)
+        request.HTTPMethod = "DELETE"
+        do {
+            try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(data, options: .PrettyPrinted)
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+        } catch {
+            failure(error: error)
+        }
+        NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
+            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
+            print(request.description)
+            let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
+            if let responseDict = json as? NSDictionary {
+                if let errorObject = responseDict.objectForKey("error") {
+                    let title: String
+                    if let t = errorObject["message"] {
+                        title = t as! String
+                    } else {
+                        title = "Error Logging Out"
+                    }
+                    let e: RockauthError = RockauthError(title: title, message: "Could not log out user")
+                    failure(error: e)
+                } else {
+                    success(response: responseDict)
+                }
+            } else if let error = error {
+                failure(error: error)
+            }
+            }.resume()
+    }
+
     public func registerUser(providers: [SocialProvider], success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         registerUser(nil, lastName: nil, email: nil, password: nil, providers: providers, success: success, failure: failure);
     }

@@ -9,9 +9,9 @@
 import UIKit
 
 public class RockauthError: ErrorType {
-    var title: String = "Error"
-    var message: String = "Error"
-    var alertController: UIAlertController {
+    public var title: String = "Error"
+    public var message: String = "Error"
+    public var alertController: UIAlertController {
         let alert = UIAlertController(title: self.title, message: self.message, preferredStyle: .Alert)
         let okButton = UIAlertAction(title: "OK", style: .Default, handler:nil)
         alert.addAction(okButton)
