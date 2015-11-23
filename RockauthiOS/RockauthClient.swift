@@ -42,6 +42,10 @@ public class RockauthClient {
            authentication["device_identifier"] = identifier
         }
 
+        if let userName = provider.userName {
+            authentication["username"] = userName
+        }
+
         let params = ["authentication": authentication]
         
         let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)authentications.json")!)
