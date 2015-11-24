@@ -17,6 +17,9 @@ public protocol SocialProvider: LoginProvider {
     var secret: String? {get}
 
     var userName: String? {get}
+    var email: String? {get}
+    var firstName: String? {get}
+    var lastName: String? {get}
 
     var prettyName: String {get} // Implement if the name isn't simply converted by the default impmlementation below. Should be capitalized and use any styling specific to the provider, eg. "Google+"
     var iconName: String? {get} // Filename of the icon image.

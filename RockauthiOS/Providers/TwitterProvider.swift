@@ -20,6 +20,9 @@ public class TwitterProvider: SocialProvider {
     public var name: String = "twitter"
     public var secret: String?
     public var userName: String?
+    public var email: String? = nil
+    public var firstName: String? = nil
+    public var lastName: String? = nil
 
     public var iconName: String? = "icon-twitter"
     public var color: UIColor = UIColor(colorLiteralRed: 0x55/255.0, green: 0xac/255.0, blue: 0xee/255.0, alpha: 1.0)
