@@ -45,6 +45,15 @@ public class RockauthClient {
         if let userName = provider.userName {
             authentication["username"] = userName
         }
+        if let firstName = provider.firstName {
+            authentication["first_name"] = firstName
+        }
+        if let lastName = provider.lastName {
+            authentication["last_name"] = lastName
+        }
+        if let email = provider.email {
+            authentication["email"] = email
+        }
 
         let params = ["authentication": authentication]
         
