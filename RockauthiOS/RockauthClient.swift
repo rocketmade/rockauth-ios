@@ -57,12 +57,10 @@ public class RockauthClient {
 
         let params = ["authentication": authentication]
         
-        let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)authentications.json")!)
+        let request = self.jsonHTTPRequestWithPath("authentications.json")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
         } catch {
             print("request failed: \(error)")
         }
@@ -95,12 +93,10 @@ public class RockauthClient {
         }
         let params = ["authentication": authentication]
         // Create request
-        let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)authentications.json")!)
+        let request = self.jsonHTTPRequestWithPath("authentications.json")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
         } catch {
             failure(error: error)
         }
@@ -135,15 +131,21 @@ public class RockauthClient {
             }
             }.resume()
     }
+    
+    private func jsonHTTPRequestWithPath(path: String) -> NSMutableURLRequest {
+        let url = self.apiURL.URLByAppendingPathComponent(path)
+        let request = NSMutableURLRequest(URL: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        return request
+    }
 
     public func logout(success: (response: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         let data = [String:String]()
-        let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)me.json")!)
+        let request = self.jsonHTTPRequestWithPath("me.json")
         request.HTTPMethod = "DELETE"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(data, options: .PrettyPrinted)
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
         } catch {
             failure(error: error)
         }
