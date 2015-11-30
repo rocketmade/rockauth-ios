@@ -178,7 +178,7 @@ public class RockauthClient {
         registerUser(firstName, lastName: lastName, email: email, password: password, providers: nil, success: success, failure: failure)
 
     }
-
+    
     public func registerUser(firstName: String?, lastName: String?, email: String?, password: String?, providers: [SocialProvider]?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         // Create user
         let authentication = ["client_id": self.clientID, "client_secret": self.clientSecret]
@@ -250,5 +250,125 @@ public class RockauthClient {
                 failure(error: error)
             }
             }.resume()
+    }
+}
+
+typealias JWT = String
+
+class Session {
+    var authentication: Authetication
+    var user: RockauthUser
+    let providerAuthentications: [ProviderAuthentication]
+    
+    init?(json: [String: AnyObject?]) {
+        
+        guard let authenticationHash = json["authentication"] as? [String: AnyObject?], auth = Authetication(json: authenticationHash),
+            let usersArray = json["users"] as? [[String: AnyObject?]], userHash = usersArray.first, user = RockauthUser(json: userHash) else {
+                self.authentication = Authetication()
+                self.user = RockauthUser()
+                self.providerAuthentications = [ProviderAuthentication]()
+                return nil
+        }
+        
+        self.authentication = auth
+        self.user = user
+        
+        //pull the provider authentications out
+        if let providerAuths = json["provider_authentications"] as? [[String: AnyObject?]] {
+            var collector = [ProviderAuthentication]()
+            for hash in providerAuths {
+                if let auth = ProviderAuthentication(json: hash) {
+                    collector.append(auth)
+                }
+            }
+            self.providerAuthentications = collector
+        }
+        else{
+            self.providerAuthentications = [ProviderAuthentication]()
+        }
+    }
+}
+
+class RockauthUser {
+    let id: Int
+    let email: String?
+    let firstName: String?
+    let lastName: String?
+    
+    init() {
+        self.id = 0
+        self.email = ""
+        self.firstName = ""
+        self.lastName = ""
+    }
+    
+    init?(json: [String: AnyObject?]) {
+        
+        guard let id = json["id"] as? Int else {
+            self.id = 0
+            self.email = ""
+            self.firstName = ""
+            self.lastName = ""
+            return nil
+        }
+        
+        self.id = id
+        self.email = json["email"] as? String
+        self.firstName = json["first_name"] as? String
+        self.lastName = json["last_name"] as? String
+    }
+}
+
+class Authetication {
+    let id: Int
+    let jwt: JWT
+    let tokenID: String
+    let expiration: NSDate
+    let providerAuthID: Int?
+    
+    init() {
+        self.id = 0
+        self.jwt = ""
+        self.tokenID = ""
+        self.expiration = NSDate()
+        self.providerAuthID = nil
+    }
+    
+    init?(json: [String: AnyObject?]) {
+        
+        guard let id = json["id"] as? Int, jwt = json["token"] as? String, tokenID = json["token_id"] as? String, expiration = json["expiration"] as? Int else {
+            self.id = 0
+            self.jwt = ""
+            self.tokenID = ""
+            self.expiration = NSDate()
+            self.providerAuthID = nil
+            return nil
+        }
+        
+        self.id = id
+        self.jwt = jwt
+        self.tokenID = tokenID
+        self.expiration = NSDate(timeIntervalSince1970: NSTimeInterval(expiration))
+        self.providerAuthID = json["provider_authentication_id"] as? Int
+    }
+}
+
+class ProviderAuthentication {
+    let name: String
+    let userID: String
+    let id: Int
+    
+    init?(json: [String: AnyObject?]) {
+       
+        guard let name = json["provider"] as? String, let userID = json["provider_user_id"] as? String, id = json["id"] as? Int else {
+            self.id = 0
+            self.userID = ""
+            self.name = ""
+            return nil
+        }
+        
+        self.id = id
+        self.userID = userID
+        self.name = name
     }
 }
