@@ -1,0 +1,31 @@
+{
+    "users": [{
+              "id": 140,
+              "email": null,
+              "first_name": null,
+              "last_name": null,
+              "provider_authentication_ids": [54]
+              }],
+    "provider_authentications": [{
+                                 "id": 54,
+                                 "provider": "facebook",
+                                 "provider_user_id": "10102922162809270"
+                                 }, {
+                                 "id": 54,
+                                 "provider": "facebook",
+                                 "provider_user_id": "10102922162809270"
+                                 }],
+    "authentication": {
+        "id": 654,
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIiLCJpYXQiOjE0NDg5ODg3NTIsImV4cCI6MTQ4MDUyNDc1MiwiYXVkIjoiVE1rT2dzd3I1MzNaVXZiZDBabEExTzkwIiwic3ViIjoxNDAsImp0aSI6Ii9VU29xeVhVNnpBQ1BTVFVZdXBZV2lleGN0VzVqL1ZtIn0.OeysjDQhZUitaH3UfJMHS_dcT2vL_kD-u1xJVnYxYi8",
+        "token_id": "/USoqyXU6zACPSTUYupYWiexctW5j/Vm",
+        "expiration": 1480524752,
+        "client_version": null,
+        "device_identifier": "106B589F-CFA5-4926-8CD5-7279FDA29A4A",
+        "device_os": "iPhone OS",
+        "device_os_version": "9.1",
+        "device_description": "iPhone Simulator",
+        "user_id": 140,
+        "provider_authentication_id": 54
+    }
+}

@@ -123,13 +123,13 @@ public class RockauthClient {
     
     private func errorFromResponse(hash: [String: AnyObject?]) -> ErrorType? {
        
-        if let errorObject = hash["error"] as? [String: AnyObject?] {
+        if let errorObject = hash["error"] as? [String: AnyObject] {
             let title: String = errorObject["message"] as? String ?? "Error Signing In"
             var e: RockauthError = RockauthError(title: title, message: "Could not sign in user")
             if let validationErrors = errorObject["validation_errors"] {
                 var message = ""
                 for key in (validationErrors as! NSDictionary).allKeys {
-                    message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
+                    message += "\(key.capitalizedString) \(validationErrors.valueForKey(key as! String)![0])\n"
                 }
                 
                 e = RockauthError(title: title, message: message)
@@ -338,7 +338,7 @@ public class RockauthUser {
     }
 }
 
-public class Authetication {
+public class Authetication: Equatable{
     let id: Int
     let token: JWT
     let tokenID: String
@@ -372,7 +372,7 @@ public class Authetication {
     }
 }
 
-public class ProviderAuthentication {
+public class ProviderAuthentication: Equatable{
     let name: String
     let userID: String
     let id: Int
@@ -391,3 +391,18 @@ public class ProviderAuthentication {
         self.name = name
     }
 }
+
+public func ==(lhs: Authetication, rhs: Authetication) -> Bool{
+    return lhs.id == rhs.id &&
+    lhs.token == rhs.token &&
+    lhs.tokenID == rhs.tokenID &&
+    lhs.expiration == rhs.expiration &&
+    lhs.providerAuthID == rhs.providerAuthID
+}
+
+public func ==(lhs: ProviderAuthentication, rhs: ProviderAuthentication) -> Bool{
+    return lhs.id == rhs.id &&
+    lhs.userID == rhs.userID &&
+    lhs.name == rhs.name
+}
+
