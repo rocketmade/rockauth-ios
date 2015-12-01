@@ -33,7 +33,7 @@ public class TwitterProvider: SocialProvider {
         self.secret = secret
     }
 
-    public func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(fromViewController viewController: UIViewController, success: loginSuccess, failure: loginFailure) {
         if let delegate = self.delegate {
             delegate.twitterButtonClicked()
         } else {
@@ -42,13 +42,9 @@ public class TwitterProvider: SocialProvider {
         }
     }
 
-    public func connect(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func connect(fromViewController viewController: UIViewController, success: loginSuccess, failure: loginFailure) {
         if let sharedClient = RockauthClient.sharedClient {
-            sharedClient.login(self, success: { (user) -> Void in
-                success(user: user)
-                }, failure: { (error) -> Void in
-                    failure(error: error)
-            })
+            sharedClient.login(self, success: success, failure: failure)
         }
     }
 

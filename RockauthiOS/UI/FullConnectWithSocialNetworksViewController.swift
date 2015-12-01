@@ -11,10 +11,10 @@ import UIKit
 class FullConnectWithSocialNetworksViewController: UIViewController {
 
     var providers: [SocialProvider?]!
-    var connected: ((user: NSDictionary) -> ())!
-    var failed: ((error: ErrorType) -> ())!
+    var connected: loginSuccess!
+    var failed: loginFailure!
 
-    init(providers: [SocialProvider?], connected: (user: NSDictionary) -> (), failed: (error: ErrorType) -> ()) {
+    init(providers: [SocialProvider?], connected: loginSuccess, failed: loginFailure) {
         super.init(nibName: nil, bundle: nil)
         commonInit(providers, connected: connected, failed: failed)
     }
@@ -24,13 +24,13 @@ class FullConnectWithSocialNetworksViewController: UIViewController {
         commonInit([FacebookProvider.sharedProvider], connected: nil, failed: nil)
     }
 
-    func commonInit(providers: [SocialProvider?], connected: ((user: NSDictionary) -> ())?, failed: ((error: ErrorType) -> ())?) {
+    func commonInit(providers: [SocialProvider?], connected: loginSuccess?, failed: loginFailure?) {
         self.providers = providers
         if let connected = connected {
             self.connected = connected
         } else {
-            self.connected = {(user: NSDictionary) -> () in
-                print(user)
+            self.connected = {(session: RockAuthSession) -> () in
+               print(session)
             }
         }
         if let failed = failed {

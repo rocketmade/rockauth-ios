@@ -8,6 +8,9 @@
 
 import UIKit
 
+public typealias loginSuccess = (session: RockAuthSession) -> Void
+public typealias loginFailure = (error: ErrorType) -> Void
+
 public class RockauthClient {
 
     public static var sharedClient: RockauthClient?
@@ -25,7 +28,7 @@ public class RockauthClient {
         self.clientSecret = clientSecret
     }
 
-    public func login(provider: SocialProvider, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(provider: SocialProvider, success: loginSuccess, failure: loginFailure) {
         
         var authentication: [String: AnyObject] = [
             "auth_type": "assertion",
@@ -56,28 +59,10 @@ public class RockauthClient {
         }
 
         let params = ["authentication": authentication]
-        
-        let request = self.jsonHTTPRequestWithPath("authentications.json")
-        request.HTTPMethod = "POST"
-        do {
-            try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
-        } catch {
-            print("request failed: \(error)")
-        }
-
-        // TODO: fix this so it doesn't call success on 400 errors
-        NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
-            let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
-            if let responseDict = response as? NSDictionary {
-                print(responseDict)
-                success(user: responseDict)
-            } else {
-                failure(error: error!)
-            }
-            }.resume()
+        self.login(params, success: success, failure: failure)
     }
 
-    public func login(provider: EmailProvider, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(provider: EmailProvider, success: loginSuccess, failure: loginFailure) {
         if let email = provider.email, password = provider.password {
             login(email, password: password, success: success, failure: failure)
         } else {
@@ -85,14 +70,17 @@ public class RockauthClient {
         }
     }
 
-    public func login(email: String?, password: String?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(email: String?, password: String?, success: loginSuccess, failure: loginFailure) {
         var authentication = ["client_id": self.clientID, "client_secret": self.clientSecret, "auth_type": "password"]
         if let email = email, password = password {
             authentication["username"] = email
             authentication["password"] = password
         }
         let params = ["authentication": authentication]
-        // Create request
+        self.login(params, success: success, failure: failure)
+    }
+    
+    private func login(params: [String: AnyObject], success: (session: RockAuthSession) -> Void, failure: (error: ErrorType) -> Void) {
         let request = self.jsonHTTPRequestWithPath("authentications.json")
         request.HTTPMethod = "POST"
         do {
@@ -100,36 +88,56 @@ public class RockauthClient {
         } catch {
             failure(error: error)
         }
-
+        
+        self.loginOrSignupWithRequest(request, success: success, failure: failure)
+    }
+    
+    private func loginOrSignupWithRequest(request: NSURLRequest, success: (session: RockAuthSession) -> Void, failure: (error: ErrorType) -> Void) {
         NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            print(request.description)
-            let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
-            if let responseDict = response as? NSDictionary {
-                if let errorObject = responseDict.objectForKey("error") {
-                    let title: String
-                    if let t = errorObject["message"] {
-                        title = t as! String
-                    } else {
-                        title = "Error Signing In"
-                    }
-                    var e: RockauthError = RockauthError(title: title, message: "Could not sign in user")
-                    if let validationErrors = errorObject["validation_errors"] {
-                        var message = ""
-                        print(validationErrors)
-                        for key in (validationErrors as! NSDictionary).allKeys {
-                            message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
-                        }
-                        e = RockauthError(title: title, message: message)
-                    }
-                    failure(error: e)
-                } else {
-                    success(user: responseDict)
-                }
-            } else if let error = error {
+            
+            //exit now if there was an error with the request
+            if let error = error {
                 failure(error: error)
+                return
             }
+            
+            guard let responseJSON = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? [String: AnyObject] else {
+                failure(error: RockauthError(title: "Bad response", message: "Unexpected response from server, non json repsonse recieved"))
+                return
+            }
+            
+            if let responseError = self.errorFromResponse(responseJSON) {
+                failure(error: responseError)
+                return
+            }
+            
+            guard let session = RockAuthSession(json: responseJSON) else {
+                failure(error: RockauthError(title: "Bad response", message: "Missing authentication in response"))
+                return
+            }
+            
+            success(session: session)
+            
             }.resume()
+    }
+    
+    private func errorFromResponse(hash: [String: AnyObject?]) -> ErrorType? {
+       
+        if let errorObject = hash["error"] as? [String: AnyObject?] {
+            let title: String = errorObject["message"] as? String ?? "Error Signing In"
+            var e: RockauthError = RockauthError(title: title, message: "Could not sign in user")
+            if let validationErrors = errorObject["validation_errors"] {
+                var message = ""
+                for key in (validationErrors as! NSDictionary).allKeys {
+                    message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
+                }
+                
+                e = RockauthError(title: title, message: message)
+            }
+            
+            return e
+        }
+        return nil
     }
     
     private func jsonHTTPRequestWithPath(path: String) -> NSMutableURLRequest {
@@ -172,16 +180,15 @@ public class RockauthClient {
             }.resume()
     }
 
-    public func registerUser(providers: [SocialProvider], success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func registerUser(providers: [SocialProvider], success: loginSuccess, failure: loginFailure) {
         registerUser(nil, lastName: nil, email: nil, password: nil, providers: providers, success: success, failure: failure);
     }
 
-    public func registerUser(firstName: String?, lastName: String?, email: String, password: String, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func registerUser(firstName: String?, lastName: String?, email: String, password: String, success: loginSuccess, failure: loginFailure) {
         registerUser(firstName, lastName: lastName, email: email, password: password, providers: nil, success: success, failure: failure)
-
     }
     
-    public func registerUser(firstName: String?, lastName: String?, email: String?, password: String?, providers: [SocialProvider]?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func registerUser(firstName: String?, lastName: String?, email: String?, password: String?, providers: [SocialProvider]?, success: loginSuccess, failure: loginFailure) {
         // Create user
         let authentication = ["client_id": self.clientID, "client_secret": self.clientSecret]
         var user: Dictionary<String, AnyObject> = ["authentication": authentication]
@@ -214,69 +221,79 @@ public class RockauthClient {
 
         // Create request
         let params = ["user": user]
-        let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)me.json")!)
+        let request = self.jsonHTTPRequestWithPath("me.json")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
         } catch {
             failure(error: error)
         }
-
-        NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            print(request.description)
-            let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
-            if let responseDict = response as? NSDictionary {
-                if let errorObject = responseDict.objectForKey("error") {
-                    let title: String
-                    if let t = errorObject["message"] {
-                        title = t as! String
-                    } else {
-                        title = "Error Signing Up"
-                    }
-                    var e: RockauthError = RockauthError(title: title, message: "User could not be created")
-                    if let validationErrors = errorObject["validation_errors"] {
-                        var message = ""
-                        for key in (validationErrors as! NSDictionary).allKeys {
-                            message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
-                        }
-                        e = RockauthError(title: title, message: message)
-                    }
-                    failure(error: e)
-                } else {
-                    success(user: responseDict)
-                }
-            } else if let error = error {
-                failure(error: error)
-            }
-            }.resume()
+        
+        self.loginOrSignupWithRequest(request, success: success, failure: failure)
     }
 }
 
-typealias JWT = String
+public typealias JWT = String
 
-class Session {
-    var authentication: Authetication
-    var user: RockauthUser
+public class RockAuthSession {
+    let authentication: Authetication
+    let authentications: [Authetication]
+    let user: RockauthUser
     let providerAuthentications: [ProviderAuthentication]
     
     init?(json: [String: AnyObject?]) {
         
-        guard let authenticationHash = json["authentication"] as? [String: AnyObject?], auth = Authetication(json: authenticationHash),
-            let usersArray = json["users"] as? [[String: AnyObject?]], userHash = usersArray.first, user = RockauthUser(json: userHash) else {
-                self.authentication = Authetication()
-                self.user = RockauthUser()
-                self.providerAuthentications = [ProviderAuthentication]()
-                return nil
+        //local variables to pull out of the hash.  We use local variables so we can make a master nil check at the end so we can know if we should fail or not.
+        //We fail in one place because of a compiler bug where we have to initialize all variables before returning nil.
+        var localUser: RockauthUser?
+        var localAuthentication: Authetication?
+        var localAuthentications: [Authetication]?
+        
+        //User will either be in a collection or a top level hash.  This is done for consistencey but in practice there will only ever be one user
+        if let usersArray = json["users"] as? [[String: AnyObject]], hash = usersArray.first, user = RockauthUser(json: hash) {
+            localUser = user
+        }
+        else if let hash = json["user"] as? [String: AnyObject], user = RockauthUser(json: hash){
+            localUser = user
         }
         
-        self.authentication = auth
-        self.user = user
+        //Same approach with authentication
+        if let hash = json["authentication"] as? [String: AnyObject], let auth = Authetication(json: hash) {
+            //In this case only 1 auth came down so that is the one we should use and the user object will NOT have a authentication_id key
+            localAuthentications = [Authetication]()
+            localAuthentications!.append(auth)
+            localAuthentication = auth
+        }
+        else if let array = json["authentications"] as? [[String: AnyObject]] {
+            localAuthentications = [Authetication]()
+            for hash in array {
+                if let auth = Authetication(json: hash) {
+                localAuthentications!.append(auth)
+                }
+            }
+            
+            //In this case the user object should have the authentication_id key so we can look through all our auths and find the one we should be using for this session
+            if let userHash = json["user"] as? [String: AnyObject], authID = userHash["authentication_id"] as? Int{
+                localAuthentication = localAuthentications!.filter{ $0.id == authID}.first
+            }
+        }
+        
+        //At this point we have collected all our values in the localy named ones so we can unwrap and assign them.  If they are non nil at this point we can fail
+        if let u = localUser, let auth = localAuthentication, let auths = localAuthentications {
+            self.user = u
+            self.authentication = auth
+            self.authentications = auths
+        }
+        else {
+            self.user = RockauthUser()
+            self.authentication = Authetication()
+            self.authentications = [Authetication]()
+            self.providerAuthentications = [ProviderAuthentication]()
+            return nil
+        }
         
         //pull the provider authentications out
-        if let providerAuths = json["provider_authentications"] as? [[String: AnyObject?]] {
+        if let providerAuths = json["provider_authentications"] as? [[String: AnyObject]] {
             var collector = [ProviderAuthentication]()
             for hash in providerAuths {
                 if let auth = ProviderAuthentication(json: hash) {
@@ -291,7 +308,7 @@ class Session {
     }
 }
 
-class RockauthUser {
+public class RockauthUser {
     let id: Int
     let email: String?
     let firstName: String?
@@ -304,7 +321,7 @@ class RockauthUser {
         self.lastName = ""
     }
     
-    init?(json: [String: AnyObject?]) {
+    init?(json: [String: AnyObject]) {
         
         guard let id = json["id"] as? Int else {
             self.id = 0
@@ -321,26 +338,26 @@ class RockauthUser {
     }
 }
 
-class Authetication {
+public class Authetication {
     let id: Int
-    let jwt: JWT
+    let token: JWT
     let tokenID: String
     let expiration: NSDate
     let providerAuthID: Int?
     
     init() {
         self.id = 0
-        self.jwt = ""
+        self.token = ""
         self.tokenID = ""
         self.expiration = NSDate()
         self.providerAuthID = nil
     }
     
-    init?(json: [String: AnyObject?]) {
+    init?(json: [String: AnyObject]) {
         
         guard let id = json["id"] as? Int, jwt = json["token"] as? String, tokenID = json["token_id"] as? String, expiration = json["expiration"] as? Int else {
             self.id = 0
-            self.jwt = ""
+            self.token = ""
             self.tokenID = ""
             self.expiration = NSDate()
             self.providerAuthID = nil
@@ -348,19 +365,19 @@ class Authetication {
         }
         
         self.id = id
-        self.jwt = jwt
+        self.token = jwt
         self.tokenID = tokenID
         self.expiration = NSDate(timeIntervalSince1970: NSTimeInterval(expiration))
         self.providerAuthID = json["provider_authentication_id"] as? Int
     }
 }
 
-class ProviderAuthentication {
+public class ProviderAuthentication {
     let name: String
     let userID: String
     let id: Int
     
-    init?(json: [String: AnyObject?]) {
+    init?(json: [String: AnyObject]) {
        
         guard let name = json["provider"] as? String, let userID = json["provider_user_id"] as? String, id = json["id"] as? Int else {
             self.id = 0

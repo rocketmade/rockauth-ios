@@ -20,8 +20,8 @@ class ConnectWithSocialNetworksView: UIView {
 
     var providers: [SocialProvider?]!
     var providersByTitle: [String:SocialProvider] = [:]
-    var success: ((user: NSDictionary) -> ())!
-    var failure: ((error: ErrorType) -> ())!
+    var success: loginSuccess!
+    var failure: loginFailure!
     var shortFormat: Bool = true
     var parentViewController: UIViewController?
     var orSeparator: Bool = false
@@ -36,18 +36,18 @@ class ConnectWithSocialNetworksView: UIView {
         commonInit([FacebookProvider()], shortFormat: true, orSeparator: false, parentViewController: nil, connected: nil, failed: nil)
     }
 
-    init(providers: [SocialProvider?], shortFormat: Bool, orSeparator: Bool, parentViewController: UIViewController?, connected: (user: NSDictionary) -> (), failed: (error: ErrorType) -> ()) {
+    init(providers: [SocialProvider?], shortFormat: Bool, orSeparator: Bool, parentViewController: UIViewController?, connected: loginSuccess, failed: loginFailure) {
         super.init(frame: CGRectZero)
         commonInit(providers, shortFormat: shortFormat, orSeparator: orSeparator, parentViewController: parentViewController, connected: connected, failed: failed)
     }
 
-    func commonInit(providers: [SocialProvider?], shortFormat: Bool, orSeparator: Bool, parentViewController: UIViewController?, connected: ((user: NSDictionary) -> ())?, failed: ((error: ErrorType) -> ())?) {
+    func commonInit(providers: [SocialProvider?], shortFormat: Bool, orSeparator: Bool, parentViewController: UIViewController?, connected: loginSuccess?, failed: loginFailure?) {
         self.parentViewController = parentViewController
         self.providers = providers
         if let connected = connected {
             self.success = connected
         } else {
-            self.success = {(user: NSDictionary) -> () in
+            self.success = {(user: RockAuthSession) -> () in
                 print(user)
             }
         }

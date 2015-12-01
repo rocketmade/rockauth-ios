@@ -24,8 +24,8 @@ public static var sharedProvider: SocialProvider?
     var igAppId :String?
     var igRedirectUri :String?
 
-    var successBlock :((user: NSDictionary) -> Void)?
-    var failureBlock :((error: ErrorType) -> Void)?
+    var successBlock: loginSuccess?
+    var failureBlock: loginFailure?
     
     private var webViewController = IGViewController()
 
@@ -35,7 +35,7 @@ public static var sharedProvider: SocialProvider?
         igRedirectUri = registeredRedirectUri
     }
     
-    public func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(fromViewController viewController: UIViewController, success: loginSuccess, failure: loginFailure) {
         self.successBlock = success
         self.failureBlock = failure
         webViewController = IGViewController(delegate: self, callbackUrl: self.igRedirectUri)
@@ -70,7 +70,7 @@ public static var sharedProvider: SocialProvider?
         if let sharedClient = RockauthClient.sharedClient {
             sharedClient.login(self, success: { (user) -> Void in
                 if let successBlock = self.successBlock {
-                    successBlock(user: user)
+                    successBlock(session: user)
                 }
                 }, failure: { (error) -> Void in
                     if let failureBlock = self.failureBlock {

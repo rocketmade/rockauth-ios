@@ -19,7 +19,7 @@ public class EmailProvider: LoginProvider {
         self.password = password
     }
 
-    public func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(fromViewController viewController: UIViewController, success: loginSuccess, failure: loginFailure) {
         if let client = RockauthClient.sharedClient {
             client.login(self, success: success, failure: failure)
         } else {
