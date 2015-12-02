@@ -21,11 +21,19 @@ public class RockauthClient {
     public var clientSecret: String
     public var twitterKey: String?
     public var twitterSecret: String?
+    
+    private let session: NSURLSession
 
     public init(baseURL: NSURL, clientID: String, clientSecret: String) {
         self.apiURL = baseURL
         self.clientID = clientID
         self.clientSecret = clientSecret
+        
+        self.session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: NSOperationQueue.mainQueue())
+    }
+    
+    deinit {
+        self.session.invalidateAndCancel()
     }
 
     public func login(provider: SocialProvider, success: loginSuccess, failure: loginFailure) {
@@ -93,7 +101,7 @@ public class RockauthClient {
     }
     
     private func loginOrSignupWithRequest(request: NSURLRequest, success: (session: RockAuthSession) -> Void, failure: (error: ErrorType) -> Void) {
-        NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
+        self.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             
             //exit now if there was an error with the request
             if let error = error {
@@ -157,7 +165,7 @@ public class RockauthClient {
         } catch {
             failure(error: error)
         }
-        NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
+        self.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             print(request.description)
             let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
