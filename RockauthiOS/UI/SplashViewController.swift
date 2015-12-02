@@ -15,8 +15,8 @@ class SplashViewController: UIViewController {
     @IBInspectable var cancelButton: Bool!
     var logo: UIImage?
     var providers: [SocialProvider?]!
-    var connected: ((user: NSDictionary)->())!
-    var failed: ((error: ErrorType)->())!
+    var connected: loginSuccess!
+    var failed: loginFailure!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -28,12 +28,12 @@ class SplashViewController: UIViewController {
         commonInit(emailAuthentication: true, cancelButton: false, providers: [FacebookProvider()], logo: nil, connected: nil, failed: nil)
     }
 
-    init(showCancelButton: Bool, logo: UIImage?, useEmailAuthentication email: Bool, providers: [SocialProvider?], connected: (user: NSDictionary)->(), failed: (error: ErrorType)->()) {
+    init(showCancelButton: Bool, logo: UIImage?, useEmailAuthentication email: Bool, providers: [SocialProvider?], connected: loginSuccess, failed: loginFailure) {
         super.init(nibName: nil, bundle: nil)
         commonInit(emailAuthentication: email, cancelButton: showCancelButton, providers: providers, logo: logo, connected: connected, failed: failed)
     }
 
-    func commonInit(emailAuthentication email: Bool, cancelButton: Bool, providers: [SocialProvider?], logo: UIImage?, connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
+    func commonInit(emailAuthentication email: Bool, cancelButton: Bool, providers: [SocialProvider?], logo: UIImage?, connected: loginSuccess?, failed: loginFailure?) {
         useEmailAuthentication = email
         self.cancelButton = cancelButton
         self.providers = providers
@@ -46,8 +46,8 @@ class SplashViewController: UIViewController {
         if let connected = connected {
             self.connected = connected
         } else {
-            self.connected = {(user: NSDictionary) -> () in
-                print(user)
+            self.connected = {(session: RockAuthSession) -> () in
+                print(session)
                 if let navigationController = self.navigationController {
                     navigationController.popViewControllerAnimated(true)
                 }
@@ -83,7 +83,7 @@ class SplashViewController: UIViewController {
         let buttonsContainerHorizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[buttonsContainer]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         let buttonsContainerVerticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|-(>=10)-[buttonsContainer]-10-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: views)
         self.view.addConstraints(buttonsContainerHorizontalConstraints + buttonsContainerVerticalConstraints)
-
+        
         let socialButtonsContainer = ConnectWithSocialNetworksView(providers: providers, shortFormat: true, orSeparator: false, parentViewController: self, connected: connected, failed: failed)
         socialButtonsContainer.translatesAutoresizingMaskIntoConstraints = false
         buttonsContainer.addSubview(socialButtonsContainer)

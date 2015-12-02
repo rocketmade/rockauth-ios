@@ -20,10 +20,10 @@ public class SignUpViewController: UIViewController {
     var emailUnderbar: UIView = UIView()
     var passwordUnderbar: UIView = UIView()
     var providers: [SocialProvider?]!
-    var connected: ((user: NSDictionary)->())!
-    var failed: ((error: ErrorType)->())!
+    var connected: loginSuccess!
+    var failed: loginFailure!
 
-    init(providers: [SocialProvider?], connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
+    init(providers: [SocialProvider?], connected: loginSuccess?, failed: loginFailure?) {
         super.init(nibName: nil, bundle: nil)
         commonInit(providers, connected: connected, failed: failed)
     }
@@ -33,13 +33,13 @@ public class SignUpViewController: UIViewController {
         commonInit(providers, connected: nil, failed: nil)
     }
 
-    func commonInit(providers: [SocialProvider?], connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
+    func commonInit(providers: [SocialProvider?], connected: loginSuccess?, failed: loginFailure?) {
         self.providers = providers
         if let connected = connected {
             self.connected = connected
         } else {
-            self.connected = {(user: NSDictionary) -> () in
-                print(user)
+            self.connected = {(session: RockAuthSession) -> () in
+                print(session)
                 if let navigationController = self.navigationController {
                     navigationController.popViewControllerAnimated(true)
                 }
@@ -233,9 +233,10 @@ public class SignUpViewController: UIViewController {
 
         if (validationPassed) {
             // check with server
-            RockauthClient.sharedClient!.registerUser(self.firstNameField.text!, lastName: self.lastNameField.text!, email: self.emailField.text!, password: self.passwordField.text!, success: { (user) -> Void in
+            
+            RockauthClient.sharedClient!.registerUser(self.firstNameField.text!, lastName: self.lastNameField.text!, email: self.emailField.text!, password: self.passwordField.text!, success: { (session) -> Void in
                 // give the app the user
-                self.connected(user: user)
+                self.connected(session: session)
                 }) { (error) -> Void in
                     NSOperationQueue.mainQueue().addOperationWithBlock {
                         self.navigationController!.presentViewController((error as! RockauthError).alertController, animated: true, completion: nil)

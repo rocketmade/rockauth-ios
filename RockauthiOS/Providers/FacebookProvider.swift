@@ -32,19 +32,16 @@ public class FacebookProvider: SocialProvider {
         FBSDKApplicationDelegate.sharedInstance().application(UIApplication.sharedApplication(), didFinishLaunchingWithOptions: nil)
     }
 
-    public func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(fromViewController viewController: UIViewController, success: loginSuccess, failure: loginFailure) {
         if FBSDKAccessToken.currentAccessToken() != nil {
             if let sharedClient = RockauthClient.sharedClient {
-                sharedClient.login(self, success: { (user) -> Void in
-                    success(user: user)
-                    }, failure: { (error) -> Void in
-                        failure(error: error)
-                })
+                sharedClient.login(self, success: success, failure: failure)
             } else {
                 failure(error: RockauthError(title: "Error Signing In", message: "RockauthClient.sharedClient is probably not initialized"))
             }
             return
         }
+        
         let manager = FBSDKLoginManager()
         manager.logInWithReadPermissions(["email", "public_profile"], fromViewController: viewController) { (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
             if error != nil {
@@ -61,11 +58,7 @@ public class FacebookProvider: SocialProvider {
                             self.lastName = result["last_name"] as? String
                             self.email = result["email"] as? String
                             if let sharedClient = RockauthClient.sharedClient {
-                                sharedClient.login(self, success: { (user) -> Void in
-                                    success(user: user)
-                                    }, failure: { (error) -> Void in
-                                        failure(error: error)
-                                })
+                                sharedClient.login(self, success: success, failure: failure)
                             }
                         } else {
                             print("Error Getting Info \(error)");

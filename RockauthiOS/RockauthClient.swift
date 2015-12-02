@@ -8,6 +8,9 @@
 
 import UIKit
 
+public typealias loginSuccess = (session: RockAuthSession) -> Void
+public typealias loginFailure = (error: ErrorType) -> Void
+
 public class RockauthClient {
 
     public static var sharedClient: RockauthClient?
@@ -18,14 +21,22 @@ public class RockauthClient {
     public var clientSecret: String
     public var twitterKey: String?
     public var twitterSecret: String?
+    
+    private let session: NSURLSession
 
     public init(baseURL: NSURL, clientID: String, clientSecret: String) {
         self.apiURL = baseURL
         self.clientID = clientID
         self.clientSecret = clientSecret
+        
+        self.session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: nil, delegateQueue: NSOperationQueue.mainQueue())
+    }
+    
+    deinit {
+        self.session.invalidateAndCancel()
     }
 
-    public func login(provider: SocialProvider, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(provider: SocialProvider, success: loginSuccess, failure: loginFailure) {
         
         var authentication: [String: AnyObject] = [
             "auth_type": "assertion",
@@ -56,30 +67,10 @@ public class RockauthClient {
         }
 
         let params = ["authentication": authentication]
-        
-        let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)authentications.json")!)
-        request.HTTPMethod = "POST"
-        do {
-            try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-        } catch {
-            print("request failed: \(error)")
-        }
-
-        // TODO: fix this so it doesn't call success on 400 errors
-        NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
-            let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
-            if let responseDict = response as? NSDictionary {
-                print(responseDict)
-                success(user: responseDict)
-            } else {
-                failure(error: error!)
-            }
-            }.resume()
+        self.login(params, success: success, failure: failure)
     }
 
-    public func login(provider: EmailProvider, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(provider: EmailProvider, success: loginSuccess, failure: loginFailure) {
         if let email = provider.email, password = provider.password {
             login(email, password: password, success: success, failure: failure)
         } else {
@@ -87,67 +78,94 @@ public class RockauthClient {
         }
     }
 
-    public func login(email: String?, password: String?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func login(email: String?, password: String?, success: loginSuccess, failure: loginFailure) {
         var authentication = ["client_id": self.clientID, "client_secret": self.clientSecret, "auth_type": "password"]
         if let email = email, password = password {
             authentication["username"] = email
             authentication["password"] = password
         }
         let params = ["authentication": authentication]
-        // Create request
-        let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)authentications.json")!)
+        self.login(params, success: success, failure: failure)
+    }
+    
+    private func login(params: [String: AnyObject], success: (session: RockAuthSession) -> Void, failure: (error: ErrorType) -> Void) {
+        let request = self.jsonHTTPRequestWithPath("authentications.json")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
         } catch {
             failure(error: error)
         }
-
-        NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            print(request.description)
-            let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
-            if let responseDict = response as? NSDictionary {
-                if let errorObject = responseDict.objectForKey("error") {
-                    let title: String
-                    if let t = errorObject["message"] {
-                        title = t as! String
-                    } else {
-                        title = "Error Signing In"
-                    }
-                    var e: RockauthError = RockauthError(title: title, message: "Could not sign in user")
-                    if let validationErrors = errorObject["validation_errors"] {
-                        var message = ""
-                        print(validationErrors)
-                        for key in (validationErrors as! NSDictionary).allKeys {
-                            message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
-                        }
-                        e = RockauthError(title: title, message: message)
-                    }
-                    failure(error: e)
-                } else {
-                    success(user: responseDict)
-                }
-            } else if let error = error {
+        
+        self.loginOrSignupWithRequest(request, success: success, failure: failure)
+    }
+    
+    private func loginOrSignupWithRequest(request: NSURLRequest, success: (session: RockAuthSession) -> Void, failure: (error: ErrorType) -> Void) {
+        self.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            
+            //exit now if there was an error with the request
+            if let error = error {
                 failure(error: error)
+                return
             }
+            
+            guard let responseJSON = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? [String: AnyObject] else {
+                failure(error: RockauthError(title: "Bad response", message: "Unexpected response from server, non json repsonse recieved"))
+                return
+            }
+            
+            if let responseError = self.errorFromResponse(responseJSON) {
+                failure(error: responseError)
+                return
+            }
+            
+            guard let session = RockAuthSession(json: responseJSON) else {
+                failure(error: RockauthError(title: "Bad response", message: "Missing authentication in response"))
+                return
+            }
+            
+            success(session: session)
+            
             }.resume()
+    }
+    
+    private func errorFromResponse(hash: [String: AnyObject?]) -> ErrorType? {
+       
+        if let errorObject = hash["error"] as? [String: AnyObject] {
+            let title: String = errorObject["message"] as? String ?? "Error Signing In"
+            var e: RockauthError = RockauthError(title: title, message: "Could not sign in user")
+            if let validationErrors = errorObject["validation_errors"] {
+                var message = ""
+                for key in (validationErrors as! NSDictionary).allKeys {
+                    message += "\(key.capitalizedString) \(validationErrors.valueForKey(key as! String)![0])\n"
+                }
+                
+                e = RockauthError(title: title, message: message)
+            }
+            
+            return e
+        }
+        return nil
+    }
+    
+    private func jsonHTTPRequestWithPath(path: String) -> NSMutableURLRequest {
+        let url = self.apiURL.URLByAppendingPathComponent(path)
+        let request = NSMutableURLRequest(URL: url)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        return request
     }
 
     public func logout(success: (response: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         let data = [String:String]()
-        let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)me.json")!)
+        let request = self.jsonHTTPRequestWithPath("me.json")
         request.HTTPMethod = "DELETE"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(data, options: .PrettyPrinted)
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
         } catch {
             failure(error: error)
         }
-        NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
+        self.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             print(request.description)
             let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
@@ -170,16 +188,15 @@ public class RockauthClient {
             }.resume()
     }
 
-    public func registerUser(providers: [SocialProvider], success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func registerUser(providers: [SocialProvider], success: loginSuccess, failure: loginFailure) {
         registerUser(nil, lastName: nil, email: nil, password: nil, providers: providers, success: success, failure: failure);
     }
 
-    public func registerUser(firstName: String?, lastName: String?, email: String, password: String, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func registerUser(firstName: String?, lastName: String?, email: String, password: String, success: loginSuccess, failure: loginFailure) {
         registerUser(firstName, lastName: lastName, email: email, password: password, providers: nil, success: success, failure: failure)
-
     }
-
-    public func registerUser(firstName: String?, lastName: String?, email: String?, password: String?, providers: [SocialProvider]?, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    
+    public func registerUser(firstName: String?, lastName: String?, email: String?, password: String?, providers: [SocialProvider]?, success: loginSuccess, failure: loginFailure) {
         // Create user
         let authentication = ["client_id": self.clientID, "client_secret": self.clientSecret]
         var user: Dictionary<String, AnyObject> = ["authentication": authentication]
@@ -212,43 +229,23 @@ public class RockauthClient {
 
         // Create request
         let params = ["user": user]
-        let request = NSMutableURLRequest(URL: NSURL(string: "\(self.apiURL)me.json")!)
+        let request = self.jsonHTTPRequestWithPath("me.json")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
         } catch {
             failure(error: error)
         }
-
-        NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration()).dataTaskWithRequest(request) { (data, response, error) -> Void in
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            print(request.description)
-            let response = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
-            if let responseDict = response as? NSDictionary {
-                if let errorObject = responseDict.objectForKey("error") {
-                    let title: String
-                    if let t = errorObject["message"] {
-                        title = t as! String
-                    } else {
-                        title = "Error Signing Up"
-                    }
-                    var e: RockauthError = RockauthError(title: title, message: "User could not be created")
-                    if let validationErrors = errorObject["validation_errors"] {
-                        var message = ""
-                        for key in (validationErrors as! NSDictionary).allKeys {
-                            message += "\(key.capitalizedString) \(validationErrors!.valueForKey(key as! String)![0])\n"
-                        }
-                        e = RockauthError(title: title, message: message)
-                    }
-                    failure(error: e)
-                } else {
-                    success(user: responseDict)
-                }
-            } else if let error = error {
-                failure(error: error)
-            }
-            }.resume()
+        
+        self.loginOrSignupWithRequest(request, success: success, failure: failure)
     }
 }
+
+
+
+
+
+
+
+
+

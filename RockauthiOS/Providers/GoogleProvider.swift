@@ -31,7 +31,8 @@ public class GoogleProvider: SocialProvider {
     
     public init() { }
 
-    public func login(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    //WARNING: This doesn't make sense becus the success block will never be called
+    public func login(fromViewController viewController: UIViewController, success: loginSuccess, failure: loginFailure) {
         if let delegate = self.delegate {
             delegate.googleButtonClicked()
         } else {
@@ -39,14 +40,9 @@ public class GoogleProvider: SocialProvider {
             failure(error: e)
         }
     }
-    public func connect(fromViewController viewController: UIViewController, success: (user: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func connect(fromViewController viewController: UIViewController, success: loginSuccess, failure: loginFailure) {
         if let sharedClient = RockauthClient.sharedClient {
-            sharedClient.login(self,
-                success: { (user) -> Void in
-                    success(user: user)
-                }, failure: { (error) -> Void in
-                    failure(error: error)
-            })
+            sharedClient.login(self, success: success, failure: failure)
         }
     }
 

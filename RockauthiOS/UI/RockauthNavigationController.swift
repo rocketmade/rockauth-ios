@@ -12,8 +12,8 @@ public class RockauthNavigationController: UINavigationController {
 
     var logo: UIImage?
     var providers: [SocialProvider?]!
-    var connected: ((user: NSDictionary)->())!
-    var failed: ((error: ErrorType)->())!
+    var connected: loginSuccess!
+    var failed: loginFailure!
     var useEmailAuthentication: Bool!
     public var themeColor: UIColor?
 
@@ -43,13 +43,13 @@ public class RockauthNavigationController: UINavigationController {
     }
 
 
-    func commonInit(providers: [SocialProvider?], connected: ((user: NSDictionary)->())?, failed: ((error: ErrorType)->())?) {
+    func commonInit(providers: [SocialProvider?], connected: loginSuccess?, failed: loginFailure?) {
         self.providers = providers
         if let connected = connected {
             self.connected = connected
         } else {
-            self.connected = {(user: NSDictionary) -> () in
-                print(user)
+            self.connected = {(session: RockAuthSession) -> () in
+                print(session)
             }
         }
         if let failed = failed {
@@ -61,7 +61,7 @@ public class RockauthNavigationController: UINavigationController {
         }
     }
 
-    public func showUI(presenter: UIViewController, connected: (user:NSDictionary)->(), failed:(error: ErrorType)->()) {
+    public func showUI(presenter: UIViewController, connected: loginSuccess, failed: loginFailure) {
         self.connected = connected
         self.failed = failed
         let splash = SplashViewController(showCancelButton: true, logo: self.logo, useEmailAuthentication: self.useEmailAuthentication, providers: self.providers, connected: self.connected, failed: self.failed)

@@ -7,6 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		329207BD1C0E073800A38C62 /* RockauthiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207BC1C0E073800A38C62 /* RockauthiOSTests.swift */; };
+		329207BF1C0E073800A38C62 /* RockauthiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC0134211BD597000063541C /* RockauthiOS.framework */; };
+		329207C61C0E08A900A38C62 /* facebookLoginJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 329207C51C0E08A900A38C62 /* facebookLoginJson.json */; };
+		329207C71C0E092E00A38C62 /* RockauthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290811BFA9E9300D223BE /* RockauthClient.swift */; };
+		329207C81C0E0B2000A38C62 /* EmailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290831BFA9E9D00D223BE /* EmailProvider.swift */; };
+		329207C91C0E0B2000A38C62 /* FacebookProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290841BFA9E9D00D223BE /* FacebookProvider.swift */; };
+		329207CA1C0E0B2000A38C62 /* GoogleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290851BFA9E9D00D223BE /* GoogleProvider.swift */; };
+		329207CB1C0E0B2000A38C62 /* InstagramProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290861BFA9E9D00D223BE /* InstagramProvider.swift */; };
+		329207CC1C0E0B2000A38C62 /* LoginProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290871BFA9E9D00D223BE /* LoginProviderProtocol.swift */; };
+		329207CD1C0E0B2000A38C62 /* SocialProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290881BFA9E9D00D223BE /* SocialProviderProtocol.swift */; };
+		329207CE1C0E0B2000A38C62 /* TwitterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290891BFA9E9D00D223BE /* TwitterProvider.swift */; };
+		329207CF1C0E0B2A00A38C62 /* RockauthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A372907D1BFA9E8D00D223BE /* RockauthError.swift */; };
+		329207D01C0E0B2A00A38C62 /* UIColor+Rocketmade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A372907E1BFA9E8D00D223BE /* UIColor+Rocketmade.swift */; };
+		329207D21C0E0F3800A38C62 /* emailSignupJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 329207D11C0E0F3800A38C62 /* emailSignupJson.json */; };
+		329207D51C0F624700A38C62 /* ProviderAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D41C0F624700A38C62 /* ProviderAuthentication.swift */; };
+		329207D71C0F627700A38C62 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D61C0F627700A38C62 /* Authentication.swift */; };
+		329207D91C0F632500A38C62 /* RockAuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D81C0F632500A38C62 /* RockAuthUser.swift */; };
+		329207DB1C0F634500A38C62 /* RockAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207DA1C0F634500A38C62 /* RockAuthSession.swift */; };
+		329207DC1C0F6AD300A38C62 /* ProviderAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D41C0F624700A38C62 /* ProviderAuthentication.swift */; };
+		329207DD1C0F6AD300A38C62 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D61C0F627700A38C62 /* Authentication.swift */; };
+		329207DE1C0F6AD300A38C62 /* RockAuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D81C0F632500A38C62 /* RockAuthUser.swift */; };
+		329207DF1C0F6AD300A38C62 /* RockAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207DA1C0F634500A38C62 /* RockAuthSession.swift */; };
 		A19512C23ECE559806EA6191 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA14552724AB06F43F6C91B9 /* Pods.framework */; };
 		A30DB6D71BE4194400F4F2D5 /* icon-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = A30DB6D41BE4194400F4F2D5 /* icon-twitter.png */; };
 		A30DB6D81BE4194400F4F2D5 /* icon-twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A30DB6D51BE4194400F4F2D5 /* icon-twitter@2x.png */; };
@@ -49,14 +71,11 @@
 		A372909D1BFA9EA600D223BE /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290951BFA9EA600D223BE /* SignInViewController.swift */; };
 		A372909E1BFA9EA600D223BE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290961BFA9EA600D223BE /* SignUpViewController.swift */; };
 		A372909F1BFA9EA600D223BE /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290971BFA9EA600D223BE /* SplashViewController.swift */; };
-		A37290A01BFA9EA600D223BE /* TwitterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290981BFA9EA600D223BE /* TwitterButton.swift */; };
 		BC0134271BD597000063541C /* RockauthiOS.h in Headers */ = {isa = PBXBuildFile; fileRef = BC0134261BD597000063541C /* RockauthiOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BC01342D1BD597000063541C /* RockauthiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC0134211BD597000063541C /* RockauthiOS.framework */; };
-		BC0134341BD597000063541C /* RockauthiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0134331BD597000063541C /* RockauthiOSTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BC01342E1BD597000063541C /* PBXContainerItemProxy */ = {
+		329207C01C0E073800A38C62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BC0134181BD597000063541C /* Project object */;
 			proxyType = 1;
@@ -66,7 +85,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		329207BA1C0E073800A38C62 /* RockauthiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RockauthiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		329207BC1C0E073800A38C62 /* RockauthiOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockauthiOSTests.swift; sourceTree = "<group>"; };
+		329207BE1C0E073800A38C62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		329207C51C0E08A900A38C62 /* facebookLoginJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = facebookLoginJson.json; sourceTree = "<group>"; };
+		329207D11C0E0F3800A38C62 /* emailSignupJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emailSignupJson.json; sourceTree = "<group>"; };
+		329207D41C0F624700A38C62 /* ProviderAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderAuthentication.swift; sourceTree = "<group>"; };
+		329207D61C0F627700A38C62 /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		329207D81C0F632500A38C62 /* RockAuthUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockAuthUser.swift; sourceTree = "<group>"; };
+		329207DA1C0F634500A38C62 /* RockAuthSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockAuthSession.swift; sourceTree = "<group>"; };
 		72B0861DA086C4EECFD6B661 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		78A160FF3790F68E8348C9F0 /* Pods-RockauthiOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RockauthiOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RockauthiOSTests/Pods-RockauthiOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		8789A069A7F0BABDB409D595 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A30DB6D41BE4194400F4F2D5 /* icon-twitter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-twitter.png"; sourceTree = "<group>"; };
 		A30DB6D51BE4194400F4F2D5 /* icon-twitter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-twitter@2x.png"; sourceTree = "<group>"; };
@@ -109,17 +138,23 @@
 		A37290951BFA9EA600D223BE /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		A37290961BFA9EA600D223BE /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		A37290971BFA9EA600D223BE /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
-		A37290981BFA9EA600D223BE /* TwitterButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterButton.swift; sourceTree = "<group>"; };
+		BAA5C472B7A9CF98BB647844 /* Pods-RockauthiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RockauthiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RockauthiOSTests/Pods-RockauthiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BC0134211BD597000063541C /* RockauthiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RockauthiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC0134251BD597000063541C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC0134261BD597000063541C /* RockauthiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RockauthiOS.h; sourceTree = "<group>"; };
-		BC01342C1BD597000063541C /* RockauthiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RockauthiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC0134321BD597000063541C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BC0134331BD597000063541C /* RockauthiOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockauthiOSTests.swift; sourceTree = "<group>"; };
 		CA14552724AB06F43F6C91B9 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE60BE3CF18ACE77A7C8288E /* libPods-RockauthiOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RockauthiOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		329207B71C0E073800A38C62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				329207BF1C0E073800A38C62 /* RockauthiOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BC01341D1BD597000063541C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,17 +163,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BC0134291BD597000063541C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC01342D1BD597000063541C /* RockauthiOS.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		329207BB1C0E073800A38C62 /* RockauthiOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				329207BC1C0E073800A38C62 /* RockauthiOSTests.swift */,
+				329207BE1C0E073800A38C62 /* Info.plist */,
+				329207C51C0E08A900A38C62 /* facebookLoginJson.json */,
+				329207D11C0E0F3800A38C62 /* emailSignupJson.json */,
+			);
+			path = RockauthiOSTests;
+			sourceTree = "<group>";
+		};
+		329207D31C0F621B00A38C62 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				329207D41C0F624700A38C62 /* ProviderAuthentication.swift */,
+				329207D61C0F627700A38C62 /* Authentication.swift */,
+				329207D81C0F632500A38C62 /* RockAuthUser.swift */,
+				329207DA1C0F634500A38C62 /* RockAuthSession.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		A30DB6CC1BE3DEA300F4F2D5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,7 +198,6 @@
 				A37290951BFA9EA600D223BE /* SignInViewController.swift */,
 				A37290961BFA9EA600D223BE /* SignUpViewController.swift */,
 				A37290971BFA9EA600D223BE /* SplashViewController.swift */,
-				A37290981BFA9EA600D223BE /* TwitterButton.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -212,7 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				BC0134231BD597000063541C /* RockauthiOS */,
-				BC0134301BD597000063541C /* RockauthiOSTests */,
+				329207BB1C0E073800A38C62 /* RockauthiOSTests */,
 				BC0134221BD597000063541C /* Products */,
 				D1F8E779062F8F62D59907E7 /* Pods */,
 				EA094AF350055152E884E30E /* Frameworks */,
@@ -223,7 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				BC0134211BD597000063541C /* RockauthiOS.framework */,
-				BC01342C1BD597000063541C /* RockauthiOSTests.xctest */,
+				329207BA1C0E073800A38C62 /* RockauthiOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -231,6 +279,7 @@
 		BC0134231BD597000063541C /* RockauthiOS */ = {
 			isa = PBXGroup;
 			children = (
+				329207D31C0F621B00A38C62 /* Models */,
 				BC0134261BD597000063541C /* RockauthiOS.h */,
 				A37290811BFA9E9300D223BE /* RockauthClient.swift */,
 				A37290501BFA9C7B00D223BE /* Utils */,
@@ -250,28 +299,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BC0134301BD597000063541C /* RockauthiOSTests */ = {
-			isa = PBXGroup;
-			children = (
-				BC0134331BD597000063541C /* RockauthiOSTests.swift */,
-				BC0134311BD597000063541C /* Supporting Files */,
-			);
-			path = RockauthiOSTests;
-			sourceTree = "<group>";
-		};
-		BC0134311BD597000063541C /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				BC0134321BD597000063541C /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		D1F8E779062F8F62D59907E7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				72B0861DA086C4EECFD6B661 /* Pods.debug.xcconfig */,
 				8789A069A7F0BABDB409D595 /* Pods.release.xcconfig */,
+				BAA5C472B7A9CF98BB647844 /* Pods-RockauthiOSTests.debug.xcconfig */,
+				78A160FF3790F68E8348C9F0 /* Pods-RockauthiOSTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -280,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				CA14552724AB06F43F6C91B9 /* Pods.framework */,
+				DE60BE3CF18ACE77A7C8288E /* libPods-RockauthiOSTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -298,16 +333,32 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		329207B91C0E073800A38C62 /* RockauthiOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 329207C21C0E073800A38C62 /* Build configuration list for PBXNativeTarget "RockauthiOSTests" */;
+			buildPhases = (
+				329207B61C0E073800A38C62 /* Sources */,
+				329207B71C0E073800A38C62 /* Frameworks */,
+				329207B81C0E073800A38C62 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				329207C11C0E073800A38C62 /* PBXTargetDependency */,
+			);
+			name = RockauthiOSTests;
+			productName = RockauthiOSTests;
+			productReference = 329207BA1C0E073800A38C62 /* RockauthiOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		BC0134201BD597000063541C /* RockauthiOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BC0134371BD597000063541C /* Build configuration list for PBXNativeTarget "RockauthiOS" */;
 			buildPhases = (
-				3966A23F891DD9BBC71D7F18 /* Check Pods Manifest.lock */,
 				BC01341C1BD597000063541C /* Sources */,
 				BC01341D1BD597000063541C /* Frameworks */,
 				BC01341E1BD597000063541C /* Headers */,
 				BC01341F1BD597000063541C /* Resources */,
-				2D7BBC2298EE083DA7632D73 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -317,24 +368,6 @@
 			productName = RockauthiOS;
 			productReference = BC0134211BD597000063541C /* RockauthiOS.framework */;
 			productType = "com.apple.product-type.framework";
-		};
-		BC01342B1BD597000063541C /* RockauthiOSTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BC01343A1BD597000063541C /* Build configuration list for PBXNativeTarget "RockauthiOSTests" */;
-			buildPhases = (
-				BC0134281BD597000063541C /* Sources */,
-				BC0134291BD597000063541C /* Frameworks */,
-				BC01342A1BD597000063541C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BC01342F1BD597000063541C /* PBXTargetDependency */,
-			);
-			name = RockauthiOSTests;
-			productName = RockauthiOSTests;
-			productReference = BC01342C1BD597000063541C /* RockauthiOSTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -346,10 +379,10 @@
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Daniel Gubler";
 				TargetAttributes = {
-					BC0134201BD597000063541C = {
-						CreatedOnToolsVersion = 6.4;
+					329207B91C0E073800A38C62 = {
+						CreatedOnToolsVersion = 7.1;
 					};
-					BC01342B1BD597000063541C = {
+					BC0134201BD597000063541C = {
 						CreatedOnToolsVersion = 6.4;
 					};
 				};
@@ -367,12 +400,21 @@
 			projectRoot = "";
 			targets = (
 				BC0134201BD597000063541C /* RockauthiOS */,
-				BC01342B1BD597000063541C /* RockauthiOSTests */,
+				329207B91C0E073800A38C62 /* RockauthiOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		329207B81C0E073800A38C62 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				329207D21C0E0F3800A38C62 /* emailSignupJson.json in Resources */,
+				329207C61C0E08A900A38C62 /* facebookLoginJson.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BC01341F1BD597000063541C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -404,49 +446,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BC01342A1BD597000063541C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		2D7BBC2298EE083DA7632D73 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3966A23F891DD9BBC71D7F18 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
+		329207B61C0E073800A38C62 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				329207CA1C0E0B2000A38C62 /* GoogleProvider.swift in Sources */,
+				329207C81C0E0B2000A38C62 /* EmailProvider.swift in Sources */,
+				329207BD1C0E073800A38C62 /* RockauthiOSTests.swift in Sources */,
+				329207CB1C0E0B2000A38C62 /* InstagramProvider.swift in Sources */,
+				329207DD1C0F6AD300A38C62 /* Authentication.swift in Sources */,
+				329207C91C0E0B2000A38C62 /* FacebookProvider.swift in Sources */,
+				329207C71C0E092E00A38C62 /* RockauthClient.swift in Sources */,
+				329207DE1C0F6AD300A38C62 /* RockAuthUser.swift in Sources */,
+				329207DC1C0F6AD300A38C62 /* ProviderAuthentication.swift in Sources */,
+				329207CE1C0E0B2000A38C62 /* TwitterProvider.swift in Sources */,
+				329207CF1C0E0B2A00A38C62 /* RockauthError.swift in Sources */,
+				329207CC1C0E0B2000A38C62 /* LoginProviderProtocol.swift in Sources */,
+				329207DF1C0F6AD300A38C62 /* RockAuthSession.swift in Sources */,
+				329207D01C0E0B2A00A38C62 /* UIColor+Rocketmade.swift in Sources */,
+				329207CD1C0E0B2000A38C62 /* SocialProviderProtocol.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BC01341C1BD597000063541C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -457,40 +481,59 @@
 				A372909F1BFA9EA600D223BE /* SplashViewController.swift in Sources */,
 				A372907F1BFA9E8D00D223BE /* RockauthError.swift in Sources */,
 				A372908C1BFA9E9D00D223BE /* GoogleProvider.swift in Sources */,
+				329207D51C0F624700A38C62 /* ProviderAuthentication.swift in Sources */,
 				A372908E1BFA9E9D00D223BE /* LoginProviderProtocol.swift in Sources */,
 				A37290821BFA9E9300D223BE /* RockauthClient.swift in Sources */,
 				A37290901BFA9E9D00D223BE /* TwitterProvider.swift in Sources */,
 				A372909D1BFA9EA600D223BE /* SignInViewController.swift in Sources */,
+				329207D71C0F627700A38C62 /* Authentication.swift in Sources */,
 				A372908D1BFA9E9D00D223BE /* InstagramProvider.swift in Sources */,
+				329207D91C0F632500A38C62 /* RockAuthUser.swift in Sources */,
 				A372909E1BFA9EA600D223BE /* SignUpViewController.swift in Sources */,
+				329207DB1C0F634500A38C62 /* RockAuthSession.swift in Sources */,
 				A372908B1BFA9E9D00D223BE /* FacebookProvider.swift in Sources */,
 				A372909C1BFA9EA600D223BE /* RockauthNavigationController.swift in Sources */,
 				A37290991BFA9EA600D223BE /* ConnectWithSocialNetworksView.swift in Sources */,
-				A37290A01BFA9EA600D223BE /* TwitterButton.swift in Sources */,
 				A372909A1BFA9EA600D223BE /* FlatRoundedButton.swift in Sources */,
 				A372908F1BFA9E9D00D223BE /* SocialProviderProtocol.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BC0134281BD597000063541C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC0134341BD597000063541C /* RockauthiOSTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BC01342F1BD597000063541C /* PBXTargetDependency */ = {
+		329207C11C0E073800A38C62 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BC0134201BD597000063541C /* RockauthiOS */;
-			targetProxy = BC01342E1BD597000063541C /* PBXContainerItemProxy */;
+			targetProxy = 329207C01C0E073800A38C62 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		329207C31C0E073800A38C62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				INFOPLIST_FILE = RockauthiOSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rocketmade.RockauthiOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		329207C41C0E073800A38C62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = RockauthiOSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rocketmade.RockauthiOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		BC0134351BD597000063541C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -617,39 +660,18 @@
 			};
 			name = Release;
 		};
-		BC01343B1BD597000063541C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = RockauthiOSTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		BC01343C1BD597000063541C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = RockauthiOSTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		329207C21C0E073800A38C62 /* Build configuration list for PBXNativeTarget "RockauthiOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				329207C31C0E073800A38C62 /* Debug */,
+				329207C41C0E073800A38C62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BC01341B1BD597000063541C /* Build configuration list for PBXProject "RockauthiOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -664,15 +686,6 @@
 			buildConfigurations = (
 				BC0134381BD597000063541C /* Debug */,
 				BC0134391BD597000063541C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BC01343A1BD597000063541C /* Build configuration list for PBXNativeTarget "RockauthiOSTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BC01343B1BD597000063541C /* Debug */,
-				BC01343C1BD597000063541C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
