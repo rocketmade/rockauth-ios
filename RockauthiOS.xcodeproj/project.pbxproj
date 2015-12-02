@@ -21,6 +21,14 @@
 		329207CF1C0E0B2A00A38C62 /* RockauthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A372907D1BFA9E8D00D223BE /* RockauthError.swift */; };
 		329207D01C0E0B2A00A38C62 /* UIColor+Rocketmade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A372907E1BFA9E8D00D223BE /* UIColor+Rocketmade.swift */; };
 		329207D21C0E0F3800A38C62 /* emailSignupJson.json in Resources */ = {isa = PBXBuildFile; fileRef = 329207D11C0E0F3800A38C62 /* emailSignupJson.json */; };
+		329207D51C0F624700A38C62 /* ProviderAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D41C0F624700A38C62 /* ProviderAuthentication.swift */; };
+		329207D71C0F627700A38C62 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D61C0F627700A38C62 /* Authentication.swift */; };
+		329207D91C0F632500A38C62 /* RockAuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D81C0F632500A38C62 /* RockAuthUser.swift */; };
+		329207DB1C0F634500A38C62 /* RockAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207DA1C0F634500A38C62 /* RockAuthSession.swift */; };
+		329207DC1C0F6AD300A38C62 /* ProviderAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D41C0F624700A38C62 /* ProviderAuthentication.swift */; };
+		329207DD1C0F6AD300A38C62 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D61C0F627700A38C62 /* Authentication.swift */; };
+		329207DE1C0F6AD300A38C62 /* RockAuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207D81C0F632500A38C62 /* RockAuthUser.swift */; };
+		329207DF1C0F6AD300A38C62 /* RockAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329207DA1C0F634500A38C62 /* RockAuthSession.swift */; };
 		A19512C23ECE559806EA6191 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA14552724AB06F43F6C91B9 /* Pods.framework */; };
 		A30DB6D71BE4194400F4F2D5 /* icon-twitter.png in Resources */ = {isa = PBXBuildFile; fileRef = A30DB6D41BE4194400F4F2D5 /* icon-twitter.png */; };
 		A30DB6D81BE4194400F4F2D5 /* icon-twitter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A30DB6D51BE4194400F4F2D5 /* icon-twitter@2x.png */; };
@@ -82,6 +90,10 @@
 		329207BE1C0E073800A38C62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		329207C51C0E08A900A38C62 /* facebookLoginJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = facebookLoginJson.json; sourceTree = "<group>"; };
 		329207D11C0E0F3800A38C62 /* emailSignupJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emailSignupJson.json; sourceTree = "<group>"; };
+		329207D41C0F624700A38C62 /* ProviderAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderAuthentication.swift; sourceTree = "<group>"; };
+		329207D61C0F627700A38C62 /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		329207D81C0F632500A38C62 /* RockAuthUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockAuthUser.swift; sourceTree = "<group>"; };
+		329207DA1C0F634500A38C62 /* RockAuthSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockAuthSession.swift; sourceTree = "<group>"; };
 		72B0861DA086C4EECFD6B661 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		78A160FF3790F68E8348C9F0 /* Pods-RockauthiOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RockauthiOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RockauthiOSTests/Pods-RockauthiOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		8789A069A7F0BABDB409D595 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -163,6 +175,17 @@
 				329207D11C0E0F3800A38C62 /* emailSignupJson.json */,
 			);
 			path = RockauthiOSTests;
+			sourceTree = "<group>";
+		};
+		329207D31C0F621B00A38C62 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				329207D41C0F624700A38C62 /* ProviderAuthentication.swift */,
+				329207D61C0F627700A38C62 /* Authentication.swift */,
+				329207D81C0F632500A38C62 /* RockAuthUser.swift */,
+				329207DA1C0F634500A38C62 /* RockAuthSession.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		A30DB6CC1BE3DEA300F4F2D5 /* UI */ = {
@@ -256,6 +279,7 @@
 		BC0134231BD597000063541C /* RockauthiOS */ = {
 			isa = PBXGroup;
 			children = (
+				329207D31C0F621B00A38C62 /* Models */,
 				BC0134261BD597000063541C /* RockauthiOS.h */,
 				A37290811BFA9E9300D223BE /* RockauthClient.swift */,
 				A37290501BFA9C7B00D223BE /* Utils */,
@@ -433,11 +457,15 @@
 				329207C81C0E0B2000A38C62 /* EmailProvider.swift in Sources */,
 				329207BD1C0E073800A38C62 /* RockauthiOSTests.swift in Sources */,
 				329207CB1C0E0B2000A38C62 /* InstagramProvider.swift in Sources */,
+				329207DD1C0F6AD300A38C62 /* Authentication.swift in Sources */,
 				329207C91C0E0B2000A38C62 /* FacebookProvider.swift in Sources */,
 				329207C71C0E092E00A38C62 /* RockauthClient.swift in Sources */,
+				329207DE1C0F6AD300A38C62 /* RockAuthUser.swift in Sources */,
+				329207DC1C0F6AD300A38C62 /* ProviderAuthentication.swift in Sources */,
 				329207CE1C0E0B2000A38C62 /* TwitterProvider.swift in Sources */,
 				329207CF1C0E0B2A00A38C62 /* RockauthError.swift in Sources */,
 				329207CC1C0E0B2000A38C62 /* LoginProviderProtocol.swift in Sources */,
+				329207DF1C0F6AD300A38C62 /* RockAuthSession.swift in Sources */,
 				329207D01C0E0B2A00A38C62 /* UIColor+Rocketmade.swift in Sources */,
 				329207CD1C0E0B2000A38C62 /* SocialProviderProtocol.swift in Sources */,
 			);
@@ -453,12 +481,16 @@
 				A372909F1BFA9EA600D223BE /* SplashViewController.swift in Sources */,
 				A372907F1BFA9E8D00D223BE /* RockauthError.swift in Sources */,
 				A372908C1BFA9E9D00D223BE /* GoogleProvider.swift in Sources */,
+				329207D51C0F624700A38C62 /* ProviderAuthentication.swift in Sources */,
 				A372908E1BFA9E9D00D223BE /* LoginProviderProtocol.swift in Sources */,
 				A37290821BFA9E9300D223BE /* RockauthClient.swift in Sources */,
 				A37290901BFA9E9D00D223BE /* TwitterProvider.swift in Sources */,
 				A372909D1BFA9EA600D223BE /* SignInViewController.swift in Sources */,
+				329207D71C0F627700A38C62 /* Authentication.swift in Sources */,
 				A372908D1BFA9E9D00D223BE /* InstagramProvider.swift in Sources */,
+				329207D91C0F632500A38C62 /* RockAuthUser.swift in Sources */,
 				A372909E1BFA9EA600D223BE /* SignUpViewController.swift in Sources */,
+				329207DB1C0F634500A38C62 /* RockAuthSession.swift in Sources */,
 				A372908B1BFA9E9D00D223BE /* FacebookProvider.swift in Sources */,
 				A372909C1BFA9EA600D223BE /* RockauthNavigationController.swift in Sources */,
 				A37290991BFA9EA600D223BE /* ConnectWithSocialNetworksView.swift in Sources */,
