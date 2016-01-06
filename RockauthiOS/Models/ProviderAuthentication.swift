@@ -15,7 +15,7 @@ public class ProviderAuthentication: Equatable{
     
     init?(json: [String: AnyObject]) {
         
-        guard let name = json["provider"] as? String, let userID = json["provider_user_id"] as? String, id = json["id"] as? Int else {
+        guard let name = json["provider"] as? String, let userID = json["providerUserId"] as? String, id = json["id"] as? Int else {
             self.id = 0
             self.userID = ""
             self.name = ""
