@@ -89,7 +89,7 @@ public class RockauthClient {
     }
     
     private func login(params: [String: AnyObject], success: (session: RockAuthSession) -> Void, failure: (error: ErrorType) -> Void) {
-        let request = self.jsonHTTPRequestWithPath("authentications")
+        let request = self.jsonHTTPRequestWithPath("api/authentications")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
@@ -160,7 +160,7 @@ public class RockauthClient {
 
     public func logout(success: (response: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         let data = [String:String]()
-        let request = self.jsonHTTPRequestWithPath("me.json")
+        let request = self.jsonHTTPRequestWithPath("api/me.json")
         request.HTTPMethod = "DELETE"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(data, options: .PrettyPrinted)
@@ -231,7 +231,7 @@ public class RockauthClient {
 
         // Create request
         let params = ["user": user]
-        let request = self.jsonHTTPRequestWithPath("me.json")
+        let request = self.jsonHTTPRequestWithPath("api/me.json")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)

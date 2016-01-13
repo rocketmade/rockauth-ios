@@ -11,7 +11,7 @@ import XCTest
 class RockauthiOSTests: XCTestCase {
     
     let bundle = NSBundle(forClass: RockauthiOSTests.self)
-    let apiClient = RockauthClient(baseURL: NSURL(string: "https://m6eitwi40c.execute-api.us-east-1.amazonaws.com/dev/")!, clientID: "TMkOgswr533ZUvbd0ZlA1O90", clientSecret: "OpANNPD9cuSWOVg6yuBDdJqs3Rzx1EIlrXzygI9ZtLShObO1")
+    let apiClient = RockauthClient(baseURL: NSURL(string: "http://connected-store-staging-lb01-1985342299.us-east-1.elb.amazonaws.com")!, clientID: "U2WbWMv5WYJGQX0Ur0z3gQ", clientSecret: "vNIm4FJIGFUhlIbFtZ7bqLpy1lBzNKwMn0_goZCNXEo")
     
     override func setUp() {
         super.setUp()
@@ -92,7 +92,7 @@ class RockauthiOSTests: XCTestCase {
     func testEmailLogin() {
         
         let expectation = expectationWithDescription("email login")
-        apiClient.login("testUser@rocketmade.com", password: "password", success: { (session) -> Void in
+        apiClient.login("test@rocketmade.com", password: "s1mpl370n", success: { (session) -> Void in
            expectation.fulfill()
             XCTAssertNotNil(session)
             }) { (error) -> Void in
