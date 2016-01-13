@@ -2,22 +2,24 @@
     "authentications": [{
                         "id": 656,
                         "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIiLCJpYXQiOjE0NDg5OTA2MDMsImV4cCI6MTQ4MDUyNjYwMywiYXVkIjoiVE1rT2dzd3I1MzNaVXZiZDBabEExTzkwIiwic3ViIjoxNTAsImp0aSI6IjFwclE0TFB4cEI1Nml2VmNmcUdxajVpSmQxQ0R4M2I4In0.YPq9u3EHauk-Gylp0wIOsTU8vdXg8KAwWY0Tc4GK7m8",
-                        "token_id": "1prQ4LPxpB56ivVcfqGqj5iJd1CDx3b8",
+                        "tokenId": "1prQ4LPxpB56ivVcfqGqj5iJd1CDx3b8",
                         "expiration": 1480526603,
-                        "client_version": null,
-                        "device_identifier": null,
-                        "device_os": null,
-                        "device_os_version": null,
-                        "device_description": null,
-                        "provider_authentication_id": null
+                        "clientVersion": null,
+                        "deviceIdentifier": null,
+                        "deviceOs": null,
+                        "deviceOsVersion": null,
+                        "deviceDescription": null,
+                        "providerAuthenticationId": null
                         }],
-    "provider_authentications": [],
-    "user": {
+    "users": [{
         "id": 150,
         "email": "testUser@rocketmade.com",
-        "first_name": "Test",
-        "last_name": "User",
-        "authentication_id": 656,
-        "provider_authentication_ids": []
+        "firstName": "Test",
+        "lastName": "User"
+    }],
+    "providerAuthentications": [],
+    "meta": {
+        "primaryResourceCollection": "authentications",
+        "primaryResourceId": 656
     }
 }

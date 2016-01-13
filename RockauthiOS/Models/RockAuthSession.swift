@@ -47,8 +47,8 @@ public class RockAuthSession {
                 }
             }
             
-            //In this case the user object should have the authentication_id key so we can look through all our auths and find the one we should be using for this session
-            if let userHash = json["user"] as? [String: AnyObject], authID = userHash["authentication_id"] as? Int{
+            //In this case the meta object should have the primaryResourceId key so we can look through all our auths and find the one we should be using for this session
+            if let meta = json["meta"] as? [String: AnyObject], authID = meta["primaryResourceId"] as? Int{
                 localAuthentication = localAuthentications!.filter{ $0.id == authID}.first
             }
         }
@@ -68,7 +68,7 @@ public class RockAuthSession {
         }
         
         //pull the provider authentications out
-        if let providerAuths = json["provider_authentications"] as? [[String: AnyObject]] {
+        if let providerAuths = json["providerAuthentications"] as? [[String: AnyObject]] {
             var collector = [ProviderAuthentication]()
             for hash in providerAuths {
                 if let auth = ProviderAuthentication(json: hash) {

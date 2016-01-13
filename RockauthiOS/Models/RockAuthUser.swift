@@ -33,7 +33,7 @@ public class RockauthUser {
         
         self.id = id
         self.email = json["email"] as? String
-        self.firstName = json["first_name"] as? String
-        self.lastName = json["last_name"] as? String
+        self.firstName = json["firstName"] as? String
+        self.lastName = json["lastName"] as? String
     }
 }

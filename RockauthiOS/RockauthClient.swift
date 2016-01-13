@@ -89,7 +89,7 @@ public class RockauthClient {
     }
     
     private func login(params: [String: AnyObject], success: (session: RockAuthSession) -> Void, failure: (error: ErrorType) -> Void) {
-        let request = self.jsonHTTPRequestWithPath("authentications.json")
+        let request = self.jsonHTTPRequestWithPath("api/authentications")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
@@ -108,7 +108,9 @@ public class RockauthClient {
                 failure(error: error)
                 return
             }
-            
+            // Uncomment below to display the json response
+//            let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+//            print(dataString)
             guard let responseJSON = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? [String: AnyObject] else {
                 failure(error: RockauthError(title: "Bad response", message: "Unexpected response from server, non json repsonse recieved"))
                 return
@@ -120,7 +122,7 @@ public class RockauthClient {
             }
             
             guard let session = RockAuthSession(json: responseJSON) else {
-                failure(error: RockauthError(title: "Bad response", message: "Missing authentication in response"))
+                failure(error: RockauthError(title: "Bad response", message: "Unable to match authentications in response"))
                 return
             }
             
@@ -158,7 +160,7 @@ public class RockauthClient {
 
     public func logout(success: (response: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         let data = [String:String]()
-        let request = self.jsonHTTPRequestWithPath("me.json")
+        let request = self.jsonHTTPRequestWithPath("api/me.json")
         request.HTTPMethod = "DELETE"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(data, options: .PrettyPrinted)
@@ -229,7 +231,7 @@ public class RockauthClient {
 
         // Create request
         let params = ["user": user]
-        let request = self.jsonHTTPRequestWithPath("me.json")
+        let request = self.jsonHTTPRequestWithPath("api/me.json")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)

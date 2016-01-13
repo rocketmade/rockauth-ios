@@ -25,7 +25,7 @@ public class Authetication: Equatable{
     
     init?(json: [String: AnyObject]) {
         
-        guard let id = json["id"] as? Int, jwt = json["token"] as? String, tokenID = json["token_id"] as? String, expiration = json["expiration"] as? Int else {
+        guard let id = json["id"] as? Int, jwt = json["token"] as? String, tokenID = json["tokenId"] as? String, expiration = json["expiration"] as? Int else {
             self.id = 0
             self.token = ""
             self.tokenID = ""
@@ -38,7 +38,7 @@ public class Authetication: Equatable{
         self.token = jwt
         self.tokenID = tokenID
         self.expiration = NSDate(timeIntervalSince1970: NSTimeInterval(expiration))
-        self.providerAuthID = json["provider_authentication_id"] as? Int
+        self.providerAuthID = json["providerAuthenticationId"] as? Int
     }
 }
 
