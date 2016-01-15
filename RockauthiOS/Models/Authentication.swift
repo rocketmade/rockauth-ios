@@ -9,11 +9,11 @@
 import Foundation
 
 public class Authetication: Equatable{
-    let id: Int
-    let token: JWT
-    let tokenID: String
-    let expiration: NSDate
-    let providerAuthID: Int?
+    public let id: Int
+    public let token: JWT
+    public let tokenID: String
+    public let expiration: NSDate
+    public let providerAuthID: Int?
     
     init() {
         self.id = 0

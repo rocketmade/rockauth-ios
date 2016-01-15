@@ -158,9 +158,10 @@ public class RockauthClient {
         return request
     }
 
-    public func logout(success: (response: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
+    public func logout(authToken: String, success: (response: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
         let data = [String:String]()
-        let request = self.jsonHTTPRequestWithPath("api/me.json")
+        let request = self.jsonHTTPRequestWithPath("api/authentications")
+        request.addValue("BEARER \(authToken)", forHTTPHeaderField: "AUTHORIZATION")
         request.HTTPMethod = "DELETE"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(data, options: .PrettyPrinted)
