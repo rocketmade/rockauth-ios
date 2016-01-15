@@ -159,30 +159,15 @@ public class RockauthClient {
     }
 
     public func logout(authToken: String) {
-        let data = [String:String]()
-        let request = self.jsonHTTPRequestWithPath("api/authentications")
+        let request = NSMutableURLRequest(URL: self.apiURL.URLByAppendingPathComponent("api/authentications"))
         request.addValue("BEARER \(authToken)", forHTTPHeaderField: "AUTHORIZATION")
         request.HTTPMethod = "DELETE"
-        do {
-            try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(data, options: .PrettyPrinted)
-        } catch {
-            #if DEBUG
-                print("Error logging out: \(errorObject)")
-            #endif
-        }
         self.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
-            let json = try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
-            if let responseDict = json as? NSDictionary {
-                if let errorObject = responseDict.objectForKey("error") {
-                    #if DEBUG
-                        print("Error logging out: \(errorObject)")
-                    #endif
+            #if DEBUG
+                if let error = error {
+                    NSLog("Error logging out: %@", error)
                 }
-            } else {
-                #if DEBUG
-                    print("Error logging out: \(errorObject)")
-                #endif
-            }
+            #endif
             }.resume()
     }
 
