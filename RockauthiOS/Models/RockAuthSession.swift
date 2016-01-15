@@ -11,10 +11,10 @@ import Foundation
 public typealias JWT = String
 
 public class RockAuthSession {
-    let authentication: Authetication
-    let authentications: [Authetication]
-    let user: RockauthUser
-    let providerAuthentications: [ProviderAuthentication]
+    public let authentication: Authetication
+    public let authentications: [Authetication]
+    public let user: RockauthUser
+    public let providerAuthentications: [ProviderAuthentication]
     
     init?(json: [String: AnyObject?]) {
         
