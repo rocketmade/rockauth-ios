@@ -171,7 +171,7 @@ public class RockauthClient {
         self.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             print(NSString(data: data!, encoding: NSUTF8StringEncoding))
             print(request.description)
-            let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
+            let json = try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
             if let responseDict = json as? NSDictionary {
                 if let errorObject = responseDict.objectForKey("error") {
                     let title: String
@@ -187,6 +187,10 @@ public class RockauthClient {
                 }
             } else if let error = error {
                 failure(error: error)
+            } else {
+                // no data and no error
+                let e: RockauthError = RockauthError(title: "Failure logging out", message: "Could not log out user")
+                failure(error: e)
             }
             }.resume()
     }
