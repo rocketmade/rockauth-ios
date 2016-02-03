@@ -3,6 +3,6 @@
 # Uncomment this line if you're using Swift
 use_frameworks!
 
-pod 'FBSDKCoreKit', '~> 4.7.0'
-pod 'FBSDKLoginKit', '~> 4.7.0'
+pod 'FBSDKCoreKit', '= 4.9.1'
+pod 'FBSDKLoginKit', '= 4.9.1'
 
