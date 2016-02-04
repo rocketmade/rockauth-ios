@@ -15,8 +15,13 @@ public class RockAuthSession {
     public let authentications: [Authetication]
     public let user: RockauthUser
     public let providerAuthentications: [ProviderAuthentication]
+    public let rawJSON: [String: AnyObject]
     
-    init?(json: [String: AnyObject?]) {
+    init?(json: [String: AnyObject]) {
+        
+        //Storing the raw data that made up this object so that you have access to addition info which may be passed that doesn't get parsed by this class
+        //or it's children
+        self.rawJSON = json
         
         //local variables to pull out of the hash.  We use local variables so we can make a master nil check at the end so we can know if we should fail or not.
         //We fail in one place because of a compiler bug where we have to initialize all variables before returning nil.
