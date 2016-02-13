@@ -108,6 +108,12 @@ public class RockauthClient {
                 failure(error: error)
                 return
             }
+            
+            if let r = response as? NSHTTPURLResponse r.statusCode < 200 || r.statusCode >= 300 {
+                failure(error: RockauthError(title: "Bad response", message: "The server returned status code \(r.statusCode)"))
+                return
+            }
+            
             // Uncomment below to display the json response
 //            let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
 //            print(dataString)
