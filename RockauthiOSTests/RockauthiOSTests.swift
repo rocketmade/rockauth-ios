@@ -63,10 +63,15 @@ class RockauthiOSTests: XCTestCase {
         XCTAssert(pAuth.userID == "10102922162809270")
     }
     
+    
     func testEmailSignupSessionSerialization() {
         let json = self.jsonFromFile("emailSignupJson")
-        
         let session = RockAuthSession(json: json)
+        self.doEmailSignupSessionSerializationTest(session)
+    }
+    
+    func doEmailSignupSessionSerializationTest(session: RockAuthSession?) {
+        
         XCTAssertNotNil(session)
         
         let user = session!.user
@@ -87,6 +92,15 @@ class RockauthiOSTests: XCTestCase {
         XCTAssert(auths.first! == auth)
         
         XCTAssert(session!.providerAuthentications.count == 0)
+    }
+    
+    func testNSCoding() {
+        let json = self.jsonFromFile("emailSignupJson")
+        let session = RockAuthSession(json: json)!
+        let data = NSKeyedArchiver.archivedDataWithRootObject(session)
+        
+        let unmarshalled = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! RockAuthSession
+        self.doEmailSignupSessionSerializationTest(unmarshalled)
     }
     
     func testEmailLogin() {

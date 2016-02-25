@@ -109,7 +109,7 @@ public class RockauthClient {
                 return
             }
             
-            if let r = response as? NSHTTPURLResponse r.statusCode < 200 || r.statusCode >= 300 {
+            if let r = response as? NSHTTPURLResponse where r.statusCode < 200 || r.statusCode >= 300 {
                 failure(error: RockauthError(title: "Bad response", message: "The server returned status code \(r.statusCode)"))
                 return
             }
