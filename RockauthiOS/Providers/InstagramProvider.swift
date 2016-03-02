@@ -63,7 +63,6 @@ public static var sharedProvider: SocialProvider?
     // MARK: IGViewControllerDelegate methods
     
     func success(token: String) {
-        webViewController.dismissViewControllerAnimated(true, completion: nil)
         NSLog("token:\(token)")
         self.token = token
         

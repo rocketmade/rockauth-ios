@@ -89,7 +89,7 @@ public class RockauthClient {
     }
     
     private func login(params: [String: AnyObject], success: (session: RockAuthSession) -> Void, failure: (error: ErrorType) -> Void) {
-        let request = self.jsonHTTPRequestWithPath("authentications.json")
+        let request = self.jsonHTTPRequestWithPath("api/authentications")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
@@ -109,6 +109,14 @@ public class RockauthClient {
                 return
             }
             
+            if let r = response as? NSHTTPURLResponse where r.statusCode < 200 || r.statusCode >= 300 {
+                failure(error: RockauthError(title: "Bad response", message: "The server returned status code \(r.statusCode)"))
+                return
+            }
+            
+            // Uncomment below to display the json response
+//            let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+//            print(dataString)
             guard let responseJSON = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? [String: AnyObject] else {
                 failure(error: RockauthError(title: "Bad response", message: "Unexpected response from server, non json repsonse recieved"))
                 return
@@ -120,7 +128,7 @@ public class RockauthClient {
             }
             
             guard let session = RockAuthSession(json: responseJSON) else {
-                failure(error: RockauthError(title: "Bad response", message: "Missing authentication in response"))
+                failure(error: RockauthError(title: "Bad response", message: "Unable to match authentications in response"))
                 return
             }
             
@@ -156,35 +164,16 @@ public class RockauthClient {
         return request
     }
 
-    public func logout(success: (response: NSDictionary) -> Void, failure: (error: ErrorType) -> Void) {
-        let data = [String:String]()
-        let request = self.jsonHTTPRequestWithPath("me.json")
+    public func logout(authToken: String) {
+        let request = NSMutableURLRequest(URL: self.apiURL.URLByAppendingPathComponent("api/authentications"))
+        request.addValue("BEARER \(authToken)", forHTTPHeaderField: "AUTHORIZATION")
         request.HTTPMethod = "DELETE"
-        do {
-            try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(data, options: .PrettyPrinted)
-        } catch {
-            failure(error: error)
-        }
         self.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
-            print(NSString(data: data!, encoding: NSUTF8StringEncoding))
-            print(request.description)
-            let json = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers)
-            if let responseDict = json as? NSDictionary {
-                if let errorObject = responseDict.objectForKey("error") {
-                    let title: String
-                    if let t = errorObject["message"] {
-                        title = t as! String
-                    } else {
-                        title = "Error Logging Out"
-                    }
-                    let e: RockauthError = RockauthError(title: title, message: "Could not log out user")
-                    failure(error: e)
-                } else {
-                    success(response: responseDict)
+            #if DEBUG
+                if let error = error {
+                    NSLog("Error logging out: %@", error)
                 }
-            } else if let error = error {
-                failure(error: error)
-            }
+            #endif
             }.resume()
     }
 
@@ -229,7 +218,7 @@ public class RockauthClient {
 
         // Create request
         let params = ["user": user]
-        let request = self.jsonHTTPRequestWithPath("me.json")
+        let request = self.jsonHTTPRequestWithPath("api/me.json")
         request.HTTPMethod = "POST"
         do {
             try request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
