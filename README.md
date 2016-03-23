@@ -15,7 +15,7 @@ RockauthIOS is available through [CocoaPods](http://cocoapods.org).
   ```ruby
   pod 'RockauthiOS', :git => 'https://github.com/rocketmade/rockauth-ios', :branch => 'dev'
   ```
-  
+
 2. Run `pod install`
 
 
@@ -30,7 +30,7 @@ RockauthIOS is available through [CocoaPods](http://cocoapods.org).
   ...
   RockauthClient.sharedClient = RockauthClient(baseURL: <#apiBaseURL: String#>, clientID: <#apiClientID: String#>, clientSecret: <#apiClientSecret: String#>)
   ```
-  
+
 2. If your app was not created with Liftoff, the app's Info.plist must contain the following:
   ```
 	<key>Configuration</key>
@@ -42,14 +42,16 @@ RockauthIOS is available through [CocoaPods](http://cocoapods.org).
 	</dict>
   ```
   Or like this:
-  
+
   ![alt tag](/docs/screenshot-plist.png)
-  
+
 ### Email Registration
 
 ### Email Login
 
 ### Facebook Integration
+
+Currently disabled
 
 ### Twitter Integration
 
@@ -59,7 +61,7 @@ RockauthIOS is available through [CocoaPods](http://cocoapods.org).
   pod 'TwitterKit'
   pod 'TwitterCore'
   ```
-  
+
 2. Run `pod install`
 
 3. Add the following to your project (possibly in your AppDelegate, specifically in `didFinishLaunchingWithOptions`):
@@ -68,8 +70,8 @@ RockauthIOS is available through [CocoaPods](http://cocoapods.org).
   ...
   Twitter.sharedInstance().startWithConsumerKey(<#twitterKey: String#>, consumerSecret: <#twitterSecret: String#>)
   ```
-  
-4. Where you want to invoke 
+
+4. Where you want to invoke
   ```
   import RockauthiOS
   import TwitterKit
@@ -115,8 +117,8 @@ RockauthIOS is available through [CocoaPods](http://cocoapods.org).
 5. In the viewController that will be responsible for interacting with Rockauth add the following to `ViewDidLoad`:
   ```
   GIDSignIn.sharedInstance().delegate = self
-  GIDSignIn.sharedInstance().uiDelegate = self 
-  
+  GIDSignIn.sharedInstance().uiDelegate = self
+
   (GoogleProvider.sharedProvider as! GoogleProvider).delegate = self
   ```
 6. Add the following method that will get called when the Google button in the Rockauth UI is clicked:
@@ -160,7 +162,7 @@ RockauthIOS is available through [CocoaPods](http://cocoapods.org).
   /usr/libexec/PlistBuddy -c "Merge ${SRCROOT}/${PRODUCT_NAME}/${CONFIGURATION}-GoogleService-Info.plist" ${SRCROOT}/${PRODUCT_NAME}/GoogleService-Info.plist
   ```
   Just make sure it is run before 'Copy Bundle Resources'
-  
+
   You will also need to name each plist like this: `Debug-GoogleService-Info.plist` or `Release-GoogleService-Info.plist`
 ## Author
 
