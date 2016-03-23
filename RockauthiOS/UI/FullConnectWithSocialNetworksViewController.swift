@@ -21,7 +21,7 @@ class FullConnectWithSocialNetworksViewController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit([FacebookProvider.sharedProvider], connected: nil, failed: nil)
+        commonInit([], connected: nil, failed: nil)
     }
 
     func commonInit(providers: [SocialProvider?], connected: loginSuccess?, failed: loginFailure?) {

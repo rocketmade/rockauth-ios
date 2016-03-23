@@ -58,7 +58,6 @@
 		A37290801BFA9E8D00D223BE /* UIColor+Rocketmade.swift in Sources */ = {isa = PBXBuildFile; fileRef = A372907E1BFA9E8D00D223BE /* UIColor+Rocketmade.swift */; };
 		A37290821BFA9E9300D223BE /* RockauthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290811BFA9E9300D223BE /* RockauthClient.swift */; };
 		A372908A1BFA9E9D00D223BE /* EmailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290831BFA9E9D00D223BE /* EmailProvider.swift */; };
-		A372908B1BFA9E9D00D223BE /* FacebookProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290841BFA9E9D00D223BE /* FacebookProvider.swift */; };
 		A372908C1BFA9E9D00D223BE /* GoogleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290851BFA9E9D00D223BE /* GoogleProvider.swift */; };
 		A372908D1BFA9E9D00D223BE /* InstagramProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290861BFA9E9D00D223BE /* InstagramProvider.swift */; };
 		A372908E1BFA9E9D00D223BE /* LoginProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37290871BFA9E9D00D223BE /* LoginProviderProtocol.swift */; };
@@ -491,7 +490,6 @@
 				329207D91C0F632500A38C62 /* RockAuthUser.swift in Sources */,
 				A372909E1BFA9EA600D223BE /* SignUpViewController.swift in Sources */,
 				329207DB1C0F634500A38C62 /* RockAuthSession.swift in Sources */,
-				A372908B1BFA9E9D00D223BE /* FacebookProvider.swift in Sources */,
 				A372909C1BFA9EA600D223BE /* RockauthNavigationController.swift in Sources */,
 				A37290991BFA9EA600D223BE /* ConnectWithSocialNetworksView.swift in Sources */,
 				A372909A1BFA9EA600D223BE /* FlatRoundedButton.swift in Sources */,

@@ -20,12 +20,12 @@ class SplashViewController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit(emailAuthentication: true, cancelButton: false, providers: [FacebookProvider()], logo: nil, connected: nil, failed: nil)
+        commonInit(emailAuthentication: true, cancelButton: false, providers: [], logo: nil, connected: nil, failed: nil)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        commonInit(emailAuthentication: true, cancelButton: false, providers: [FacebookProvider()], logo: nil, connected: nil, failed: nil)
+        commonInit(emailAuthentication: true, cancelButton: false, providers: [], logo: nil, connected: nil, failed: nil)
     }
 
     init(showCancelButton: Bool, logo: UIImage?, useEmailAuthentication email: Bool, providers: [SocialProvider?], connected: loginSuccess, failed: loginFailure) {

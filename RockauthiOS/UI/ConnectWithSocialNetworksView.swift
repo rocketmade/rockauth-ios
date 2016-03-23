@@ -28,12 +28,12 @@ class ConnectWithSocialNetworksView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit([FacebookProvider()], shortFormat: true, orSeparator: false, parentViewController: nil, connected: nil, failed: nil)
+        commonInit([], shortFormat: true, orSeparator: false, parentViewController: nil, connected: nil, failed: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit([FacebookProvider()], shortFormat: true, orSeparator: false, parentViewController: nil, connected: nil, failed: nil)
+        commonInit([], shortFormat: true, orSeparator: false, parentViewController: nil, connected: nil, failed: nil)
     }
 
     init(providers: [SocialProvider?], shortFormat: Bool, orSeparator: Bool, parentViewController: UIViewController?, connected: loginSuccess, failed: loginFailure) {
