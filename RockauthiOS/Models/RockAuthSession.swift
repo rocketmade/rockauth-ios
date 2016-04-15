@@ -11,8 +11,8 @@ import Foundation
 public typealias JWT = String
 
 public class RockAuthSession: NSObject, NSCoding {
-    public let authentication: Authetication
-    public let authentications: [Authetication]
+    public let authentication: Authentication
+    public let authentications: [Authentication]
     public let user: RockauthUser
     public let providerAuthentications: [ProviderAuthentication]
     public let rawJSON: [String: AnyObject]
@@ -26,8 +26,8 @@ public class RockAuthSession: NSObject, NSCoding {
         //local variables to pull out of the hash.  We use local variables so we can make a master nil check at the end so we can know if we should fail or not.
         //We fail in one place because of a compiler bug where we have to initialize all variables before returning nil.
         var localUser: RockauthUser?
-        var localAuthentication: Authetication?
-        var localAuthentications: [Authetication]?
+        var localAuthentication: Authentication?
+        var localAuthentications: [Authentication]?
         
         //User will either be in a collection or a top level hash.  This is done for consistencey but in practice there will only ever be one user
         if let usersArray = json["users"] as? [[String: AnyObject]], hash = usersArray.first, user = RockauthUser(json: hash) {
@@ -38,16 +38,16 @@ public class RockAuthSession: NSObject, NSCoding {
         }
         
         //Same approach with authentication
-        if let hash = json["authentication"] as? [String: AnyObject], let auth = Authetication(json: hash) {
+        if let hash = json["authentication"] as? [String: AnyObject], let auth = Authentication(json: hash) {
             //In this case only 1 auth came down so that is the one we should use and the user object will NOT have a authentication_id key
-            localAuthentications = [Authetication]()
+            localAuthentications = [Authentication]()
             localAuthentications!.append(auth)
             localAuthentication = auth
         }
         else if let array = json["authentications"] as? [[String: AnyObject]] {
-            localAuthentications = [Authetication]()
+            localAuthentications = [Authentication]()
             for hash in array {
-                if let auth = Authetication(json: hash) {
+                if let auth = Authentication(json: hash) {
                     localAuthentications!.append(auth)
                 }
             }
@@ -66,8 +66,8 @@ public class RockAuthSession: NSObject, NSCoding {
         }
         else {
             self.user = RockauthUser()
-            self.authentication = Authetication()
-            self.authentications = [Authetication]()
+            self.authentication = Authentication()
+            self.authentications = [Authentication]()
             self.providerAuthentications = [ProviderAuthentication]()
             super.init()
             return nil
@@ -91,8 +91,8 @@ public class RockAuthSession: NSObject, NSCoding {
     }
     
     public required init?(coder aDecoder: NSCoder) {
-        self.authentication = aDecoder.decodeObjectForKey("authentication") as! Authetication
-        self.authentications = aDecoder.decodeObjectForKey("authentications") as! [Authetication]
+        self.authentication = aDecoder.decodeObjectForKey("authentication") as! Authentication
+        self.authentications = aDecoder.decodeObjectForKey("authentications") as! [Authentication]
         self.user = aDecoder.decodeObjectForKey("user") as! RockauthUser
         self.providerAuthentications = aDecoder.decodeObjectForKey("providerAuthentications") as! [ProviderAuthentication]
         self.rawJSON = aDecoder.decodeObjectForKey("rawJSON") as! [String: AnyObject]

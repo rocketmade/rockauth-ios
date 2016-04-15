@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Authetication: NSObject, NSCoding {
+public class Authentication: NSObject, NSCoding {
     public let id: Int
     public let token: JWT
     public let tokenID: String
@@ -66,7 +66,7 @@ public class Authetication: NSObject, NSCoding {
     }
 }
 
-public func ==(lhs: Authetication, rhs: Authetication) -> Bool{
+public func ==(lhs: Authentication, rhs: Authentication) -> Bool{
     return lhs.id == rhs.id &&
         lhs.token == rhs.token &&
         lhs.tokenID == rhs.tokenID &&
