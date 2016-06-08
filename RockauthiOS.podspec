@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "Daniel Gubler" => "danielcgubler@gmail.com" }
 
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "8.2"
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
@@ -73,7 +73,7 @@ Pod::Spec.new do |s|
   # s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  
+
   # removed for now
   # s.dependency 'FBSDKCoreKit', '= 4.9.1'
   # s.dependency 'FBSDKLoginKit', '= 4.9.1'
