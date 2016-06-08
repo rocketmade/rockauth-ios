@@ -145,7 +145,10 @@ public class RockauthClient {
             if let validationErrors = errorObject["validation_errors"] {
                 var message = ""
                 for key in (validationErrors as! NSDictionary).allKeys {
-                    message += "\(key.capitalizedString) \(validationErrors.valueForKey(key as! String)![0])\n"
+                    let capitalKey = key.capitalizedString
+                    let error = validationErrors.valueForKey(key as! String)?.firstItem
+                    message += "\(capitalKey) \(error)"
+                    message += "\n"
                 }
                 
                 e = RockauthError(title: title, message: message)
