@@ -9,10 +9,10 @@
 import Foundation
 
 public class RockauthUser: NSObject, NSCoding {
-    let id: Int
-    let email: String?
-    let firstName: String?
-    let lastName: String?
+    public let id: Int
+    public let email: String?
+    public let firstName: String?
+    public let lastName: String?
     
     override init() {
         self.id = 0
